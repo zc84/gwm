@@ -6,15 +6,22 @@ Production-aligned MVP for the GWM Middle East digital platform.
 
 Epic 1 is complete: foundation and deployment skeleton.
 
-Epic 2 is restarted from the supplied V2 PNG concept: brand system, reusable
-assets and pixel-perfect QA.
+Epic 2 established the V2 brand system and reusable visual language.
+
+Epic 3 has shifted to static public content and homepage finalization.
+
+Epic 4 is active: implement the static public pages and V2-aligned page
+elements from the plan.
 
 ## MVP Direction
 
 - No Docker in the first MVP stage.
 - Deployment is managed through `render.yaml`.
 - Public website uses Next.js, TypeScript and Tailwind.
-- CMS/admin uses Payload CMS with PostgreSQL.
+- Public website content uses static repository content for the MVP.
+- CMS/admin is deferred and marked as coming soon.
+- Public website content can still read Strapi 5 REST content later when
+  configured.
 - AI uses a configurable OpenAI API key.
 - RAG is simulated with generated static knowledge bundles until production
   embeddings and vector search are introduced.
@@ -31,7 +38,7 @@ This keeps the repo usable from a fresh Codex session.
 ## Repository Structure
 
 - `apps/web` - public Next.js website shell.
-- `apps/cms` - Payload CMS admin/API shell.
+- `apps/cms` - deferred admin placeholder.
 - `packages/shared` - shared locale and configuration contracts.
 - `docs` - implementation and architecture notes.
 - `specs` - product/design implementation plan and source design concept.
@@ -50,13 +57,20 @@ Create local environment values:
 cp .env.example .env.local
 ```
 
+Optional future Strapi-backed homepage content can be enabled with:
+
+```bash
+STRAPI_API_URL=http://localhost:1337
+STRAPI_API_TOKEN=replace-with-read-token
+```
+
 Run the public website:
 
 ```bash
 npm run dev:web
 ```
 
-Run the CMS:
+Run the deferred admin placeholder:
 
 ```bash
 npm run dev:cms
@@ -65,24 +79,39 @@ npm run dev:cms
 Local URLs:
 
 - Web: `http://localhost:3000/en` and `http://localhost:3000/ar`
-- CMS: `http://localhost:3001/admin`
+- Vehicles: `http://localhost:3000/en/vehicles`
+- Product: `http://localhost:3000/en/vehicles/haval-h6-hev`
+- Service: `http://localhost:3000/en/service`
+- Countries: `http://localhost:3000/en/countries`
+- Forms: `http://localhost:3000/en/forms`
+- News: `http://localhost:3000/en/news`
+- Admin placeholder: `http://localhost:3001`
 - Web health: `http://localhost:3000/api/health`
-- CMS health: `http://localhost:3001/api/health`
+- Admin health: `http://localhost:3001/api/health`
 
-The CMS requires a reachable PostgreSQL database for admin usage. Render will
-provide `DATABASE_URL` from the Blueprint. Local development can use any
-PostgreSQL instance that matches `.env.example`.
+The MVP does not require PostgreSQL for content. Public content is loaded from
+typed static files in the repository. PostgreSQL is deferred unless a later API
+epic needs persisted leads or events.
+
+The public homepage reads Strapi content from `STRAPI_API_URL` when configured.
+Without a reachable Strapi instance it renders typed EN/AR fallback content, so
+local builds do not require CMS availability.
 
 ## Validation
 
-These commands passed after Epic 1:
+Useful validation commands:
 
 ```bash
 npm run lint
 npm run typecheck
 npm run build --workspace @gwm/web
-DATABASE_URL=postgres://gwm:gwm@localhost:5432/gwm PAYLOAD_SECRET=local-dev-secret npm run build --workspace @gwm/cms
 npm run format
+```
+
+The deferred admin placeholder can still be built locally if needed:
+
+```bash
+DATABASE_URL=postgres://gwm:gwm@localhost:5432/gwm PAYLOAD_SECRET=local-dev-secret npm run build --workspace @gwm/cms
 ```
 
 Note: `npm install` currently reports dependency audit findings from installed
@@ -94,27 +123,25 @@ epic or when a direct vulnerable dependency is introduced.
 `render.yaml` defines:
 
 - `gwm-web`
-- `gwm-cms`
-- `gwm-postgres`
 
 Secret values are configured with `sync: false` or generated values. Before
-deploying, set `NEXT_PUBLIC_SITE_URL`, `PAYLOAD_PUBLIC_SERVER_URL` and
-`OPENAI_API_KEY` in Render.
+deploying, set `NEXT_PUBLIC_SITE_URL` and any API provider values needed by the
+active API epics.
 
 ## Active Epic
 
-Epic 2 builds the design system from the V2 concept in `specs/design/`:
+Epic 4 implements the static public website pages and V2-aligned elements:
 
-- brandbook
-- typography scale
-- color tokens
-- layout primitives
-- reusable CSS and TypeScript design assets
-- header/footer and journey components
-- EN/AR visual QA for RTL spacing and ordering
+- reusable localized header, footer, hero, section and stat primitives
+- vehicle catalogue and product detail pages
+- service, country, forms and news pages
+- static SEO endpoints
+- generated placeholder visual assets
 
 Primary handoff files:
 
 - `docs/brandbook-v2.md`
 - `docs/epic-2-design-system-pixel-perfect.md`
+- `docs/epic-3-strapi-driven-content.md`
+- `docs/epic-4-static-pages-design-implementation.md`
 - `specs/design/README.md`

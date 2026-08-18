@@ -13,11 +13,13 @@
   "dependencies": {
     "@gwm/shared": "*",
     "next": "15.4.11",
+    "qs": "^6.15.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
+    "@types/qs": "^6.15.1",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "autoprefixer": "^10.4.21",

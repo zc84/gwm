@@ -12,8 +12,8 @@ The MVP must:
 - Be deployable on Render.com.
 - Deploy without Docker for the first MVP stage.
 - Preserve migration paths to Azure.
-- Support AI configuration and AI-driven content operations through
-  administration.
+- Preserve a path to AI configuration and AI-driven content operations through
+  future administration.
 
 The MVP is not a throwaway prototype. It is a scalable foundation.
 
@@ -28,8 +28,8 @@ MVP stage:
 - Native Render services where possible.
 - Next.js public website and lightweight API routes for MVP server
   behavior.
-- Payload CMS for content, admin workflows and AI configuration.
-- PostgreSQL for persisted CMS data and leads.
+- Static JSON/TypeScript content bundles for public MVP content.
+- PostgreSQL deferred unless later API epics need persisted leads or events.
 - OpenAI API as the configurable AI provider.
 - Generated static content bundles to simulate RAG.
 - Static JSON/search indexes for website search and assistant context.
@@ -61,17 +61,17 @@ Deferred stage:
 
 - MVP: Next.js API routes/server actions for leads, forms, search
   simulation and AI proxying
-- PostgreSQL
+- PostgreSQL deferred unless API persistence is required
 - REST APIs
 - OpenAPI-style endpoint documentation
 - Future: ASP.NET Core API when Docker or Azure hosting is introduced
 
-## CMS
+## Content
 
-- Payload CMS
-- Localised content models
-- Workflow states
-- Media management
+- MVP uses static repository content.
+- CMS/admin is deferred and marked as coming soon.
+- Optional future Strapi 5 REST contract is preserved.
+- Localised content is represented in EN/AR static bundles.
 
 ## Search
 
@@ -90,8 +90,8 @@ Provider abstraction:
 
 ## Identity
 
-- MVP: Payload CMS admin authentication
-- Lightweight admin access control
+- MVP: no CMS/admin authentication.
+- Future: lightweight admin access control.
 - Future: Keycloak locally
 - Entra ID migration ready
 
@@ -104,8 +104,6 @@ The MVP must be deployable on Render.
 Services:
 
 - Next.js Web Service
-- Payload CMS Service
-- PostgreSQL Database
 - Optional background worker for content/index generation if required
 
 Deployment must support:
@@ -145,6 +143,12 @@ Implement:
 - News list
 - Country directory
 
+Epic 3 status:
+
+- Localized homepage now renders from a typed content contract.
+- Static repository content is the MVP source of truth.
+- Optional Strapi 5 REST remains available when `STRAPI_API_URL` is configured.
+
 ## Product Page
 
 - Sticky anchor navigation
@@ -179,9 +183,9 @@ Implement:
 
 ---
 
-# 5. CMS Content Model
+# 5. Static Content Model
 
-Create:
+Create static content bundles for:
 
 ## Vehicle
 
@@ -217,7 +221,7 @@ Create:
 
 ## AI Content Metadata
 
-Every content item supports:
+Deferred CMS metadata fields:
 
 - generatedByAI
 - prompt used
@@ -229,9 +233,9 @@ Every content item supports:
 
 # 6. AI Administration Module
 
-Create an admin AI configuration section.
+Deferred. The admin placeholder should mark this as coming soon.
 
-Admin must be able to configure AI without code changes.
+MVP AI configuration uses environment variables and code-owned defaults.
 
 ## AI Provider Settings
 
@@ -293,7 +297,7 @@ Admin can edit:
 
 # 7. AI Content Generation in CMS
 
-CMS editors can use AI assistance.
+Deferred with CMS/admin. Keep API routes and provider abstractions in scope.
 
 Features:
 
@@ -509,7 +513,7 @@ Future:
 
 MVP:
 
-Payload media library and placeholder assets.
+Static placeholder assets and repository-managed metadata.
 
 Future:
 
@@ -578,7 +582,7 @@ Future:
 
 MVP simulates RAG with generated static content bundles:
 
-    CMS/static seed content
+    Static seed content
 
     ↓
 
@@ -791,27 +795,27 @@ Epic 2 handoff:
 
 ## Sprint 3
 
-CMS
+Static content and homepage finalization
 
 ## Sprint 4
 
-Homepage
+Homepage - implemented with static content
 
 ## Sprint 5
 
-Vehicle platform
+Vehicle platform - static catalogue and product detail first pass
 
 ## Sprint 6
 
-Forms and leads
+Forms and leads API routes
 
 ## Sprint 7
 
-Dealer and service
+Dealer and service page implementation, API integrations later
 
 ## Sprint 8
 
-News and SEO
+Static news and SEO outputs
 
 ## Sprint 9
 
@@ -823,7 +827,7 @@ OpenAI-backed AI assistant using static RAG simulation
 
 ## Sprint 11
 
-AI CMS generation helpers and prompt management
+AI API helpers and prompt management without CMS persistence
 
 ## Sprint 12
 
@@ -842,10 +846,10 @@ The MVP is complete when:
 - Vehicle journey works
 - Dealer journey works
 - Lead journey works
-- CMS works
+- Static content bundles work
 - AI assistant works using OpenAI and generated static knowledge bundles
-- AI configuration works from admin
-- AI content generation works
+- AI configuration works from environment variables
+- AI content generation CMS workflow is deferred
 - AI image prompt workflow works
 - Integrations are mocked
 - Tests pass
