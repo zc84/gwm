@@ -764,7 +764,30 @@ Epic 1 deferred scope:
 
 ## Sprint 2
 
-Design system
+V2 brand system - restarted
+
+Epic 2 scope:
+
+- Treat `specs/design/` V2 PNG screens as the active source of truth.
+- Parse V2 into a brandbook.
+- Extract reusable design tokens.
+- Implement TypeScript, Tailwind and CSS token assets.
+- Generate lightweight reference thumbnails for future QA.
+- Establish pixel-perfect QA protocol for all later implemented content.
+
+Epic 2 acceptance gate:
+
+- Implemented UI must be reviewed against V2 source screens at mobile, tablet
+  and desktop breakpoints.
+- RTL behavior must be verified through Arabic screenshots.
+- Intentional deviations must be documented before the epic is closed.
+
+Epic 2 handoff:
+
+- `docs/brandbook-v2.md`
+- `docs/epic-2-design-system-pixel-perfect.md`
+- `specs/design/README.md`
+- `specs/design/gwm-v2-design-tokens.json`
 
 ## Sprint 3
 

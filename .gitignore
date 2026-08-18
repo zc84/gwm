@@ -10,3 +10,8 @@ coverage
 .env.*.local
 *.log
 .DS_Store
+
+# Large design references are kept locally and documented in specs/design.
+specs/design/*
+!specs/design/README.md
+!specs/design/gwm-v2-design-tokens.json

@@ -6,6 +6,9 @@ Production-aligned MVP for the GWM Middle East digital platform.
 
 Epic 1 is complete: foundation and deployment skeleton.
 
+Epic 2 is restarted from the supplied V2 PNG concept: brand system, reusable
+assets and pixel-perfect QA.
+
 ## MVP Direction
 
 - No Docker in the first MVP stage.
@@ -98,13 +101,20 @@ Secret values are configured with `sync: false` or generated values. Before
 deploying, set `NEXT_PUBLIC_SITE_URL`, `PAYLOAD_PUBLIC_SERVER_URL` and
 `OPENAI_API_KEY` in Render.
 
-## Next Epic
+## Active Epic
 
-Epic 2 should build the design system from the PDF concept:
+Epic 2 builds the design system from the V2 concept in `specs/design/`:
 
+- brandbook
 - typography scale
 - color tokens
 - layout primitives
-- header/footer components
-- editorial section patterns
-- EN/AR visual QA for RTL spacing
+- reusable CSS and TypeScript design assets
+- header/footer and journey components
+- EN/AR visual QA for RTL spacing and ordering
+
+Primary handoff files:
+
+- `docs/brandbook-v2.md`
+- `docs/epic-2-design-system-pixel-perfect.md`
+- `specs/design/README.md`

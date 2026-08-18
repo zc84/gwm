@@ -1,0 +1,73 @@
+{
+  "name": "GWM Middle East V2",
+  "source": "specs/design",
+  "colors": {
+    "black": "#050506",
+    "canvas": "#080808",
+    "panel": "#0f1014",
+    "panelRaised": "#14151a",
+    "panelSoft": "#1a1c22",
+    "line": "#242832",
+    "lineStrong": "#343946",
+    "text": "#f7f7f2",
+    "muted": "#a7abb2",
+    "subtle": "#6f747d",
+    "red": "#d50032",
+    "redHot": "#f0063c",
+    "redDark": "#72041e",
+    "white": "#ffffff"
+  },
+  "typography": {
+    "fontFamily": {
+      "latin": ["Arial", "Helvetica", "sans-serif"],
+      "arabic": ["Arial", "Tahoma", "sans-serif"],
+      "mono": ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"]
+    },
+    "scale": {
+      "displayXl": { "fontSize": "64px", "lineHeight": "0.9", "fontWeight": 900 },
+      "displayLg": { "fontSize": "48px", "lineHeight": "0.95", "fontWeight": 900 },
+      "headingLg": { "fontSize": "32px", "lineHeight": "1.05", "fontWeight": 900 },
+      "headingMd": { "fontSize": "22px", "lineHeight": "1.15", "fontWeight": 800 },
+      "body": { "fontSize": "16px", "lineHeight": "1.65", "fontWeight": 400 },
+      "caption": { "fontSize": "12px", "lineHeight": "1.35", "fontWeight": 700 }
+    }
+  },
+  "spacing": {
+    "pageXMobile": "20px",
+    "pageXDesktop": "32px",
+    "sectionYMobile": "56px",
+    "sectionYDesktop": "88px",
+    "cardPadding": "24px",
+    "controlHeight": "44px",
+    "contentMax": "1180px"
+  },
+  "radius": {
+    "xs": "6px",
+    "sm": "8px",
+    "md": "12px",
+    "lg": "18px",
+    "pill": "999px"
+  },
+  "shadow": {
+    "panel": "0 18px 60px rgba(0, 0, 0, 0.35)",
+    "redGlow": "0 14px 34px rgba(213, 0, 50, 0.35)"
+  },
+  "components": [
+    "AppShell",
+    "BrandHeader",
+    "HeroMedia",
+    "ActionPill",
+    "TabRail",
+    "StatStrip",
+    "VehicleCard",
+    "InfoCard",
+    "FeatureGrid",
+    "SpecTable",
+    "GalleryRail",
+    "AccordionRow",
+    "FormField",
+    "ConversionBand",
+    "MobileActionBar",
+    "BrandFooter"
+  ]
+}

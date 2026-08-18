@@ -18,7 +18,6 @@ const copy = {
       ["6", "Sub-brands"],
     ],
     sections: ["Brand grid", "Featured models", "Country directory"],
-    footer: "Epic 1 foundation shell",
   },
   ar: {
     nav: ["العلامات التجارية", "المركبات", "عن GWM", "التكنولوجيا", "اتصل بنا"],
@@ -36,7 +35,6 @@ const copy = {
       ["6", "العلامات"],
     ],
     sections: ["شبكة العلامات", "الموديلات المميزة", "دليل الدول"],
-    footer: "هيكل التأسيس للملحمة الأولى",
   },
 } satisfies Record<Locale, Record<string, unknown>>;
 
@@ -51,7 +49,7 @@ export default async function HomePage({ params }: HomePageProps) {
   const isRtl = getTextDirection(locale) === "rtl";
 
   return (
-    <main className="min-h-screen bg-white text-ink">
+    <main className="gwm-app-shell text-gwm-text">
       <header className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
         <Link
           href={`/${locale}`}
@@ -68,14 +66,14 @@ export default async function HomePage({ params }: HomePageProps) {
         </nav>
         <Link
           href={`/${alternateLocale}`}
-          className="border-b border-ink text-sm font-bold"
+          className="border-b border-gwm-line-strong text-sm font-bold"
           aria-label={localeLabels[alternateLocale]}
         >
           {t.language as string}
         </Link>
       </header>
 
-      <section className="border-y border-line bg-mist">
+      <section className="border-y border-gwm-line bg-gwm-panel">
         <div className="mx-auto grid min-h-[520px] max-w-7xl items-end px-6 py-16 md:grid-cols-[1fr_1.1fr] md:gap-16">
           <div className={isRtl ? "md:order-2" : ""}>
             <p className="mb-5 text-xs font-black uppercase tracking-[0.18em] text-signal">
@@ -84,7 +82,7 @@ export default async function HomePage({ params }: HomePageProps) {
             <h1 className="max-w-3xl text-6xl font-black leading-[0.95] tracking-normal md:text-8xl">
               {t.title as string}
             </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-600">
+            <p className="mt-8 max-w-2xl text-lg leading-8 text-gwm-muted">
               {t.intro as string}
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
@@ -96,19 +94,19 @@ export default async function HomePage({ params }: HomePageProps) {
               </a>
               <a
                 href="#foundation"
-                className="border border-ink px-6 py-3 text-sm font-black uppercase"
+                className="border border-gwm-line-strong bg-gwm-panel-raised px-6 py-3 text-sm font-black uppercase"
               >
                 {t.secondaryCta as string}
               </a>
             </div>
           </div>
-          <div className="mt-12 border border-line bg-white p-6 md:mt-0">
-            <div className="aspect-[16/10] bg-[linear-gradient(135deg,#f8fafc_0%,#dfe5eb_55%,#ffffff_55%)]" />
+          <div className="mt-12 border border-gwm-line bg-gwm-panel-raised p-6 md:mt-0">
+            <div className="aspect-[16/10] bg-[linear-gradient(135deg,#050506_0%,#14151a_55%,#72041e_100%)]" />
             <div className="mt-6 grid grid-cols-2 border-l border-t border-line">
               {(t.stats as string[][]).map(([value, label]) => (
-                <div key={label} className="border-b border-r border-line p-5">
-                  <div className="text-3xl font-black text-ink">{value}</div>
-                  <div className="mt-2 text-xs font-bold uppercase text-slate-500">
+                <div key={label} className="border-b border-r border-gwm-line p-5">
+                  <div className="text-3xl font-black text-gwm-text">{value}</div>
+                  <div className="mt-2 text-xs font-bold uppercase text-gwm-muted">
                     {label}
                   </div>
                 </div>
@@ -125,16 +123,15 @@ export default async function HomePage({ params }: HomePageProps) {
               <span className="text-sm font-black text-signal">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <h2 className="mt-12 text-2xl font-black">{section}</h2>
+              <h2 className="mt-12 text-2xl font-black text-gwm-text">{section}</h2>
             </div>
           ))}
         </div>
       </section>
 
-      <footer className="border-t border-line bg-mist px-6 py-10">
+      <footer className="border-t border-gwm-line bg-gwm-panel px-6 py-10">
         <div className="mx-auto flex max-w-7xl items-center justify-between text-sm font-bold">
           <span>GWM</span>
-          <span>{t.footer as string}</span>
         </div>
       </footer>
     </main>

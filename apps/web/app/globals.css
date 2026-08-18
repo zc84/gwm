@@ -1,10 +1,12 @@
+@import "./brand.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  color: #08152d;
-  background: #ffffff;
+  color: var(--gwm-color-text);
+  background: var(--gwm-color-black);
 }
 
 * {
