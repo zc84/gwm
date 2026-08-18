@@ -1,0 +1,27 @@
+{
+  "name": "gwm-middle-east-mvp",
+  "private": true,
+  "version": "0.1.0",
+  "description": "GWM Middle East website MVP monorepo.",
+  "packageManager": "npm@11.11.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @gwm/web",
+    "dev:web": "npm run dev --workspace @gwm/web",
+    "dev:cms": "npm run dev --workspace @gwm/cms",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "format": "prettier --check .",
+    "format:write": "prettier --write ."
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.33.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
+  }
+}
