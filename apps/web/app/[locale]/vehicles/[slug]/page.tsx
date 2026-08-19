@@ -271,7 +271,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
               >
                 <Icon name="shield" className="text-gwm-red" />
                 <h3 className="mt-3 text-sm font-black text-white">{feature.title}</h3>
-                <p className="gwm-copy mt-2 text-sm">{feature.summary}</p>
+                {feature.summary ? (
+                  <p className="gwm-copy mt-2 text-sm">{feature.summary}</p>
+                ) : null}
               </div>
             ))}
           </div>
@@ -306,32 +308,41 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <section className="gwm-section">
         <div className="gwm-container">
-          <h2 className="gwm-heading-lg mb-8 text-center">
-            {isRtl ? "اختر فئتك" : "Choose Your Trim"}
-          </h2>
-          <div className="grid gap-4 md:grid-cols-3">
-            {vehicle.trims.map((trim) => (
-              <div
-                key={trim.name}
-                className={`border p-5 ${trim.featured ? "border-gwm-red bg-gwm-panel-raised" : "border-gwm-line bg-gwm-panel"}`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-black text-white">{trim.name}</span>
-                  {trim.featured ? (
-                    <span className="rounded-full bg-gwm-red px-2 py-0.5 text-[10px] font-black uppercase text-white">
-                      {trim.note}
-                    </span>
-                  ) : null}
-                </div>
-                <div className="mt-2 text-sm font-bold text-gwm-muted">{trim.price}</div>
-                {!trim.featured && trim.note ? (
-                  <div className="mt-1 text-xs font-bold text-gwm-subtle">
-                    {trim.note}
-                  </div>
-                ) : null}
-              </div>
-            ))}
+          <SectionHeading
+            eyebrow={isRtl ? "الأسعار" : "Pricing"}
+            title={isRtl ? "أسعار الفئات" : "Model Pricing"}
+          />
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[480px] border-collapse text-sm">
+              <thead>
+                <tr className="border-b border-gwm-line text-start">
+                  <th className="py-3 pe-4 text-xs font-black uppercase text-gwm-muted">
+                    {isRtl ? "الفئة" : "Trim"}
+                  </th>
+                  <th className="py-3 pe-4 text-xs font-black uppercase text-gwm-muted">
+                    {isRtl ? "السعر" : "Price"}
+                  </th>
+                  <th className="py-3 pe-4 text-xs font-black uppercase text-gwm-muted">
+                    {isRtl ? "الضريبة" : "VAT"}
+                  </th>
+                  <th className="py-3 text-xs font-black uppercase text-gwm-muted">
+                    {isRtl ? "السعر بعد الضريبة" : "Price w/ VAT"}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {vehicle.pricing.map((row) => (
+                  <tr key={row.trim} className="border-b border-gwm-line">
+                    <td className="py-3 pe-4 font-black text-white">{row.trim}</td>
+                    <td className="py-3 pe-4 font-bold text-gwm-muted">{row.price}</td>
+                    <td className="py-3 pe-4 font-bold text-gwm-muted">{row.vat}</td>
+                    <td className="py-3 font-black text-white">{row.priceWithVat}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+          <p className="gwm-caption mt-4">{vehicle.pricingNote}</p>
           <div className="mt-8 text-center">
             <Link href={`/${locale}/forms`} className="gwm-button gwm-button-primary">
               {vehicle.continueLabel}
@@ -340,17 +351,46 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
       </section>
 
-      <section className="border-t border-gwm-line bg-gwm-panel-soft">
+      <section className="border-y border-gwm-line bg-gwm-panel-soft">
+        <div className="gwm-container gwm-section">
+          <h2 className="gwm-heading-lg mb-6 text-center">
+            {isRtl ? "الضمان" : "Warranty"}
+          </h2>
+          <div className="mx-auto max-w-2xl space-y-2 text-center">
+            {vehicle.warranty.map((line) => (
+              <p key={line} className="text-sm font-bold text-white">
+                {line}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-gwm-line bg-gwm-panel-soft">
         <div className="gwm-container gwm-section">
           <SectionHeading
             eyebrow={isRtl ? "المواصفات" : "Specifications"}
             title={isRtl ? "المواصفات الكاملة" : "Specifications"}
           />
-          <div className="divide-y divide-gwm-line border-y border-gwm-line">
-            {vehicle.specs.map((spec) => (
-              <div key={spec.label} className="grid gap-2 py-4 md:grid-cols-2">
-                <span className="font-bold text-gwm-muted">{spec.label}</span>
-                <span className="font-black text-white">{spec.value}</span>
+          <div className="grid gap-6 md:grid-cols-2">
+            {vehicle.specs.map((group, index) => (
+              <div
+                key={group.trimName ?? index}
+                className="border border-gwm-line bg-gwm-panel p-6"
+              >
+                {group.trimName ? (
+                  <h3 className="mb-4 text-sm font-black uppercase text-gwm-red">
+                    {group.trimName}
+                  </h3>
+                ) : null}
+                <div className="divide-y divide-gwm-line">
+                  {group.rows.map((row) => (
+                    <div key={row.label} className="grid gap-2 py-3 sm:grid-cols-2">
+                      <span className="font-bold text-gwm-muted">{row.label}</span>
+                      <span className="font-black text-white">{row.value}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

@@ -125,6 +125,7 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           tagline: "Everyday intelligence, elevated",
           intro:
             "A versatile family SUV balancing modern design, intelligent assistance and comfortable long-distance usability.",
+          slug: "all-new-h6",
         },
         {
           name: "H6 HEV",
@@ -133,7 +134,6 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           tagline: "Hybrid efficiency without compromise",
           intro:
             "A hybrid SUV proposition designed to combine smooth urban driving with responsive performance and reduced fuel demand.",
-          slug: "haval-h6-hev",
         },
         {
           name: "H6 GT",
@@ -447,6 +447,7 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           tagline: "Strength, capability and everyday refinement",
           intro:
             "A premium pickup engineered for work, family and adventure, combining robust capability with connected cabin technology.",
+          slug: "poer-facelift",
         },
         {
           name: "POER 2.4T Passenger",
@@ -463,7 +464,6 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           tagline: "Built to keep business moving",
           intro:
             "A commercial pickup seed designed around dependable utility, payload-focused use cases and fleet suitability.",
-          slug: "poer-commercial",
         },
         {
           name: "POER Off-Road",
@@ -504,6 +504,7 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           tagline: "Practical capability, modernised",
           intro:
             "A versatile pickup balancing work-ready toughness with more modern cabin comfort and daily usability.",
+          slug: "wingle-7",
         },
         {
           name: "SAHAR POER",
@@ -560,6 +561,7 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           tagline: "ذكاء يومي بمستوى أعلى",
           intro:
             "سيارة SUV عائلية متعددة الاستخدامات تجمع بين التصميم العصري والمساعدة الذكية والراحة في الرحلات الطويلة.",
+          slug: "all-new-h6",
         },
         {
           name: "H6 HEV",
@@ -568,7 +570,6 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           tagline: "كفاءة هجينة دون تنازل",
           intro:
             "سيارة SUV هجينة تجمع بين السلاسة داخل المدينة والاستجابة الجيدة مع كفاءة أعلى في استهلاك الوقود.",
-          slug: "haval-h6-hev",
         },
         {
           name: "H6 GT",
@@ -881,6 +882,7 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           tagline: "قوة وقدرة وراحة يومية",
           intro:
             "بيك أب فاخر يجمع بين متطلبات العمل والعائلة والمغامرة، مع قدرات قوية وتقنيات اتصال داخل المقصورة.",
+          slug: "poer-facelift",
         },
         {
           name: "POER 2.4T Passenger",
@@ -897,7 +899,6 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           tagline: "مصمم لاستمرار أعمالك",
           intro:
             "طراز بيك أب تجاري يركز على الاعتمادية والاستخدامات العملية والملاءمة لأساطيل الأعمال.",
-          slug: "poer-commercial",
         },
         {
           name: "POER Off-Road",
@@ -937,6 +938,7 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           tagline: "قدرات عملية بروح عصرية",
           intro:
             "بيك أب متعدد الاستخدامات يجمع بين الصلابة للعمل وراحة المقصورة العصرية وسهولة الاستخدام اليومي.",
+          slug: "wingle-7",
         },
         {
           name: "SAHAR POER",

@@ -14,7 +14,11 @@ export type DetailShot = {
   placeholder: string;
   media?: { url: string; alt: string };
 };
-export type Trim = { name: string; price: string; featured: boolean; note?: string };
+export type PricingRow = { trim: string; price: string; vat: string; priceWithVat: string };
+export type SpecGroup = {
+  trimName?: string;
+  rows: Array<{ label: string; value: string }>;
+};
 
 export type Vehicle = {
   slug: string;
@@ -47,13 +51,15 @@ export type Vehicle = {
     tabs: string[];
     placeholder: string;
     caption: string;
-    features: Array<{ title: string; summary: string }>;
+    features: Array<{ title: string; summary?: string }>;
   };
   colors: Array<{ name: string; value: string }>;
   colorPlaceholder: string;
-  trims: Trim[];
+  pricing: PricingRow[];
+  pricingNote: string;
+  warranty: string[];
   continueLabel: string;
-  specs: Array<{ label: string; value: string }>;
+  specs: SpecGroup[];
 };
 
 export type ServiceContent = {
@@ -173,140 +179,135 @@ const content = {
     home: getFallbackHomeContent("en"),
     vehicles: [
       {
-        slug: "haval-h6-hev",
+        slug: "all-new-h6",
         brand: "HAVAL",
-        model: "H6 HEV",
+        model: "All-New H6",
         bodyType: "SUV",
-        powertrain: "Hybrid",
-        priceLabel: "Starting from AED 109,900",
+        powertrain: "Petrol",
+        priceLabel: "Starting from SAR 89,900",
         summary:
-          "An intelligent hybrid SUV built for family use, daily efficiency and confident regional travel.",
-        heroPlaceholder: "Photo: Haval H6 HEV, action shot",
+          "A versatile family SUV balancing modern design, intelligent assistance and comfortable long-distance usability.",
+        heroPlaceholder: "Photo: All-New Haval H6, exterior hero shot",
         heroMedia: {
-          url: "/media/product-hero.png",
-          alt: "Haval H6 HEV on a desert highway at dusk",
+          url: "/media/vehicles/all-new-h6/01_hero_exterior.webp",
+          alt: "All-New Haval H6 exterior hero shot",
         },
         spin360: {
           frames: buildSpinFrames("haval-h6-hev", "HAVAL_h6-hev_MY26_EXT360"),
-          alt: "360 degree exterior spin of the Haval H6 HEV",
+          alt: "360 degree exterior spin of the All-New Haval H6",
         },
         quickStats: [
-          { value: "245", unit: "PS", label: "Combined power" },
-          { value: "530", unit: "km", label: "Hybrid range" },
-          { value: "5.4", unit: "L/100km", label: "Fuel economy" },
-          { value: "5", unit: "seats", label: "Family cabin" },
+          { value: "SUV", unit: "", label: "Segment" },
+          { value: "2.0T", unit: "235 HP", label: "Engine" },
+          { value: "385", unit: "Nm", label: "Torque" },
+          { value: "9DCT", unit: "", label: "Transmission" },
         ],
         whyCards: [
           {
-            title: "Built for Every Commute",
-            summary: "Smart hybrid tuning delivers effortless city and highway driving.",
-            placeholder: "Photo: H6 HEV city driving",
+            title: "Engineered for Confidence",
+            summary:
+              "A Head-Up Display, a 540° panoramic view and an intelligent driving suite with 18+ assist functions, built on a body that's 71% high-strength steel.",
+            placeholder: "Photo: All-New H6 safety technology",
             media: {
-              url: "/media/vehicles/haval-h6-hev/02_exterior_lifestyle.webp",
-              alt: "Haval H6 HEV exterior lifestyle shot",
+              url: "/media/vehicles/all-new-h6/02_exterior_lifestyle.webp",
+              alt: "All-New Haval H6 exterior lifestyle shot",
             },
           },
           {
             title: "A Cabin That Rewards",
-            summary: "A 14.6-inch display, connected apps and quiet cabin materials.",
-            placeholder: "Photo: H6 HEV cabin dashboard",
+            summary:
+              "A 14.6-inch central touchscreen, ventilated seats, a multi-functional trunk and wireless Apple CarPlay & Android Auto.",
+            placeholder: "Photo: All-New H6 cabin dashboard",
             media: {
-              url: "/media/vehicles/haval-h6-hev/03_interior_cockpit.webp",
-              alt: "Haval H6 HEV interior cockpit",
+              url: "/media/vehicles/all-new-h6/03_interior_cockpit.webp",
+              alt: "All-New Haval H6 interior cockpit",
             },
           },
           {
             title: "Confidence by Design",
             summary:
-              "A wide stance and driver-assistance suite built for family peace of mind.",
-            placeholder: "Photo: H6 HEV rear three-quarter",
+              "A panoramic sunroof, high-intensity LED daytime running lights and 19-inch aluminium wheels.",
+            placeholder: "Photo: All-New H6 rear three-quarter",
             media: {
-              url: "/media/vehicles/haval-h6-hev/05_rear_side_profile.webp",
-              alt: "Haval H6 HEV rear side profile",
+              url: "/media/vehicles/all-new-h6/05_rear_side_profile.webp",
+              alt: "All-New Haval H6 rear side profile",
             },
           },
         ],
         featureBanner: {
-          tabs: ["Hybrid System", "Safety Suite", "Coffee OS", "Efficiency"],
-          title: "Intelligent Hybrid Drive",
+          tabs: ["Safety", "Interior", "Exterior"],
+          title: "Smart Innovation at Your Fingertips",
           description:
-            "By coordinating the engine and electric motor, the H6 HEV blends smooth power delivery with everyday efficiency.",
-          stat: { value: "5.4L", label: "Fuel economy per 100km" },
-          placeholder: "Photo: H6 HEV hybrid powertrain feature",
+            "The all-new Haval H6 redefines modern driving with a 14.6-inch touchscreen, a Head-Up Display (HUD), a 540° panoramic view, and voice control with no connection required.",
+          stat: { value: "14.6\"", label: "Central touchscreen" },
+          placeholder: "Photo: All-New H6 technology feature",
           media: {
-            url: "/media/vehicles/haval-h6-hev/04_feature_detail.webp",
-            alt: "Haval H6 HEV hybrid powertrain feature",
+            url: "/media/vehicles/all-new-h6/04_feature_detail.webp",
+            alt: "All-New Haval H6 technology feature",
           },
         },
         details: {
           exterior: [
             {
-              caption: "Full LED headlights & signature grille",
-              placeholder: "Photo: front grille detail",
+              caption: "Panoramic sunroof",
+              placeholder: "Photo: panoramic sunroof detail",
               media: {
-                url: "/media/vehicles/haval-h6-hev/01_hero_exterior.webp",
-                alt: "Haval H6 HEV front exterior detail",
+                url: "/media/vehicles/all-new-h6/01_hero_exterior.webp",
+                alt: "All-New Haval H6 front exterior detail",
               },
             },
             {
-              caption: "18-inch machined alloy wheels",
+              caption: "High-intensity LED daytime running lights",
+              placeholder: "Photo: LED daytime running lights",
+              media: {
+                url: "/media/vehicles/all-new-h6/02_exterior_lifestyle.webp",
+                alt: "All-New Haval H6 exterior lifestyle detail",
+              },
+            },
+            {
+              caption: "19-inch aluminium wheels",
               placeholder: "Photo: alloy wheel detail",
               media: {
-                url: "/media/vehicles/haval-h6-hev/04_feature_detail.webp",
-                alt: "Haval H6 HEV feature detail",
-              },
-            },
-            {
-              caption: "Tailgate-mounted spare styling cues",
-              placeholder: "Photo: rear tailgate detail",
-              media: {
-                url: "/media/vehicles/haval-h6-hev/05_rear_side_profile.webp",
-                alt: "Haval H6 HEV rear tailgate detail",
+                url: "/media/vehicles/all-new-h6/05_rear_side_profile.webp",
+                alt: "All-New Haval H6 wheel detail",
               },
             },
           ],
           interior: [
             {
-              caption: "14.6-inch Coffee OS touchscreen",
+              caption: "14.6-inch central touchscreen",
               placeholder: "Photo: infotainment screen detail",
               media: {
-                url: "/media/vehicles/haval-h6-hev/03_interior_cockpit.webp",
-                alt: "Haval H6 HEV interior cockpit",
+                url: "/media/vehicles/all-new-h6/03_interior_cockpit.webp",
+                alt: "All-New Haval H6 interior cockpit",
               },
             },
             {
-              caption: "Heated and ventilated front seats",
-              placeholder: "Photo: front seat detail",
+              caption: "Multi-functional trunk",
+              placeholder: "Photo: trunk detail",
+              media: {
+                url: "/media/vehicles/all-new-h6/04_feature_detail.webp",
+                alt: "All-New Haval H6 feature detail",
+              },
             },
             {
-              caption: "Dual-zone climate console",
-              placeholder: "Photo: climate console detail",
+              caption: "Seat ventilation",
+              placeholder: "Photo: seat ventilation detail",
             },
           ],
         },
-        spinCaption: "Drag to spin the H6 HEV, or use the slider to explore every angle.",
+        spinCaption:
+          "Drag to spin the All-New H6, or use the slider to explore every angle.",
         safety: {
-          title: "Engineered to Protect",
+          title: "Advanced Protection, Intelligent Confidence",
           tabs: ["Airbags", "Intelligent Driving", "Body Structure"],
-          placeholder: "Photo: H6 HEV safety X-ray diagram",
-          caption: "7-airbag protection",
+          placeholder: "Photo: All-New H6 safety systems",
+          caption: "6 airbags on a body that's 71% high-strength steel",
           features: [
-            {
-              title: "Dual front airbags",
-              summary: "Comprehensive airbag array whether every occupant is seated.",
-            },
-            {
-              title: "Front seat side airbags",
-              summary: "Dual front side and full-length side curtain airbags.",
-            },
-            {
-              title: "Full-height side curtains",
-              summary: "Extended coverage across all rows of seating.",
-            },
-            {
-              title: "Driver knee airbag",
-              summary: "Additional lower-body protection for the driver.",
-            },
+            { title: "Head-Up Display (HUD)" },
+            { title: "540° Panoramic View" },
+            { title: "18+ Intelligent Driving Assist Functions" },
+            { title: "71% High-Strength Steel Body" },
           ],
         },
         colors: [
@@ -315,21 +316,28 @@ const content = {
           { name: "Graphite", value: "#343946" },
           { name: "Signal Red", value: "#d50032" },
         ],
-        colorPlaceholder: "Photo: H6 HEV in selected colour, studio",
-        trims: [
-          { name: "Elite", price: "AED 109,900", featured: false },
-          { name: "Premium", price: "AED 119,900", featured: true, note: "Most popular" },
-          { name: "Ultra", price: "AED 129,900", featured: false },
+        colorPlaceholder: "Photo: All-New H6 in selected colour, studio",
+        pricing: [
+          { trim: "Active", price: "78,174", vat: "11,726", priceWithVat: "89,900" },
+          { trim: "Premium", price: "86,000", vat: "12,900", priceWithVat: "98,900" },
+        ],
+        pricingNote:
+          "*Full specifications, models and options are available in the specifications brochure. Prices displayed are in SAR.",
+        warranty: [
+          "Engine & Transmission: 10 years, unlimited mileage",
+          "Bumper to bumper: 6 years or 200,000 km, whichever comes first (excludes wear-and-tear parts)",
         ],
         continueLabel: "Continue",
         specs: [
-          { label: "Engine & Performance", value: "1.5T Hybrid" },
-          { label: "Max Power", value: "245 PS" },
-          { label: "Max Torque", value: "530 Nm combined" },
-          { label: "Transmission", value: "DHT 2-speed" },
-          { label: "Drivetrain", value: "Front-wheel drive" },
-          { label: "Body", value: "5-seat SUV" },
-          { label: "Dimensions", value: "4,653 × 1,886 × 1,730 mm" },
+          {
+            rows: [
+              { label: "Engine", value: "2.0L / 4-Cylinder Turbo" },
+              { label: "HP and Torque", value: "234 HP / 385 Nm" },
+              { label: "Transmission", value: "9-Speed Dual-Clutch (9DCT)" },
+              { label: "Fuel Consumption", value: "16.9 km/L" },
+              { label: "Drive Mode", value: "FWD" },
+            ],
+          },
         ],
       },
       {
@@ -338,10 +346,10 @@ const content = {
         model: "500",
         bodyType: "SUV",
         powertrain: "Petrol",
-        priceLabel: "Starting from AED 149,900",
+        priceLabel: "Starting from SAR 158,900",
         summary:
-          "A premium body-on-frame SUV with long-distance comfort and serious all-terrain capability.",
-        heroPlaceholder: "Photo: Tank 500 desert action shot",
+          "A large premium SUV balancing sophisticated comfort, road presence and confident off-road engineering.",
+        heroPlaceholder: "Photo: Tank 500 exterior hero shot",
         heroMedia: {
           url: "/media/vehicles/tank-500/01_hero_exterior.webp",
           alt: "TANK 500 exterior hero shot",
@@ -351,17 +359,17 @@ const content = {
           alt: "360 degree exterior spin of the TANK 500",
         },
         quickStats: [
-          { value: "354", unit: "PS", label: "Twin-turbo power" },
-          { value: "480", unit: "Nm", label: "Peak torque" },
-          { value: "700", unit: "km", label: "Touring range" },
-          { value: "33", unit: "°", label: "Approach angle" },
+          { value: "SUV", unit: "", label: "Segment" },
+          { value: "3.0L", unit: "", label: "Engine" },
+          { value: "500", unit: "Nm", label: "Torque" },
+          { value: "9AT", unit: "", label: "Transmission" },
         ],
         whyCards: [
           {
-            title: "Built for Every Terrain",
+            title: "Seamless 9-Speed Automatic",
             summary:
-              "Selectable terrain modes and a locking centre differential for serious off-road control.",
-            placeholder: "Photo: Tank 500 off-road climb",
+              "Precise gear shifts and optimal power delivery for a quieter, more efficient ride, on the highway or in the city.",
+            placeholder: "Photo: Tank 500 on the move",
             media: {
               url: "/media/vehicles/tank-500/02_exterior_lifestyle.webp",
               alt: "TANK 500 exterior lifestyle shot",
@@ -370,7 +378,7 @@ const content = {
           {
             title: "A Cabin That Rewards",
             summary:
-              "Twin 12.3-inch displays, napa leather seats and a full-length panoramic roof.",
+              "Wireless charging, leather seats, a 14.6-inch screen and massage function for the front seats.",
             placeholder: "Photo: Tank 500 cabin dashboard",
             media: {
               url: "/media/vehicles/tank-500/03_interior_cockpit.webp",
@@ -378,9 +386,9 @@ const content = {
             },
           },
           {
-            title: "Iconic by Design",
+            title: "Confidence by Design",
             summary:
-              "A boxy, retro-modern silhouette with a spare wheel mounted tailgate.",
+              "A 360° camera, lane assist and blind-spot detection back a commanding road presence.",
             placeholder: "Photo: Tank 500 rear three-quarter",
             media: {
               url: "/media/vehicles/tank-500/05_rear_side_profile.webp",
@@ -389,87 +397,74 @@ const content = {
           },
         ],
         featureBanner: {
-          tabs: ["Tank Turn", "Hi4-T Hybrid", "Coffee OS", "All-Terrain"],
-          title: "Intelligent Tank Turn",
+          tabs: ["Safety", "Interior", "Exterior"],
+          title: "Cutting-Edge Connectivity and Entertainment",
           description:
-            "By independently braking the wheels, the TANK 500 pivots around its own axis — turning tight switchbacks and narrow trails into effortless manoeuvres.",
-          stat: { value: "=0m", label: "Turning radius on roll" },
-          placeholder: "Photo: Tank 500 tank-turn demonstration",
+            "The TANK 500's infotainment system offers a seamless blend of connectivity and entertainment — an intuitive interface, effortless smartphone integration and premium audio quality.",
+          stat: { value: "9AT", label: "Automatic transmission" },
+          placeholder: "Photo: Tank 500 technology feature",
           media: {
             url: "/media/vehicles/tank-500/04_feature_detail.webp",
-            alt: "TANK 500 tank-turn feature demonstration",
+            alt: "TANK 500 technology feature",
           },
         },
         details: {
           exterior: [
             {
-              caption: "Round LED headlights & signature grille",
-              placeholder: "Photo: front grille detail",
+              caption: "LED lights, front and rear",
+              placeholder: "Photo: LED lighting detail",
               media: {
                 url: "/media/vehicles/tank-500/01_hero_exterior.webp",
                 alt: "TANK 500 front exterior detail",
               },
             },
             {
-              caption: "18-inch all-terrain alloy wheels",
-              placeholder: "Photo: alloy wheel detail",
+              caption: "Panoramic sunroof",
+              placeholder: "Photo: panoramic sunroof detail",
               media: {
                 url: "/media/vehicles/tank-500/04_feature_detail.webp",
                 alt: "TANK 500 feature detail",
               },
             },
             {
-              caption: "Tailgate-mounted spare wheel",
+              caption: "Sound insulation glass",
               placeholder: "Photo: rear tailgate detail",
               media: {
                 url: "/media/vehicles/tank-500/05_rear_side_profile.webp",
-                alt: "TANK 500 rear tailgate detail",
+                alt: "TANK 500 rear side profile detail",
               },
             },
           ],
           interior: [
             {
-              caption: "Twin 12.3-inch digital displays",
-              placeholder: "Photo: dashboard display detail",
+              caption: "Wireless charger",
+              placeholder: "Photo: wireless charger detail",
               media: {
                 url: "/media/vehicles/tank-500/03_interior_cockpit.webp",
                 alt: "TANK 500 interior cockpit",
               },
             },
             {
-              caption: "Quilted napa leather seats",
-              placeholder: "Photo: seat stitching detail",
+              caption: "Leather seats",
+              placeholder: "Photo: leather seat detail",
             },
             {
-              caption: "Full-length panoramic roof",
-              placeholder: "Photo: panoramic roof detail",
+              caption: "14.6-inch central screen",
+              placeholder: "Photo: central screen detail",
             },
           ],
         },
         spinCaption:
           "Drag to spin the TANK 500, or use the slider to explore every angle.",
         safety: {
-          title: "Engineered to Protect",
-          tabs: ["Airbags", "Intelligent Driving", "Body Structure"],
-          placeholder: "Photo: Tank 500 safety X-ray diagram",
-          caption: "7-airbag protection",
+          title: "Safety Suite",
+          tabs: ["Camera", "Lane Assist", "Blind Spot"],
+          placeholder: "Photo: Tank 500 safety systems",
+          caption: "360° camera, lane assist and blind-spot detection",
           features: [
-            {
-              title: "Dual front airbags",
-              summary: "Comprehensive airbag array whether every occupant is seated.",
-            },
-            {
-              title: "Front seat side airbags",
-              summary: "Dual front side and full-length side curtain airbags.",
-            },
-            {
-              title: "Full-height side curtains",
-              summary: "Extended coverage across all rows of seating.",
-            },
-            {
-              title: "Driver knee airbag",
-              summary: "Additional lower-body protection for the driver.",
-            },
+            { title: "360° View Camera" },
+            { title: "Lane Assist" },
+            { title: "Blind Spot Detection" },
           ],
         },
         colors: [
@@ -479,162 +474,165 @@ const content = {
           { name: "White", value: "#ffffff" },
         ],
         colorPlaceholder: "Photo: Tank 500 in selected colour, studio",
-        trims: [
-          { name: "Adventure", price: "AED 149,900", featured: false },
-          { name: "Lux", price: "AED 164,900", featured: true, note: "Most popular" },
-          { name: "Ultra", price: "AED 178,900", featured: false },
+        pricing: [
+          { trim: "Rock Elite", price: "192,900", vat: "28,935", priceWithVat: "221,835" },
+          { trim: "Elite Urban", price: "188,900", vat: "28,335", priceWithVat: "217,235" },
+          {
+            trim: "Business Urban",
+            price: "158,900",
+            vat: "23,835",
+            priceWithVat: "182,735",
+          },
+          { trim: "Business", price: "158,900", vat: "23,835", priceWithVat: "182,735" },
+        ],
+        pricingNote:
+          "*Full specifications, models and options are available in the specifications brochure. Prices displayed are in SAR.",
+        warranty: [
+          "Engine & Transmission: 10 years or 1,000,000 km, whichever comes first",
+          "Bumper to bumper: 6 years or 200,000 km, whichever comes first (excludes wear-and-tear parts)",
         ],
         continueLabel: "Continue",
         specs: [
-          { label: "Engine & Performance", value: "3.0T Turbocharged Petrol" },
-          { label: "Max Power", value: "354 PS @ 5,500 rpm" },
-          { label: "Max Torque", value: "480 Nm @ 1,800–5,000 rpm" },
-          { label: "Transmission", value: "9-Speed Automatic" },
-          { label: "Drivetrain", value: "Selectable 4WD" },
-          { label: "Off-Road Capability", value: "Locking centre & rear differential" },
-          { label: "Dimensions", value: "5,078 × 1,934 × 1,905 mm" },
+          {
+            rows: [
+              { label: "Engine", value: "3.0L / 6-Cylinder Turbo" },
+              { label: "HP and Torque", value: "348 HP / 500 Nm" },
+              { label: "Transmission", value: "9-Speed Automatic (9AT)" },
+              { label: "Fuel Consumption", value: "11.9 km/L" },
+              { label: "Drive Mode", value: "4WD" },
+            ],
+          },
         ],
       },
       {
-        slug: "poer-commercial",
+        slug: "poer-facelift",
         brand: "POER",
-        model: "Commercial",
+        model: "Facelift",
         bodyType: "Pickup",
         powertrain: "Diesel",
-        priceLabel: "Starting from AED 99,900",
+        priceLabel: "Starting from SAR 88,900",
         summary:
-          "A durable pickup for business, utility and weekend use with the comfort expected from a modern cabin.",
-        heroPlaceholder: "Photo: Poer Commercial work-site action shot",
+          "A premium pickup engineered for work, family and adventure, combining robust capability with connected cabin technology.",
+        heroPlaceholder: "Photo: POER Facelift exterior hero shot",
         heroMedia: {
-          url: "/media/vehicles/poer-commercial/01_hero_exterior.webp",
-          alt: "POER 2.4T Commercial exterior hero shot",
+          url: "/media/vehicles/poer-facelift/01_hero_exterior.webp",
+          alt: "POER Facelift exterior hero shot",
         },
         spin360: {
           frames: buildSpinFrames(
             "poer-commercial",
             "POER_poer-2-4t-commercial_MY26_EXT360",
           ),
-          alt: "360 degree exterior spin of the POER Commercial",
+          alt: "360 degree exterior spin of the POER Facelift",
         },
         quickStats: [
-          { value: "184", unit: "PS", label: "Diesel power" },
-          { value: "480", unit: "Nm", label: "Peak torque" },
-          { value: "1,000", unit: "kg", label: "Payload capacity" },
-          { value: "3,500", unit: "kg", label: "Towing capacity" },
+          { value: "Pick-Up", unit: "", label: "Segment" },
+          { value: "2.4T", unit: "", label: "Engine" },
+          { value: "480", unit: "Nm", label: "Torque" },
+          { value: "9-Speed", unit: "Automatic", label: "Transmission" },
         ],
         whyCards: [
           {
-            title: "Built for Every Job",
-            summary: "A reinforced ladder-frame chassis rated for heavy daily loads.",
-            placeholder: "Photo: Poer Commercial loaded bed",
+            title: "Outstanding Performance",
+            summary:
+              "The all-new 2.4T diesel engine pairs with a 9-speed automatic transmission for smooth acceleration and confident control over rough terrain.",
+            placeholder: "Photo: POER Facelift on the move",
             media: {
-              url: "/media/vehicles/poer-commercial/02_exterior_lifestyle.webp",
-              alt: "POER Commercial exterior lifestyle shot",
+              url: "/media/vehicles/poer-facelift/02_exterior_lifestyle.webp",
+              alt: "POER Facelift exterior lifestyle shot",
             },
           },
           {
-            title: "A Cabin That Rewards",
+            title: "Premium and Intelligent Driving",
             summary:
-              "A 12.3-inch display, durable trim and comfortable long-shift seating.",
-            placeholder: "Photo: Poer Commercial cabin dashboard",
+              "A spacious leather cabin, a 12.3-inch touchscreen with Apple CarPlay & Android Auto, and a 7-inch digital instrument cluster.",
+            placeholder: "Photo: POER Facelift cabin dashboard",
             media: {
-              url: "/media/vehicles/poer-commercial/03_interior_cockpit.webp",
-              alt: "POER Commercial interior cockpit",
+              url: "/media/vehicles/poer-facelift/03_interior_cockpit.webp",
+              alt: "POER Facelift interior cockpit",
             },
           },
           {
-            title: "Work-Ready by Design",
+            title: "Built to Explore",
             summary:
-              "A double-cab layout with a wide bed and tie-down rated load points.",
-            placeholder: "Photo: Poer Commercial rear three-quarter",
+              "265/60 R18 wheels, a smart key with remote start and full LED lighting, front and rear.",
+            placeholder: "Photo: POER Facelift rear three-quarter",
             media: {
-              url: "/media/vehicles/poer-commercial/05_rear_side_profile.webp",
-              alt: "POER Commercial rear side profile",
+              url: "/media/vehicles/poer-facelift/05_rear_side_profile.webp",
+              alt: "POER Facelift rear side profile",
             },
           },
         ],
         featureBanner: {
-          tabs: ["4WD System", "Payload", "Coffee OS", "Durability"],
-          title: "Built to Carry More",
+          tabs: ["Safety", "Interior", "Exterior"],
+          title: "Premium and Intelligent Driving",
           description:
-            "A reinforced frame, multi-link rear suspension and selectable 4WD keep the Poer Commercial steady under heavy loads and on loose terrain.",
-          stat: { value: "1,000kg", label: "Maximum payload" },
-          placeholder: "Photo: Poer Commercial towing demonstration",
+            "A spacious cabin with leather seats for maximum comfort on long journeys, a 12.3-inch centre touchscreen with Apple CarPlay and Android Auto, and a 7-inch digital instrument cluster make every trip more comfortable and enjoyable.",
+          stat: { value: "12.3\"", label: "Touchscreen display" },
+          placeholder: "Photo: POER Facelift technology feature",
           media: {
-            url: "/media/vehicles/poer-commercial/04_feature_detail.webp",
-            alt: "POER Commercial towing feature demonstration",
+            url: "/media/vehicles/poer-facelift/04_feature_detail.webp",
+            alt: "POER Facelift technology feature",
           },
         },
         details: {
           exterior: [
             {
-              caption: "LED headlights & signature grille",
-              placeholder: "Photo: front grille detail",
-              media: {
-                url: "/media/vehicles/poer-commercial/01_hero_exterior.webp",
-                alt: "POER Commercial front exterior detail",
-              },
-            },
-            {
-              caption: "17-inch work-rated alloy wheels",
+              caption: "265/60 R18 alloy wheels",
               placeholder: "Photo: alloy wheel detail",
               media: {
-                url: "/media/vehicles/poer-commercial/04_feature_detail.webp",
-                alt: "POER Commercial feature detail",
+                url: "/media/vehicles/poer-facelift/01_hero_exterior.webp",
+                alt: "POER Facelift front exterior detail",
               },
             },
             {
-              caption: "Reinforced load bed & tie-downs",
-              placeholder: "Photo: load bed detail",
+              caption: "Smart key with remote start",
+              placeholder: "Photo: smart key detail",
               media: {
-                url: "/media/vehicles/poer-commercial/05_rear_side_profile.webp",
-                alt: "POER Commercial load bed detail",
+                url: "/media/vehicles/poer-facelift/04_feature_detail.webp",
+                alt: "POER Facelift feature detail",
+              },
+            },
+            {
+              caption: "LED headlights & fog lights, front and rear",
+              placeholder: "Photo: LED lighting detail",
+              media: {
+                url: "/media/vehicles/poer-facelift/05_rear_side_profile.webp",
+                alt: "POER Facelift rear lighting detail",
               },
             },
           ],
           interior: [
             {
-              caption: "12.3-inch Coffee OS touchscreen",
+              caption: "12.3-inch multitouch screen",
               placeholder: "Photo: infotainment screen detail",
               media: {
-                url: "/media/vehicles/poer-commercial/03_interior_cockpit.webp",
-                alt: "POER Commercial interior cockpit",
+                url: "/media/vehicles/poer-facelift/03_interior_cockpit.webp",
+                alt: "POER Facelift interior cockpit",
               },
             },
             {
-              caption: "Durable wear-resistant upholstery",
-              placeholder: "Photo: seat upholstery detail",
+              caption: "Apple CarPlay & Android Auto",
+              placeholder: "Photo: CarPlay screen detail",
             },
             {
-              caption: "Double-cab rear bench seating",
-              placeholder: "Photo: rear bench detail",
+              caption: "6-speaker audio system",
+              placeholder: "Photo: speaker detail",
             },
           ],
         },
         spinCaption:
-          "Drag to spin the Poer Commercial, or use the slider to explore every angle.",
+          "Drag to spin the POER Facelift, or use the slider to explore every angle.",
         safety: {
-          title: "Engineered to Protect",
+          title: "Advanced Stability and Control",
           tabs: ["Airbags", "Intelligent Driving", "Body Structure"],
-          placeholder: "Photo: Poer Commercial safety X-ray diagram",
-          caption: "6-airbag protection",
+          placeholder: "Photo: POER Facelift safety systems",
+          caption: "Lane change assist and a 360° omniview camera system",
           features: [
-            {
-              title: "Dual front airbags",
-              summary: "Comprehensive airbag array whether every occupant is seated.",
-            },
-            {
-              title: "Front seat side airbags",
-              summary: "Dual front side airbags for the driver and passenger.",
-            },
-            {
-              title: "Full-height side curtains",
-              summary: "Extended coverage across both rows of seating.",
-            },
-            {
-              title: "Reinforced cabin frame",
-              summary: "A high-strength steel cabin cell for cab intrusion protection.",
-            },
+            { title: "Lane Change Assist (LCA)" },
+            { title: "Cruise Control System (CCS)" },
+            { title: "360° Camera – Omniview System" },
+            { title: "Traffic Sign Recognition (TSR)" },
           ],
         },
         colors: [
@@ -643,26 +641,190 @@ const content = {
           { name: "White", value: "#ffffff" },
           { name: "Blue Gray", value: "#27313f" },
         ],
-        colorPlaceholder: "Photo: Poer Commercial in selected colour, studio",
-        trims: [
-          { name: "Standard", price: "AED 99,900", featured: false },
+        colorPlaceholder: "Photo: POER Facelift in selected colour, studio",
+        pricing: [
           {
-            name: "Business",
-            price: "AED 109,900",
-            featured: true,
-            note: "Most popular",
+            trim: "FL LUX Diesel 2.0T",
+            price: "88,900",
+            vat: "13,335",
+            priceWithVat: "102,235",
           },
-          { name: "Fleet", price: "AED 94,900", featured: false, note: "Volume pricing" },
+          { trim: "FL LUX IND", price: "93,900", vat: "14,085", priceWithVat: "107,985" },
+          { trim: "FL S-LUX IND", price: "99,900", vat: "14,985", priceWithVat: "114,885" },
+        ],
+        pricingNote:
+          "*Full specifications, models and options are available in the specifications brochure. Prices displayed are in SAR.",
+        warranty: [
+          "6 years or 150,000 km, whichever comes first (excludes wear-and-tear parts)",
         ],
         continueLabel: "Continue",
         specs: [
-          { label: "Engine & Performance", value: "2.0T Turbo Diesel" },
-          { label: "Max Power", value: "184 PS @ 3,600 rpm" },
-          { label: "Max Torque", value: "480 Nm @ 1,500–2,500 rpm" },
-          { label: "Transmission", value: "8-Speed Automatic" },
-          { label: "Drivetrain", value: "Selectable 4WD" },
-          { label: "Body", value: "Double cab pickup" },
-          { label: "Dimensions", value: "5,410 × 1,997 × 1,872 mm" },
+          {
+            trimName: "POER FL S-Luxury Diesel",
+            rows: [
+              { label: "Engine", value: "2.4L Turbo 4-Cylinder Diesel" },
+              { label: "HP and Torque", value: "181 HP / 480 Nm" },
+              { label: "Transmission", value: "9-Speed Automatic" },
+              { label: "Fuel Consumption", value: "13.3 km/L" },
+              { label: "Drive Mode", value: "4WD" },
+            ],
+          },
+          {
+            trimName: "POER FL Luxury Diesel",
+            rows: [
+              { label: "Engine", value: "2.0L Turbo 4-Cylinder Diesel" },
+              { label: "HP and Torque", value: "160 HP / 400 Nm" },
+              { label: "Transmission", value: "8-Speed ZF Automatic" },
+              { label: "Fuel Consumption", value: "13.5 km/L" },
+              { label: "Drive Mode", value: "4WD" },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "wingle-7",
+        brand: "POER",
+        model: "Wingle 7",
+        bodyType: "Pickup",
+        powertrain: "Petrol/Diesel",
+        priceLabel: "Starting from SAR 58,000",
+        summary:
+          "A versatile pickup balancing work-ready toughness with more modern cabin comfort and daily usability.",
+        heroPlaceholder: "Photo: Wingle 7 exterior hero shot",
+        heroMedia: {
+          url: "/media/vehicles/wingle-7/01_hero_exterior.webp",
+          alt: "Wingle 7 exterior hero shot",
+        },
+        quickStats: [
+          { value: "Pick-Up", unit: "", label: "Segment" },
+          { value: "4-Cylinder", unit: "", label: "Engine" },
+          { value: "225", unit: "Nm", label: "Torque" },
+          { value: "5-Speed", unit: "MT", label: "Transmission" },
+        ],
+        whyCards: [
+          {
+            title: "Built for Every Condition",
+            summary:
+              "Standard, Sport, Economy and Snow drive modes adapt to the road ahead, with petrol and diesel options available.",
+            placeholder: "Photo: Wingle 7 on the move",
+            media: {
+              url: "/media/vehicles/wingle-7/02_exterior_lifestyle.webp",
+              alt: "Wingle 7 exterior lifestyle shot",
+            },
+          },
+          {
+            title: "Immersive Audio Experience",
+            summary:
+              "A 6-speaker sound system delivers rich, clear audio, turning every trip into a mobile concert hall.",
+            placeholder: "Photo: Wingle 7 cabin dashboard",
+            media: {
+              url: "/media/vehicles/wingle-7/03_interior_cockpit.webp",
+              alt: "Wingle 7 interior cockpit",
+            },
+          },
+          {
+            title: "Advanced Stability and Control",
+            summary:
+              "An electronic stability program automatically reduces traction loss to help keep you in control.",
+            placeholder: "Photo: Wingle 7 rear three-quarter",
+            media: {
+              url: "/media/vehicles/wingle-7/05_rear_side_profile.webp",
+              alt: "Wingle 7 rear side profile",
+            },
+          },
+        ],
+        featureBanner: {
+          tabs: ["Safety", "Interior", "Exterior"],
+          title: "Immersive Audio Experience",
+          description:
+            "Enjoy superior sound quality with the Wingle 7's 6-speaker audio system, delivering rich, clear audio on every journey.",
+          stat: { value: "6", label: "Speaker audio system" },
+          placeholder: "Photo: Wingle 7 technology feature",
+          media: {
+            url: "/media/vehicles/wingle-7/04_feature_detail.webp",
+            alt: "Wingle 7 technology feature",
+          },
+        },
+        details: {
+          exterior: [
+            {
+              caption: "16-inch alloy wheels",
+              placeholder: "Photo: alloy wheel detail",
+              media: {
+                url: "/media/vehicles/wingle-7/01_hero_exterior.webp",
+                alt: "Wingle 7 front exterior detail",
+              },
+            },
+          ],
+          interior: [
+            {
+              caption: "6-speaker audio system",
+              placeholder: "Photo: speaker detail",
+              media: {
+                url: "/media/vehicles/wingle-7/03_interior_cockpit.webp",
+                alt: "Wingle 7 interior cockpit",
+              },
+            },
+            {
+              caption: "Dust filter",
+              placeholder: "Photo: cabin air filter detail",
+            },
+          ],
+        },
+        spinCaption: "Drag to spin the Wingle 7, or use the slider to explore every angle.",
+        safety: {
+          title: "Advanced Stability and Control",
+          tabs: ["Stability", "Monitoring", "Visibility"],
+          placeholder: "Photo: Wingle 7 safety systems",
+          caption: "Electronic stability program with a reverse camera",
+          features: [
+            { title: "Electronic Stability Program" },
+            { title: "Tire Pressure Monitoring System" },
+            { title: "Reverse Camera" },
+          ],
+        },
+        colors: [
+          { name: "Black", value: "#050506" },
+          { name: "Silver", value: "#a7abb2" },
+          { name: "White", value: "#ffffff" },
+        ],
+        colorPlaceholder: "Photo: Wingle 7 in selected colour, studio",
+        pricing: [
+          { trim: "FL LUX Diesel", price: "58,000", vat: "8,700", priceWithVat: "66,700" },
+          {
+            trim: "FL LUX Diesel 4x4",
+            price: "63,000",
+            vat: "9,540",
+            priceWithVat: "72,450",
+          },
+        ],
+        pricingNote:
+          "*Full specifications, models and options are available in the specifications brochure. Prices displayed are in SAR.",
+        warranty: [
+          "6 years or 150,000 km, whichever comes first (excludes wear-and-tear parts)",
+        ],
+        continueLabel: "Continue",
+        specs: [
+          {
+            trimName: "FL LUX Diesel",
+            rows: [
+              { label: "Engine", value: "2.0L Turbo 4-Cylinder Diesel" },
+              { label: "HP and Torque", value: "134 HP / 300 Nm" },
+              { label: "Transmission", value: "6-Speed Manual" },
+              { label: "Fuel Consumption", value: "14.9 km/L" },
+              { label: "Drive Mode", value: "4WD" },
+            ],
+          },
+          {
+            trimName: "FL LUX Diesel 4x4",
+            rows: [
+              { label: "Engine", value: "2.0L Turbo 4-Cylinder Diesel" },
+              { label: "HP and Torque", value: "134 HP / 300 Nm" },
+              { label: "Transmission", value: "6-Speed Manual" },
+              { label: "Fuel Consumption", value: "15.3 km/L" },
+              { label: "Drive Mode", value: "RWD" },
+            ],
+          },
         ],
       },
     ],
@@ -950,135 +1112,135 @@ const content = {
     home: getFallbackHomeContent("ar"),
     vehicles: [
       {
-        slug: "haval-h6-hev",
+        slug: "all-new-h6",
         brand: "هافال",
-        model: "H6 HEV",
+        model: "All-New H6",
         bodyType: "SUV",
-        powertrain: "هايبرد",
-        priceLabel: "يبدأ من 109,900 درهم",
-        summary: "سيارة SUV هايبرد ذكية للعائلة والكفاءة اليومية والسفر الإقليمي بثقة.",
-        heroPlaceholder: "صورة: هافال H6 HEV، لقطة حركة",
+        powertrain: "بنزين",
+        priceLabel: "يبدأ من 89,900 ريال",
+        summary:
+          "سيارة SUV عائلية متعددة الاستخدامات تجمع بين التصميم العصري والمساعدة الذكية والراحة في الرحلات الطويلة.",
+        heroPlaceholder: "صورة: هافال H6 الجديدة كليًا، لقطة خارجية",
         heroMedia: {
-          url: "/media/product-hero.png",
-          alt: "هافال H6 HEV على طريق صحراوي وقت الغروب",
+          url: "/media/vehicles/all-new-h6/01_hero_exterior.webp",
+          alt: "صورة خارجية لهافال H6 الجديدة كليًا",
         },
         spin360: {
           frames: buildSpinFrames("haval-h6-hev", "HAVAL_h6-hev_MY26_EXT360"),
-          alt: "منظور دوراني 360 درجة للمظهر الخارجي لهافال H6 HEV",
+          alt: "منظور دوراني 360 درجة لهافال H6 الجديدة كليًا",
         },
         quickStats: [
-          { value: "245", unit: "حصان", label: "القوة المجمعة" },
-          { value: "530", unit: "كم", label: "مدى الهايبرد" },
-          { value: "5.4", unit: "لتر/100كم", label: "كفاءة الوقود" },
-          { value: "5", unit: "مقاعد", label: "مقصورة عائلية" },
+          { value: "SUV", unit: "", label: "النوع" },
+          { value: "2.0T", unit: "235 حصان", label: "المحرك" },
+          { value: "385", unit: "نيوتن متر", label: "عزم الدوران" },
+          { value: "9DCT", unit: "", label: "ناقل الحركة" },
         ],
         whyCards: [
           {
-            title: "لكل تنقلاتك اليومية",
-            summary: "ضبط هايبرد ذكي لقيادة سلسة داخل المدينة وعلى الطرق السريعة.",
-            placeholder: "صورة: H6 HEV قيادة في المدينة",
+            title: "هندسة تمنحك الثقة",
+            summary:
+              "عرض معلومات على الزجاج الأمامي (HUD)، ورؤية بانورامية بزاوية 540°، ونظام قيادة ذكي بأكثر من 18 وظيفة مساعدة، على هيكل مصنوع بنسبة 71% من الفولاذ عالي الصلابة.",
+            placeholder: "صورة: تقنيات سلامة هافال H6 الجديدة",
             media: {
-              url: "/media/vehicles/haval-h6-hev/02_exterior_lifestyle.webp",
-              alt: "لقطة نمط حياة لهافال H6 HEV",
+              url: "/media/vehicles/all-new-h6/02_exterior_lifestyle.webp",
+              alt: "لقطة نمط حياة لهافال H6 الجديدة كليًا",
             },
           },
           {
             title: "مقصورة تستحق",
-            summary: "شاشة 14.6 بوصة، تطبيقات متصلة، ومواد مقصورة هادئة.",
-            placeholder: "صورة: H6 HEV لوحة القيادة",
+            summary:
+              "شاشة وسطية 14.6 بوصة، تبريد للمقاعد، شنطة متعددة الاستخدامات، وتوافق لاسلكي مع Apple CarPlay وAndroid Auto.",
+            placeholder: "صورة: مقصورة هافال H6 الجديدة",
             media: {
-              url: "/media/vehicles/haval-h6-hev/03_interior_cockpit.webp",
-              alt: "مقصورة قيادة هافال H6 HEV",
+              url: "/media/vehicles/all-new-h6/03_interior_cockpit.webp",
+              alt: "مقصورة قيادة هافال H6 الجديدة كليًا",
             },
           },
           {
             title: "ثقة بالتصميم",
-            summary: "حضور عريض ومنظومة مساعدة سائق لراحة بال العائلة.",
-            placeholder: "صورة: H6 HEV خلفية جانبية",
+            summary:
+              "فتحة سقف بانورامية، أضواء نهارية عالية السطوع، وعجلات ألمنيوم مقاس 19 إنش.",
+            placeholder: "صورة: هافال H6 الجديدة من الخلف",
             media: {
-              url: "/media/vehicles/haval-h6-hev/05_rear_side_profile.webp",
-              alt: "الجانب الخلفي لهافال H6 HEV",
+              url: "/media/vehicles/all-new-h6/05_rear_side_profile.webp",
+              alt: "الجانب الخلفي لهافال H6 الجديدة كليًا",
             },
           },
         ],
         featureBanner: {
-          tabs: ["منظومة الهايبرد", "منظومة السلامة", "Coffee OS", "الكفاءة"],
-          title: "دفع هايبرد ذكي",
+          tabs: ["السلامة", "التصميم الداخلي", "المظهر الخارجي"],
+          title: "ابتكار ذكي بين يديك",
           description:
-            "بتنسيق المحرك والمحرك الكهربائي، يجمع H6 HEV بين قوة سلسة وكفاءة يومية.",
-          stat: { value: "5.4 لتر", label: "استهلاك الوقود لكل 100 كم" },
-          placeholder: "صورة: منظومة الهايبرد في H6 HEV",
+            "صُمّمت HAVAL H6 لتُعيد تعريف مفهوم القيادة العصرية، من خلال شاشة وسطية بقياس 14.6 بوصة وعرض معلومات على الزجاج الأمامي (HUD) ورؤية بانورامية بزاوية 540° وتحكم صوتي بدون الحاجة إلى اتصال.",
+          stat: { value: "14.6 بوصة", label: "شاشة وسطية" },
+          placeholder: "صورة: ميزة تقنية هافال H6 الجديدة",
           media: {
-            url: "/media/vehicles/haval-h6-hev/04_feature_detail.webp",
-            alt: "ميزة نظام الهايبرد لهافال H6 HEV",
+            url: "/media/vehicles/all-new-h6/04_feature_detail.webp",
+            alt: "ميزة تقنية لهافال H6 الجديدة كليًا",
           },
         },
         details: {
           exterior: [
             {
-              caption: "مصابيح LED كاملة وشبك أمامي مميز",
-              placeholder: "صورة: تفاصيل الشبك الأمامي",
+              caption: "فتحة سقف بانورامية",
+              placeholder: "صورة: تفاصيل فتحة السقف",
               media: {
-                url: "/media/vehicles/haval-h6-hev/01_hero_exterior.webp",
-                alt: "تفاصيل المظهر الأمامي لهافال H6 HEV",
+                url: "/media/vehicles/all-new-h6/01_hero_exterior.webp",
+                alt: "تفاصيل المظهر الأمامي لهافال H6 الجديدة كليًا",
               },
             },
             {
-              caption: "جنوط سبيكة مشغولة 18 بوصة",
+              caption: "أضواء نهارية عالية السطوع",
+              placeholder: "صورة: تفاصيل الإضاءة النهارية",
+              media: {
+                url: "/media/vehicles/all-new-h6/02_exterior_lifestyle.webp",
+                alt: "لقطة نمط حياة لهافال H6 الجديدة كليًا",
+              },
+            },
+            {
+              caption: "عجلات ألمنيوم مقاس 19 إنش",
               placeholder: "صورة: تفاصيل الجنط",
               media: {
-                url: "/media/vehicles/haval-h6-hev/04_feature_detail.webp",
-                alt: "تفاصيل ميزة هافال H6 HEV",
-              },
-            },
-            {
-              caption: "لمسات تصميم عند الباب الخلفي",
-              placeholder: "صورة: تفاصيل الباب الخلفي",
-              media: {
-                url: "/media/vehicles/haval-h6-hev/05_rear_side_profile.webp",
-                alt: "تفاصيل الباب الخلفي لهافال H6 HEV",
+                url: "/media/vehicles/all-new-h6/05_rear_side_profile.webp",
+                alt: "تفاصيل جنط هافال H6 الجديدة كليًا",
               },
             },
           ],
           interior: [
             {
-              caption: "شاشة Coffee OS بحجم 14.6 بوصة",
+              caption: "شاشة وسطية 14.6 بوصة",
               placeholder: "صورة: تفاصيل شاشة المعلومات",
               media: {
-                url: "/media/vehicles/haval-h6-hev/03_interior_cockpit.webp",
-                alt: "مقصورة قيادة هافال H6 HEV",
+                url: "/media/vehicles/all-new-h6/03_interior_cockpit.webp",
+                alt: "مقصورة قيادة هافال H6 الجديدة كليًا",
               },
             },
             {
-              caption: "مقاعد أمامية مدفأة ومهواة",
-              placeholder: "صورة: تفاصيل المقعد الأمامي",
+              caption: "شنطة متعددة الاستخدامات",
+              placeholder: "صورة: تفاصيل الشنطة",
+              media: {
+                url: "/media/vehicles/all-new-h6/04_feature_detail.webp",
+                alt: "ميزة هافال H6 الجديدة كليًا",
+              },
             },
             {
-              caption: "وحدة تحكم مناخ مزدوجة المنطقة",
-              placeholder: "صورة: تفاصيل وحدة التحكم",
+              caption: "تبريد مقاعد",
+              placeholder: "صورة: تفاصيل تبريد المقاعد",
             },
           ],
         },
-        spinCaption: "اسحب لتدوير H6 HEV، أو استخدم الشريط لاستكشاف كل زاوية.",
+        spinCaption:
+          "اسحب لتدوير هافال H6 الجديدة كليًا، أو استخدم الشريط لاستكشاف كل زاوية.",
         safety: {
-          title: "مصممة للحماية",
+          title: "حماية متقدمة وثقة ذكية",
           tabs: ["الوسائد الهوائية", "القيادة الذكية", "هيكل السيارة"],
-          placeholder: "صورة: مخطط أشعة السلامة لـ H6 HEV",
-          caption: "حماية بـ 7 وسائد هوائية",
+          placeholder: "صورة: أنظمة سلامة هافال H6 الجديدة",
+          caption: "6 وسائد هوائية على هيكل 71% فولاذ عالي الصلابة",
           features: [
-            { title: "وسادتان أماميتان", summary: "منظومة وسائد شاملة لكل راكب." },
-            {
-              title: "وسائد جانبية أمامية",
-              summary: "وسائد جانبية أمامية وستائر جانبية كاملة الطول.",
-            },
-            {
-              title: "ستائر جانبية كاملة الارتفاع",
-              summary: "تغطية ممتدة عبر جميع صفوف المقاعد.",
-            },
-            {
-              title: "وسادة ركبة السائق",
-              summary: "حماية إضافية للجزء السفلي من جسم السائق.",
-            },
+            { title: "عرض معلومات على الزجاج الأمامي (HUD)" },
+            { title: "رؤية بانورامية بزاوية 540°" },
+            { title: "نظام قيادة ذكي بأكثر من 18 وظيفة مساعدة" },
+            { title: "هيكل فائق الصلابة بنسبة 71% فولاذ" },
           ],
         },
         colors: [
@@ -1087,26 +1249,28 @@ const content = {
           { name: "جرافيت", value: "#343946" },
           { name: "أحمر", value: "#d50032" },
         ],
-        colorPlaceholder: "صورة: H6 HEV باللون المختار، استوديو",
-        trims: [
-          { name: "Elite", price: "109,900 درهم", featured: false },
-          {
-            name: "Premium",
-            price: "119,900 درهم",
-            featured: true,
-            note: "الأكثر طلباً",
-          },
-          { name: "Ultra", price: "129,900 درهم", featured: false },
+        colorPlaceholder: "صورة: هافال H6 الجديدة كليًا باللون المختار، استوديو",
+        pricing: [
+          { trim: "Active", price: "78,174", vat: "11,726", priceWithVat: "89,900" },
+          { trim: "Premium", price: "86,000", vat: "12,900", priceWithVat: "98,900" },
+        ],
+        pricingNote:
+          "*المواصفات الكاملة للمركبة، والموديلات، والخيارات متوفرة في كتيب المواصفات. الأسعار المعروضة بالريال السعودي.",
+        warranty: [
+          "10 سنوات مفتوح الكيلومترات للمحرك وناقل الحركة فقط",
+          "6 سنوات أو 200 ألف كيلومتر أيهما أسبق على كامل السيارة ما عدا القطع الاستهلاكية",
         ],
         continueLabel: "متابعة",
         specs: [
-          { label: "المحرك والأداء", value: "1.5T هايبرد" },
-          { label: "أقصى قوة", value: "245 حصان" },
-          { label: "أقصى عزم", value: "530 نيوتن متر مجمع" },
-          { label: "ناقل الحركة", value: "DHT بسرعتين" },
-          { label: "نظام الدفع", value: "دفع أمامي" },
-          { label: "الفئة", value: "SUV بخمسة مقاعد" },
-          { label: "الأبعاد", value: "4,653 × 1,886 × 1,730 مم" },
+          {
+            rows: [
+              { label: "المحرك", value: "2.0 لتر / 4 سلندر توربو" },
+              { label: "القدرة الحصانية والعزم", value: "234 حصان / 385 نيوتن متر" },
+              { label: "ناقل الحركة", value: "9 سرعات مزدوج الكلاتش (9DCT)" },
+              { label: "استهلاك الوقود", value: "16.9 كم/لتر" },
+              { label: "نظام القيادة", value: "دفع أمامي" },
+            ],
+          },
         ],
       },
       {
@@ -1115,10 +1279,10 @@ const content = {
         model: "500",
         bodyType: "SUV",
         powertrain: "بنزين",
-        priceLabel: "يبدأ من 149,900 درهم",
+        priceLabel: "يبدأ من 158,900 ريال",
         summary:
-          "سيارة SUV فاخرة بهيكل قوي وراحة للمسافات الطويلة وقدرة جادة لجميع التضاريس.",
-        heroPlaceholder: "صورة: تانك 500، لقطة حركة صحراوية",
+          "سيارة SUV فاخرة كبيرة تجمع بين الراحة الفائقة والحضور القوي على الطريق وهندسة موثوقة للطرق الوعرة.",
+        heroPlaceholder: "صورة: تانك 500، لقطة خارجية",
         heroMedia: {
           url: "/media/vehicles/tank-500/01_hero_exterior.webp",
           alt: "لقطة المظهر الخارجي الرئيسية لتانك 500",
@@ -1128,16 +1292,17 @@ const content = {
           alt: "منظور دوراني 360 درجة للمظهر الخارجي لتانك 500",
         },
         quickStats: [
-          { value: "354", unit: "حصان", label: "قوة توين توربو" },
-          { value: "480", unit: "نيوتن متر", label: "أقصى عزم" },
-          { value: "700", unit: "كم", label: "مدى الرحلات" },
-          { value: "33", unit: "°", label: "زاوية الاقتراب" },
+          { value: "SUV", unit: "", label: "النوع" },
+          { value: "3.0", unit: "لتر", label: "المحرك" },
+          { value: "500", unit: "نيوتن متر", label: "عزم الدوران" },
+          { value: "9AT", unit: "", label: "ناقل الحركة" },
         ],
         whyCards: [
           {
-            title: "لكل التضاريس",
-            summary: "أنماط تضاريس قابلة للاختيار وقفل تفاضلي مركزي لتحكم وعر جاد.",
-            placeholder: "صورة: تانك 500 تسلق وعر",
+            title: "ناقل حركة أوتوماتيكي سلس بـ9 سرعات",
+            summary:
+              "تبديلات تروس دقيقة وتوصيل مثالي للطاقة لتجربة أكثر هدوءًا وكفاءة، على الطريق السريع أو داخل المدينة.",
+            placeholder: "صورة: تانك 500 على الطريق",
             media: {
               url: "/media/vehicles/tank-500/02_exterior_lifestyle.webp",
               alt: "لقطة نمط حياة لتانك 500",
@@ -1145,7 +1310,8 @@ const content = {
           },
           {
             title: "مقصورة تستحق",
-            summary: "شاشتان بحجم 12.3 بوصة، مقاعد جلد نابا، وسقف بانورامي كامل.",
+            summary:
+              "شاحن لاسلكي، مقاعد جلدية، شاشة 14.6 بوصة، وميزة تدليك للمقاعد الأمامية.",
             placeholder: "صورة: تانك 500 لوحة القيادة",
             media: {
               url: "/media/vehicles/tank-500/03_interior_cockpit.webp",
@@ -1153,8 +1319,9 @@ const content = {
             },
           },
           {
-            title: "تصميم أيقوني",
-            summary: "هيكل مربع بطابع كلاسيكي حديث مع إطار احتياطي على الباب الخلفي.",
+            title: "ثقة بالتصميم",
+            summary:
+              "كاميرا محيطية 360 درجة، مساعد الحفاظ على المسار، وتنبيه النقاط العمياء يدعمان حضورًا قويًا على الطريق.",
             placeholder: "صورة: تانك 500 خلفية جانبية",
             media: {
               url: "/media/vehicles/tank-500/05_rear_side_profile.webp",
@@ -1163,80 +1330,70 @@ const content = {
           },
         ],
         featureBanner: {
-          tabs: ["دوران تانك", "Hi4-T هايبرد", "Coffee OS", "جميع التضاريس"],
-          title: "دوران تانك الذكي",
+          tabs: ["السلامة", "التصميم الداخلي", "المظهر الخارجي"],
+          title: "اتصال وترفيه متطور",
           description:
-            "بكبح العجلات بشكل مستقل، تدور TANK 500 حول محورها — لتحويل المنعطفات الضيقة والمسارات الوعرة إلى مناورات سهلة.",
-          stat: { value: "=0م", label: "نصف قطر الدوران أثناء الدحرجة" },
-          placeholder: "صورة: عرض دوران تانك",
+            "نظام الترفيه والمعلومات في Tank 500 يقدم مزيجاً سلساً من الاتصال والترفيه. استمتع بواجهة مستخدم بديهية، تكامل سهل مع الهواتف الذكية، وجودة صوت ممتازة.",
+          stat: { value: "9AT", label: "ناقل حركة أوتوماتيكي" },
+          placeholder: "صورة: ميزة تقنية تانك 500",
           media: {
             url: "/media/vehicles/tank-500/04_feature_detail.webp",
-            alt: "ميزة دوران تانك لتانك 500",
+            alt: "ميزة تقنية لتانك 500",
           },
         },
         details: {
           exterior: [
             {
-              caption: "مصابيح LED دائرية وشبك أمامي مميز",
-              placeholder: "صورة: تفاصيل الشبك الأمامي",
+              caption: "إضاءات LED أمامية وخلفية",
+              placeholder: "صورة: تفاصيل الإضاءة",
               media: {
                 url: "/media/vehicles/tank-500/01_hero_exterior.webp",
                 alt: "تفاصيل المظهر الأمامي لتانك 500",
               },
             },
             {
-              caption: "جنوط سبيكة 18 بوصة لجميع التضاريس",
-              placeholder: "صورة: تفاصيل الجنط",
+              caption: "فتحة سقف بانورامية",
+              placeholder: "صورة: تفاصيل فتحة السقف",
               media: {
                 url: "/media/vehicles/tank-500/04_feature_detail.webp",
                 alt: "تفاصيل ميزة تانك 500",
               },
             },
             {
-              caption: "إطار احتياطي على الباب الخلفي",
+              caption: "زجاج عازل للصوت",
               placeholder: "صورة: تفاصيل الباب الخلفي",
               media: {
                 url: "/media/vehicles/tank-500/05_rear_side_profile.webp",
-                alt: "تفاصيل الباب الخلفي لتانك 500",
+                alt: "تفاصيل الجانب الخلفي لتانك 500",
               },
             },
           ],
           interior: [
             {
-              caption: "شاشتان رقميتان 12.3 بوصة",
-              placeholder: "صورة: تفاصيل الشاشة",
+              caption: "شاحن لاسلكي",
+              placeholder: "صورة: تفاصيل الشاحن اللاسلكي",
               media: {
                 url: "/media/vehicles/tank-500/03_interior_cockpit.webp",
                 alt: "مقصورة قيادة تانك 500",
               },
             },
-            { caption: "مقاعد جلد نابا مبطنة", placeholder: "صورة: تفاصيل خياطة المقعد" },
+            { caption: "مقاعد جلدية", placeholder: "صورة: تفاصيل المقاعد الجلدية" },
             {
-              caption: "سقف بانورامي كامل الطول",
-              placeholder: "صورة: تفاصيل السقف البانورامي",
+              caption: "شاشة وسطية 14.6 بوصة",
+              placeholder: "صورة: تفاصيل الشاشة الوسطية",
             },
           ],
         },
         spinCaption: "اسحب لتدوير TANK 500، أو استخدم الشريط لاستكشاف كل زاوية.",
         safety: {
-          title: "مصممة للحماية",
-          tabs: ["الوسائد الهوائية", "القيادة الذكية", "هيكل السيارة"],
-          placeholder: "صورة: مخطط أشعة السلامة لتانك 500",
-          caption: "حماية بـ 7 وسائد هوائية",
+          title: "مجموعة السلامة",
+          tabs: ["الكاميرا", "مساعد المسار", "النقطة العمياء"],
+          placeholder: "صورة: أنظمة سلامة تانك 500",
+          caption: "كاميرا محيطية 360 درجة، مساعد الحفاظ على المسار، وتنبيه النقاط العمياء",
           features: [
-            { title: "وسادتان أماميتان", summary: "منظومة وسائد شاملة لكل راكب." },
-            {
-              title: "وسائد جانبية أمامية",
-              summary: "وسائد جانبية أمامية وستائر جانبية كاملة الطول.",
-            },
-            {
-              title: "ستائر جانبية كاملة الارتفاع",
-              summary: "تغطية ممتدة عبر جميع صفوف المقاعد.",
-            },
-            {
-              title: "وسادة ركبة السائق",
-              summary: "حماية إضافية للجزء السفلي من جسم السائق.",
-            },
+            { title: "كاميرا محيطية 360 درجة" },
+            { title: "مساعد الحفاظ على المسار" },
+            { title: "تنبيه النقاط العمياء" },
           ],
         },
         colors: [
@@ -1246,156 +1403,164 @@ const content = {
           { name: "أبيض", value: "#ffffff" },
         ],
         colorPlaceholder: "صورة: تانك 500 باللون المختار، استوديو",
-        trims: [
-          { name: "Adventure", price: "149,900 درهم", featured: false },
-          { name: "Lux", price: "164,900 درهم", featured: true, note: "الأكثر طلباً" },
-          { name: "Ultra", price: "178,900 درهم", featured: false },
+        pricing: [
+          { trim: "Rock Elite", price: "192,900", vat: "28,935", priceWithVat: "221,835" },
+          { trim: "Elite Urban", price: "188,900", vat: "28,335", priceWithVat: "217,235" },
+          {
+            trim: "Business Urban",
+            price: "158,900",
+            vat: "23,835",
+            priceWithVat: "182,735",
+          },
+          { trim: "Business", price: "158,900", vat: "23,835", priceWithVat: "182,735" },
+        ],
+        pricingNote:
+          "*المواصفات الكاملة للمركبة، والموديلات، والخيارات متوفرة في كتيب المواصفات. الأسعار المعروضة بالريال السعودي.",
+        warranty: [
+          "10 سنوات أو 1,000,000 كيلومتر أيهما أسبق للمحرك وناقل الحركة فقط",
+          "6 سنوات أو 200 ألف كيلومتر أيهما أسبق على كامل السيارة ما عدا القطع الاستهلاكية",
         ],
         continueLabel: "متابعة",
         specs: [
-          { label: "المحرك والأداء", value: "3.0T بنزين توربو" },
-          { label: "أقصى قوة", value: "354 حصان عند 5,500 دورة" },
-          { label: "أقصى عزم", value: "480 نيوتن متر عند 1,800–5,000 دورة" },
-          { label: "ناقل الحركة", value: "أوتوماتيك 9 سرعات" },
-          { label: "نظام الدفع", value: "دفع رباعي قابل للاختيار" },
-          { label: "قدرة الطرق الوعرة", value: "قفل تفاضلي مركزي وخلفي" },
-          { label: "الأبعاد", value: "5,078 × 1,934 × 1,905 مم" },
+          {
+            rows: [
+              { label: "المحرك", value: "3.0 لتر / 6 سلندر توربو" },
+              { label: "القدرة الحصانية والعزم", value: "348 حصان / 500 نيوتن متر" },
+              { label: "ناقل الحركة", value: "أوتوماتيكي 9 سرعات (9AT)" },
+              { label: "استهلاك الوقود", value: "11.9 كم/لتر" },
+              { label: "نظام القيادة", value: "دفع رباعي" },
+            ],
+          },
         ],
       },
       {
-        slug: "poer-commercial",
+        slug: "poer-facelift",
         brand: "بوير",
-        model: "Commercial",
+        model: "Facelift",
         bodyType: "بيك أب",
         powertrain: "ديزل",
-        priceLabel: "يبدأ من 99,900 درهم",
+        priceLabel: "يبدأ من 88,900 ريال",
         summary:
-          "بيك أب متينة للأعمال والاستخدام اليومي مع الراحة المتوقعة من مقصورة حديثة.",
-        heroPlaceholder: "صورة: بوير Commercial، لقطة حركة في موقع عمل",
+          "بيك أب فاخر يجمع بين متطلبات العمل والعائلة والمغامرة، مع قدرات قوية وتقنيات اتصال داخل المقصورة.",
+        heroPlaceholder: "صورة: بوير Facelift، لقطة خارجية",
         heroMedia: {
-          url: "/media/vehicles/poer-commercial/01_hero_exterior.webp",
-          alt: "لقطة المظهر الخارجي الرئيسية لبوير 2.4T Commercial",
+          url: "/media/vehicles/poer-facelift/01_hero_exterior.webp",
+          alt: "لقطة المظهر الخارجي الرئيسية لبوير Facelift",
         },
         spin360: {
           frames: buildSpinFrames(
             "poer-commercial",
             "POER_poer-2-4t-commercial_MY26_EXT360",
           ),
-          alt: "منظور دوراني 360 درجة للمظهر الخارجي لبوير Commercial",
+          alt: "منظور دوراني 360 درجة للمظهر الخارجي لبوير Facelift",
         },
         quickStats: [
-          { value: "184", unit: "حصان", label: "قوة الديزل" },
-          { value: "480", unit: "نيوتن متر", label: "أقصى عزم" },
-          { value: "1,000", unit: "كجم", label: "الحمولة القصوى" },
-          { value: "3,500", unit: "كجم", label: "قدرة السحب" },
+          { value: "بيك أب", unit: "", label: "النوع" },
+          { value: "2.4T", unit: "", label: "المحرك" },
+          { value: "480", unit: "نيوتن متر", label: "عزم الدوران" },
+          { value: "9 سرعات", unit: "أوتوماتيكي", label: "ناقل الحركة" },
         ],
         whyCards: [
           {
-            title: "لكل مهمة عمل",
-            summary: "هيكل مقوّى من نوع السلم مصنف لتحمل أحمال يومية ثقيلة.",
-            placeholder: "صورة: بوير Commercial محملة",
+            title: "أداء استثنائي",
+            summary:
+              "محرك الديزل الجديد 2.4T يقترن بناقل حركة أوتوماتيكي بـ9 سرعات لتسارع سلس وتحكم واثق على التضاريس الوعرة.",
+            placeholder: "صورة: بوير Facelift على الطريق",
             media: {
-              url: "/media/vehicles/poer-commercial/02_exterior_lifestyle.webp",
-              alt: "لقطة نمط حياة لبوير Commercial",
+              url: "/media/vehicles/poer-facelift/02_exterior_lifestyle.webp",
+              alt: "لقطة نمط حياة لبوير Facelift",
             },
           },
           {
-            title: "مقصورة تستحق",
-            summary: "شاشة 12.3 بوصة، تشطيبات متينة، ومقاعد مريحة للورديات الطويلة.",
-            placeholder: "صورة: بوير Commercial لوحة القيادة",
+            title: "قيادة ذكية ومريحة",
+            summary:
+              "مقصورة واسعة بمقاعد جلدية، شاشة وسطية 12.3 إنش تدعم Apple CarPlay وAndroid Auto، ولوحة عدادات رقمية 7 إنش.",
+            placeholder: "صورة: بوير Facelift لوحة القيادة",
             media: {
-              url: "/media/vehicles/poer-commercial/03_interior_cockpit.webp",
-              alt: "مقصورة قيادة بوير Commercial",
+              url: "/media/vehicles/poer-facelift/03_interior_cockpit.webp",
+              alt: "مقصورة قيادة بوير Facelift",
             },
           },
           {
-            title: "جاهزة للعمل بالتصميم",
-            summary: "مقصورة مزدوجة مع صندوق عريض ونقاط تثبيت مصنفة للحمولة.",
-            placeholder: "صورة: بوير Commercial خلفية جانبية",
+            title: "جاهزة للاستكشاف",
+            summary:
+              "إطارات 265/60 R18، مفتاح ذكي مع تشغيل عن بُعد، وإضاءة LED كاملة أمامًا وخلفًا.",
+            placeholder: "صورة: بوير Facelift خلفية جانبية",
             media: {
-              url: "/media/vehicles/poer-commercial/05_rear_side_profile.webp",
-              alt: "الجانب الخلفي لبوير Commercial",
+              url: "/media/vehicles/poer-facelift/05_rear_side_profile.webp",
+              alt: "الجانب الخلفي لبوير Facelift",
             },
           },
         ],
         featureBanner: {
-          tabs: ["نظام الدفع الرباعي", "الحمولة", "Coffee OS", "المتانة"],
-          title: "مصممة لحمل المزيد",
+          tabs: ["مواصفات السلامة", "التصميم الداخلي", "المظهر الخارجي"],
+          title: "قيادة ذكية ومريحة",
           description:
-            "هيكل مقوّى، تعليق خلفي متعدد الوصلات، ودفع رباعي قابل للاختيار يبقيان بوير Commercial ثابتة تحت الأحمال الثقيلة وعلى الطرق غير الممهدة.",
-          stat: { value: "1,000كجم", label: "أقصى حمولة" },
-          placeholder: "صورة: عرض سحب بوير Commercial",
+            "استمتع بقيادة مريحة مع تكنولوجيا متقدمة. تتميز بمقصورة واسعة، ومقاعد من الجلد لضمان راحة قصوى في الرحلات الطويلة، مع شاشة وسطية للترفيه مقاس 12.3 إنش تدعم Apple CarPlay وAndroid Auto، ولوحة عدادات رقمية مقاس 7 إنش.",
+          stat: { value: "12.3 بوصة", label: "شاشة لمس" },
+          placeholder: "صورة: ميزة تقنية بوير Facelift",
           media: {
-            url: "/media/vehicles/poer-commercial/04_feature_detail.webp",
-            alt: "ميزة سحب بوير Commercial",
+            url: "/media/vehicles/poer-facelift/04_feature_detail.webp",
+            alt: "ميزة تقنية لبوير Facelift",
           },
         },
         details: {
           exterior: [
             {
-              caption: "مصابيح LED وشبك أمامي مميز",
-              placeholder: "صورة: تفاصيل الشبك الأمامي",
+              caption: "إطارات 265/60 R18",
+              placeholder: "صورة: تفاصيل الإطارات",
               media: {
-                url: "/media/vehicles/poer-commercial/01_hero_exterior.webp",
-                alt: "تفاصيل المظهر الأمامي لبوير Commercial",
+                url: "/media/vehicles/poer-facelift/01_hero_exterior.webp",
+                alt: "تفاصيل المظهر الأمامي لبوير Facelift",
               },
             },
             {
-              caption: "جنوط سبيكة 17 بوصة مصنفة للعمل",
-              placeholder: "صورة: تفاصيل الجنط",
+              caption: "مفتاح ذكي مع تشغيل عن بعد",
+              placeholder: "صورة: تفاصيل المفتاح الذكي",
               media: {
-                url: "/media/vehicles/poer-commercial/04_feature_detail.webp",
-                alt: "تفاصيل ميزة بوير Commercial",
+                url: "/media/vehicles/poer-facelift/04_feature_detail.webp",
+                alt: "تفاصيل ميزة بوير Facelift",
               },
             },
             {
-              caption: "صندوق حمولة مقوى ونقاط تثبيت",
-              placeholder: "صورة: تفاصيل صندوق الحمولة",
+              caption: "إضاءات LED وكشافات ضباب أمامية وخلفية",
+              placeholder: "صورة: تفاصيل الإضاءة",
               media: {
-                url: "/media/vehicles/poer-commercial/05_rear_side_profile.webp",
-                alt: "تفاصيل صندوق الحمولة لبوير Commercial",
+                url: "/media/vehicles/poer-facelift/05_rear_side_profile.webp",
+                alt: "تفاصيل إضاءة بوير Facelift",
               },
             },
           ],
           interior: [
             {
-              caption: "شاشة Coffee OS بحجم 12.3 بوصة",
+              caption: "شاشة لمس متعددة 12.3 إنش",
               placeholder: "صورة: تفاصيل شاشة المعلومات",
               media: {
-                url: "/media/vehicles/poer-commercial/03_interior_cockpit.webp",
-                alt: "مقصورة قيادة بوير Commercial",
+                url: "/media/vehicles/poer-facelift/03_interior_cockpit.webp",
+                alt: "مقصورة قيادة بوير Facelift",
               },
             },
             {
-              caption: "تنجيد متين مقاوم للتآكل",
-              placeholder: "صورة: تفاصيل تنجيد المقعد",
+              caption: "Apple CarPlay وAndroid Auto",
+              placeholder: "صورة: تفاصيل شاشة CarPlay",
             },
             {
-              caption: "مقاعد خلفية لمقصورة مزدوجة",
-              placeholder: "صورة: تفاصيل المقعد الخلفي",
+              caption: "نظام صوت بـ6 مكبرات",
+              placeholder: "صورة: تفاصيل مكبرات الصوت",
             },
           ],
         },
-        spinCaption: "اسحب لتدوير بوير Commercial، أو استخدم الشريط لاستكشاف كل زاوية.",
+        spinCaption: "اسحب لتدوير بوير Facelift، أو استخدم الشريط لاستكشاف كل زاوية.",
         safety: {
-          title: "مصممة للحماية",
+          title: "ثبات وتحكم متقدمان",
           tabs: ["الوسائد الهوائية", "القيادة الذكية", "هيكل السيارة"],
-          placeholder: "صورة: مخطط أشعة السلامة لبوير Commercial",
-          caption: "حماية بـ 6 وسائد هوائية",
+          placeholder: "صورة: أنظمة سلامة بوير Facelift",
+          caption: "مساعد تغيير المسار وكاميرا محيطية 360 درجة",
           features: [
-            { title: "وسادتان أماميتان", summary: "منظومة وسائد شاملة لكل راكب." },
-            {
-              title: "وسائد جانبية أمامية",
-              summary: "وسائد جانبية أمامية للسائق والراكب.",
-            },
-            {
-              title: "ستائر جانبية كاملة الارتفاع",
-              summary: "تغطية ممتدة عبر كلا صفي المقاعد.",
-            },
-            {
-              title: "هيكل مقصورة مقوى",
-              summary: "خلية مقصورة فولاذية عالية القوة للحماية من التصادم.",
-            },
+            { title: "مساعد تغيير المسار (LCA)" },
+            { title: "نظام تثبيت السرعة (CCS)" },
+            { title: "كاميرا 360 درجة – نظام Omniview" },
+            { title: "التعرف على إشارات المرور (TSR)" },
           ],
         },
         colors: [
@@ -1404,26 +1569,189 @@ const content = {
           { name: "أبيض", value: "#ffffff" },
           { name: "أزرق رمادي", value: "#27313f" },
         ],
-        colorPlaceholder: "صورة: بوير Commercial باللون المختار، استوديو",
-        trims: [
-          { name: "Standard", price: "99,900 درهم", featured: false },
+        colorPlaceholder: "صورة: بوير Facelift باللون المختار، استوديو",
+        pricing: [
           {
-            name: "Business",
-            price: "109,900 درهم",
-            featured: true,
-            note: "الأكثر طلباً",
+            trim: "FL LUX Diesel 2.0T",
+            price: "88,900",
+            vat: "13,335",
+            priceWithVat: "102,235",
           },
-          { name: "Fleet", price: "94,900 درهم", featured: false, note: "تسعير كميات" },
+          { trim: "FL LUX IND", price: "93,900", vat: "14,085", priceWithVat: "107,985" },
+          { trim: "FL S-LUX IND", price: "99,900", vat: "14,985", priceWithVat: "114,885" },
+        ],
+        pricingNote:
+          "*المواصفات الكاملة للمركبة، والموديلات، والخيارات متوفرة في كتيب المواصفات. الأسعار المعروضة بالريال السعودي.",
+        warranty: [
+          "6 سنوات أو 150 ألف كيلومتر أيهما أسبق على كامل السيارة ما عدا القطع الاستهلاكية",
         ],
         continueLabel: "متابعة",
         specs: [
-          { label: "المحرك والأداء", value: "2.0T ديزل توربو" },
-          { label: "أقصى قوة", value: "184 حصان عند 3,600 دورة" },
-          { label: "أقصى عزم", value: "480 نيوتن متر عند 1,500–2,500 دورة" },
-          { label: "ناقل الحركة", value: "أوتوماتيك 8 سرعات" },
-          { label: "نظام الدفع", value: "دفع رباعي قابل للاختيار" },
-          { label: "الفئة", value: "بيك أب مزدوجة المقصورة" },
-          { label: "الأبعاد", value: "5,410 × 1,997 × 1,872 مم" },
+          {
+            trimName: "POER FL S-Luxury Diesel",
+            rows: [
+              { label: "المحرك", value: "2.4 لتر توربو 4 سلندر ديزل" },
+              { label: "القدرة الحصانية والعزم", value: "181 حصان / 480 نيوتن متر" },
+              { label: "ناقل الحركة", value: "أوتوماتيكي 9 سرعات" },
+              { label: "استهلاك الوقود", value: "13.3 كم/لتر" },
+              { label: "نظام القيادة", value: "دفع رباعي" },
+            ],
+          },
+          {
+            trimName: "POER FL Luxury Diesel",
+            rows: [
+              { label: "المحرك", value: "2.0 لتر توربو 4 سلندر ديزل" },
+              { label: "القدرة الحصانية والعزم", value: "160 حصان / 400 نيوتن متر" },
+              { label: "ناقل الحركة", value: "ZF أوتوماتيكي 8 سرعات" },
+              { label: "استهلاك الوقود", value: "13.5 كم/لتر" },
+              { label: "نظام القيادة", value: "دفع رباعي" },
+            ],
+          },
+        ],
+      },
+      {
+        slug: "wingle-7",
+        brand: "بوير",
+        model: "Wingle 7",
+        bodyType: "بيك أب",
+        powertrain: "بنزين/ديزل",
+        priceLabel: "يبدأ من 58,000 ريال",
+        summary:
+          "بيك أب متعدد الاستخدامات يجمع بين الصلابة للعمل وراحة المقصورة العصرية وسهولة الاستخدام اليومي.",
+        heroPlaceholder: "صورة: Wingle 7، لقطة خارجية",
+        heroMedia: {
+          url: "/media/vehicles/wingle-7/01_hero_exterior.webp",
+          alt: "لقطة المظهر الخارجي الرئيسية لـ Wingle 7",
+        },
+        quickStats: [
+          { value: "بيك أب", unit: "", label: "النوع" },
+          { value: "4 سلندر", unit: "", label: "المحرك" },
+          { value: "225", unit: "نيوتن متر", label: "عزم الدوران" },
+          { value: "5 سرعات", unit: "يدوي", label: "ناقل الحركة" },
+        ],
+        whyCards: [
+          {
+            title: "لكل ظروف الطريق",
+            summary:
+              "أوضاع القيادة القياسية والرياضية والاقتصادية والثلجية تتكيف مع الطريق، مع توفر خياري البنزين والديزل.",
+            placeholder: "صورة: Wingle 7 على الطريق",
+            media: {
+              url: "/media/vehicles/wingle-7/02_exterior_lifestyle.webp",
+              alt: "لقطة نمط حياة لـ Wingle 7",
+            },
+          },
+          {
+            title: "تجربة صوت غامرة",
+            summary: "نظام صوت بـ6 مكبرات يمنحك صوتًا غنيًا وواضحًا في كل رحلة.",
+            placeholder: "صورة: Wingle 7 لوحة القيادة",
+            media: {
+              url: "/media/vehicles/wingle-7/03_interior_cockpit.webp",
+              alt: "مقصورة قيادة Wingle 7",
+            },
+          },
+          {
+            title: "ثبات وتحكم متقدمان",
+            summary:
+              "برنامج الثبات الإلكتروني يقلل تلقائيًا من فقدان الثبات ليبقيك متحكمًا في القيادة.",
+            placeholder: "صورة: Wingle 7 خلفية جانبية",
+            media: {
+              url: "/media/vehicles/wingle-7/05_rear_side_profile.webp",
+              alt: "الجانب الخلفي لـ Wingle 7",
+            },
+          },
+        ],
+        featureBanner: {
+          tabs: ["مواصفات السلامة", "التصميم الداخلي", "المظهر الخارجي"],
+          title: "تجربة صوت غامرة",
+          description:
+            "استمتع بجودة صوت متفوقة مع نظام صوت مكون من 6 مكبرات. يوفر صوتًا غنيًا وواضحًا، ويحوّل مركبتك إلى قاعة حفلات متنقلة.",
+          stat: { value: "6", label: "نظام صوت بمكبرات" },
+          placeholder: "صورة: ميزة تقنية Wingle 7",
+          media: {
+            url: "/media/vehicles/wingle-7/04_feature_detail.webp",
+            alt: "ميزة تقنية لـ Wingle 7",
+          },
+        },
+        details: {
+          exterior: [
+            {
+              caption: "عجلات سبيكة 16 بوصة",
+              placeholder: "صورة: تفاصيل الجنط",
+              media: {
+                url: "/media/vehicles/wingle-7/01_hero_exterior.webp",
+                alt: "تفاصيل المظهر الأمامي لـ Wingle 7",
+              },
+            },
+          ],
+          interior: [
+            {
+              caption: "نظام صوت بـ6 مكبرات",
+              placeholder: "صورة: تفاصيل مكبرات الصوت",
+              media: {
+                url: "/media/vehicles/wingle-7/03_interior_cockpit.webp",
+                alt: "مقصورة قيادة Wingle 7",
+              },
+            },
+            {
+              caption: "فلتر غبار",
+              placeholder: "صورة: تفاصيل فلتر الهواء",
+            },
+          ],
+        },
+        spinCaption: "اسحب لتدوير Wingle 7، أو استخدم الشريط لاستكشاف كل زاوية.",
+        safety: {
+          title: "ثبات وتحكم متقدمان",
+          tabs: ["الثبات", "المراقبة", "الرؤية"],
+          placeholder: "صورة: أنظمة سلامة Wingle 7",
+          caption: "برنامج ثبات إلكتروني مع كاميرا خلفية",
+          features: [
+            { title: "نظام الاستقرار الإلكتروني" },
+            { title: "نظام مراقبة ضغط الإطارات" },
+            { title: "كاميرا الرجوع للخلف" },
+          ],
+        },
+        colors: [
+          { name: "أسود", value: "#050506" },
+          { name: "فضي", value: "#a7abb2" },
+          { name: "أبيض", value: "#ffffff" },
+        ],
+        colorPlaceholder: "صورة: Wingle 7 باللون المختار، استوديو",
+        pricing: [
+          { trim: "FL LUX Diesel", price: "58,000", vat: "8,700", priceWithVat: "66,700" },
+          {
+            trim: "FL LUX Diesel 4x4",
+            price: "63,000",
+            vat: "9,540",
+            priceWithVat: "72,450",
+          },
+        ],
+        pricingNote:
+          "*المواصفات الكاملة للمركبة، والموديلات، والخيارات متوفرة في كتيب المواصفات. الأسعار المعروضة بالريال السعودي.",
+        warranty: [
+          "6 سنوات أو 150 ألف كيلومتر أيهما أسبق على كامل السيارة ما عدا القطع الاستهلاكية",
+        ],
+        continueLabel: "متابعة",
+        specs: [
+          {
+            trimName: "FL LUX Diesel",
+            rows: [
+              { label: "المحرك", value: "2.0 لتر توربو 4 سلندر ديزل" },
+              { label: "القدرة الحصانية والعزم", value: "134 حصان / 300 نيوتن متر" },
+              { label: "ناقل الحركة", value: "يدوي 6 سرعات" },
+              { label: "استهلاك الوقود", value: "14.9 كم/لتر" },
+              { label: "نظام القيادة", value: "دفع رباعي" },
+            ],
+          },
+          {
+            trimName: "FL LUX Diesel 4x4",
+            rows: [
+              { label: "المحرك", value: "2.0 لتر توربو 4 سلندر ديزل" },
+              { label: "القدرة الحصانية والعزم", value: "134 حصان / 300 نيوتن متر" },
+              { label: "ناقل الحركة", value: "يدوي 6 سرعات" },
+              { label: "استهلاك الوقود", value: "15.3 كم/لتر" },
+              { label: "نظام القيادة", value: "دفع خلفي" },
+            ],
+          },
         ],
       },
     ],
