@@ -31,7 +31,10 @@ export default async function AboutPage({ params }: AboutPageProps) {
         <div className="gwm-container">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {about.sections.map((section) => (
-              <article key={section.title} className="border border-gwm-line bg-gwm-panel p-5">
+              <article
+                key={section.title}
+                className="border border-gwm-line bg-gwm-panel p-5"
+              >
                 <h2 className="text-lg font-black text-white">{section.title}</h2>
                 <p className="gwm-copy mt-3 text-sm">{section.summary}</p>
               </article>

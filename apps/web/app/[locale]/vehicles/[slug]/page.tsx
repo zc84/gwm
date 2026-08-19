@@ -8,6 +8,7 @@ import {
 } from "../../../../lib/content/site";
 import {
   CtaBand,
+  Icon,
   PhotoPlaceholder,
   SectionHeading,
   SiteFooter,
@@ -69,7 +70,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <Link href={`/${locale}/forms`} className="gwm-button gwm-button-primary">
               {isRtl ? "احجز تجربة قيادة" : "Book a Test Drive"}
             </Link>
-            <Link href={`/${locale}/vehicles`} className="gwm-button gwm-button-secondary">
+            <Link
+              href={`/${locale}/vehicles`}
+              className="gwm-button gwm-button-secondary"
+            >
               + {isRtl ? "أضف للمقارنة" : "Add to Compare"}
             </Link>
           </div>
@@ -79,7 +83,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <section className="border-y border-gwm-line bg-gwm-panel">
         <div
           className="gwm-container grid gap-px bg-gwm-line"
-          style={{ gridTemplateColumns: `repeat(${vehicle.quickStats.length}, minmax(0, 1fr))` }}
+          style={{
+            gridTemplateColumns: `repeat(${vehicle.quickStats.length}, minmax(0, 1fr))`,
+          }}
         >
           {vehicle.quickStats.map((stat) => (
             <div key={stat.label} className="bg-gwm-panel px-4 py-6 text-center">
@@ -105,7 +111,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <article key={card.title}>
                 {card.media ? (
                   <div
-                    className="aspect-[4/3] bg-cover bg-center"
+                    className="aspect-[4/3] gwm-media-fade bg-cover bg-center"
                     role="img"
                     aria-label={card.media.alt}
                     style={{ backgroundImage: `url(${card.media.url})` }}
@@ -123,37 +129,45 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <section className="border-y border-gwm-line bg-gwm-panel-soft">
         <div className="gwm-container gwm-section">
-          <SectionHeading
-            eyebrow={isRtl ? "هندسة أكثر" : "Engineered to go with more"}
-            title={vehicle.featureBanner.title}
-          />
-          <div className="mb-6 flex flex-wrap gap-2">
+          <h2 className="gwm-heading-lg mb-6">
+            {isRtl ? "هندسة تمنحك المزيد" : "Engineered to go with more"}
+          </h2>
+          <div className="gwm-tabs mb-6">
             {vehicle.featureBanner.tabs.map((tab, index) => (
-              <span key={tab} className={`gwm-chip ${index === 0 ? "gwm-chip-active" : ""}`}>
+              <span
+                key={tab}
+                className={`gwm-tab ${index === 0 ? "gwm-tab-active" : ""}`}
+              >
                 {tab}
               </span>
             ))}
           </div>
           {vehicle.featureBanner.media ? (
             <div
-              className="aspect-[16/7] bg-cover bg-center"
+              className="aspect-[16/7] gwm-media-fade bg-cover bg-center"
               role="img"
               aria-label={vehicle.featureBanner.media.alt}
               style={{ backgroundImage: `url(${vehicle.featureBanner.media.url})` }}
             />
           ) : (
-            <PhotoPlaceholder label={vehicle.featureBanner.placeholder} className="aspect-[16/7]" />
+            <PhotoPlaceholder
+              label={vehicle.featureBanner.placeholder}
+              className="aspect-[16/7]"
+            />
           )}
-          <div className="mt-6 grid gap-6 md:grid-cols-[1.4fr_0.6fr] md:items-center">
-            <p className="gwm-copy max-w-2xl">{vehicle.featureBanner.description}</p>
-            <div className="border border-gwm-line bg-gwm-panel p-5 text-center">
-              <div className="text-3xl font-black text-gwm-red">
-                {vehicle.featureBanner.stat.value}
-              </div>
-              <div className="mt-1 text-xs font-bold text-gwm-muted">
-                {vehicle.featureBanner.stat.label}
-              </div>
-            </div>
+          <div className="mt-6 max-w-2xl">
+            <h3 className="text-lg font-black text-white">
+              {vehicle.featureBanner.title}
+            </h3>
+            <p className="gwm-copy mt-2">{vehicle.featureBanner.description}</p>
+          </div>
+          <div className="mt-6 flex items-baseline gap-3 border-t border-gwm-line pt-6">
+            <span className="text-3xl font-black text-white">
+              {vehicle.featureBanner.stat.value}
+            </span>
+            <span className="text-sm font-bold text-gwm-muted">
+              {vehicle.featureBanner.stat.label}
+            </span>
           </div>
         </div>
       </section>
@@ -169,7 +183,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <figure key={shot.caption} className="m-0">
                 {shot.media ? (
                   <div
-                    className="aspect-[4/3] bg-cover bg-center"
+                    className="aspect-[4/3] gwm-media-fade bg-cover bg-center"
                     role="img"
                     aria-label={shot.media.alt}
                     style={{ backgroundImage: `url(${shot.media.url})` }}
@@ -190,7 +204,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <figure key={shot.caption} className="m-0">
                 {shot.media ? (
                   <div
-                    className="aspect-[4/3] bg-cover bg-center"
+                    className="aspect-[4/3] gwm-media-fade bg-cover bg-center"
                     role="img"
                     aria-label={shot.media.alt}
                     style={{ backgroundImage: `url(${shot.media.url})` }}
@@ -207,9 +221,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <section className="border-y border-gwm-line bg-gwm-panel-soft">
         <div className="gwm-container gwm-section">
-          <h2 className="gwm-heading-lg mb-6 text-center">
+          <h2 className="gwm-heading-lg mb-3 text-center">
             {isRtl ? `منظور 360° خارجي` : "360° Exterior"}
           </h2>
+          <p className="gwm-caption mb-6 text-center">{vehicle.spinCaption}</p>
           <div className="mx-auto max-w-lg">
             {vehicle.spin360 ? (
               <Viewer360
@@ -218,31 +233,44 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 dragLabel={isRtl ? "اسحب للتدوير" : "Drag to rotate"}
               />
             ) : (
-              <PhotoPlaceholder label={`360° · ${vehicle.model}`} className="aspect-square" />
+              <PhotoPlaceholder
+                label={`360° · ${vehicle.model}`}
+                className="aspect-square"
+              />
             )}
-            <p className="gwm-caption mt-4 text-center">{vehicle.spinCaption}</p>
           </div>
         </div>
       </section>
 
       <section className="gwm-section">
         <div className="gwm-container">
-          <h2 className="gwm-heading-lg mb-2 text-center">{vehicle.safety.title}</h2>
-          <div className="mb-6 flex flex-wrap justify-center gap-2">
+          <h2 className="gwm-heading-lg mb-4 text-center">{vehicle.safety.title}</h2>
+          <div className="gwm-tabs mb-6 justify-center">
             {vehicle.safety.tabs.map((tab, index) => (
-              <span key={tab} className={`gwm-chip ${index === 0 ? "gwm-chip-active" : ""}`}>
+              <span
+                key={tab}
+                className={`gwm-tab ${index === 0 ? "gwm-tab-active" : ""}`}
+              >
                 {tab}
               </span>
             ))}
           </div>
-          <PhotoPlaceholder label={vehicle.safety.placeholder} className="aspect-[16/9]" />
-          <p className="mt-4 text-center text-sm font-black uppercase text-gwm-red">
+          <PhotoPlaceholder
+            label={vehicle.safety.placeholder}
+            className="aspect-[16/9]"
+          />
+          <p className="mt-4 flex items-center gap-2 text-sm font-black text-white">
+            <Icon name="shield" className="text-gwm-red" />
             {vehicle.safety.caption}
           </p>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {vehicle.safety.features.map((feature) => (
-              <div key={feature.title} className="border border-gwm-line bg-gwm-panel p-5">
-                <h3 className="text-sm font-black text-white">{feature.title}</h3>
+              <div
+                key={feature.title}
+                className="flex flex-col items-center border border-gwm-line bg-gwm-panel p-5 text-center"
+              >
+                <Icon name="shield" className="text-gwm-red" />
+                <h3 className="mt-3 text-sm font-black text-white">{feature.title}</h3>
                 <p className="gwm-copy mt-2 text-sm">{feature.summary}</p>
               </div>
             ))}
@@ -255,7 +283,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <h2 className="gwm-heading-lg mb-6 text-center">
             {isRtl ? "اختر لونك" : "Choose Your Colour"}
           </h2>
-          <PhotoPlaceholder label={vehicle.colorPlaceholder} className="mx-auto aspect-[16/9] max-w-3xl" />
+          <PhotoPlaceholder
+            label={vehicle.colorPlaceholder}
+            className="mx-auto aspect-[16/9] max-w-3xl"
+          />
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             {vehicle.colors.map((color, index) => (
               <span
@@ -294,7 +325,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
                 <div className="mt-2 text-sm font-bold text-gwm-muted">{trim.price}</div>
                 {!trim.featured && trim.note ? (
-                  <div className="mt-1 text-xs font-bold text-gwm-subtle">{trim.note}</div>
+                  <div className="mt-1 text-xs font-bold text-gwm-subtle">
+                    {trim.note}
+                  </div>
                 ) : null}
               </div>
             ))}
@@ -327,7 +360,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <section className="gwm-section">
         <div className="gwm-container">
           <div className="mb-8 flex items-end justify-between gap-5">
-            <h2 className="gwm-heading-lg">{isRtl ? "قد يعجبك أيضاً" : "You May Also Like"}</h2>
+            <h2 className="gwm-heading-lg">
+              {isRtl ? "قد يعجبك أيضاً" : "You May Also Like"}
+            </h2>
             <Link
               href={`/${locale}/vehicles`}
               className="whitespace-nowrap text-xs font-black uppercase text-gwm-red hover:text-white"
@@ -337,16 +372,22 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {related.map((item) => (
-              <article key={item.slug} className="border border-gwm-line bg-gwm-panel p-5">
+              <article
+                key={item.slug}
+                className="border border-gwm-line bg-gwm-panel p-5"
+              >
                 {item.heroMedia ? (
                   <div
-                    className="mb-5 aspect-[4/3] bg-cover bg-center"
+                    className="mb-5 aspect-[4/3] gwm-media-fade bg-cover bg-center"
                     role="img"
                     aria-label={item.heroMedia.alt}
                     style={{ backgroundImage: `url(${item.heroMedia.url})` }}
                   />
                 ) : (
-                  <PhotoPlaceholder label={item.heroPlaceholder} className="mb-5 aspect-[4/3]" />
+                  <PhotoPlaceholder
+                    label={item.heroPlaceholder}
+                    className="mb-5 aspect-[4/3]"
+                  />
                 )}
                 <h3 className="text-lg font-black text-white">
                   {item.brand} {item.model}

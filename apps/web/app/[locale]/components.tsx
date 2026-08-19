@@ -2,39 +2,135 @@ import Link from "next/link";
 import { localeLabels, type Locale } from "@gwm/shared";
 
 const navItems = [
-  { href: "vehicles", en: "Models", ar: "الطرازات", target: "" },
-  { href: "offers", en: "Offers", ar: "العروض", target: "" },
-  { href: "about", en: "About GWM", ar: "عن GWM", target: "" },
-  { href: "", en: "Technology", ar: "التكنولوجيا", target: "technology" },
-  { href: "forms", en: "Contact Us", ar: "اتصل بنا", target: "" },
+  { href: "#brands", en: "Brands", ar: "العلامات التجارية" },
+  { href: "/vehicles", en: "Vehicles", ar: "المركبات" },
+  { href: "/about", en: "About GWM", ar: "عن GWM" },
+  { href: "#technology", en: "Technology", ar: "التكنولوجيا" },
+  { href: "/forms", en: "Contact Us", ar: "اتصل بنا" },
 ] as const;
 
-export function SiteHeader({ locale }: { locale: Locale }) {
-  const alternateLocale = locale === "en" ? "ar" : "en";
+export function LogoMark({ className = "h-7 w-7" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" className={className} fill="none" aria-hidden="true">
+      <circle cx="16" cy="16" r="14.5" stroke="currentColor" strokeWidth="1.6" />
+      <path
+        d="M7.5 21.5L12 10.5l4 8 4-8 4.5 11"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  );
+}
 
+function NavLinks({
+  locale,
+  labels,
+  className,
+}: {
+  locale: Locale;
+  labels?: readonly [string, string, string, string, string];
+  className: string;
+}) {
+  return (
+    <nav className={className}>
+      {navItems.map((item, index) => (
+        <Link key={item.href} href={`/${locale}${item.href}`}>
+          {labels ? labels[index] : item[locale]}
+        </Link>
+      ))}
+    </nav>
+  );
+}
+
+function LanguageSwitch({
+  locale,
+  languageLabel,
+  className,
+}: {
+  locale: Locale;
+  languageLabel?: string;
+  className: string;
+}) {
+  const alternateLocale = locale === "en" ? "ar" : "en";
+  return (
+    <div className={className}>
+      <span className="border-b border-white pb-0.5 font-bold text-white">
+        {localeLabels[locale]}
+      </span>
+      <Link
+        href={`/${alternateLocale}`}
+        className="font-bold text-white/50 hover:text-white"
+        aria-label={languageLabel ?? localeLabels[alternateLocale]}
+      >
+        {languageLabel ?? localeLabels[alternateLocale]}
+      </Link>
+    </div>
+  );
+}
+
+export function SiteHeader({
+  locale,
+  navLabels,
+  languageLabel,
+}: {
+  locale: Locale;
+  navLabels?: readonly [string, string, string, string, string];
+  languageLabel?: string;
+}) {
   return (
     <header className="absolute inset-x-0 top-0 z-20 border-b border-white/10 bg-black/45 backdrop-blur">
-      <div className="gwm-container flex h-20 items-center justify-between">
-        <Link href={`/${locale}`} className="text-2xl font-black text-white">
+      <div className="gwm-container relative flex h-20 items-center justify-center">
+        <LanguageSwitch
+          locale={locale}
+          languageLabel={languageLabel}
+          className="absolute left-0 hidden items-center gap-4 text-sm md:flex"
+        />
+
+        <NavLinks
+          locale={locale}
+          labels={navLabels}
+          className="hidden items-center gap-7 text-xs font-black uppercase text-white/78 md:flex"
+        />
+
+        <Link
+          href={`/${locale}`}
+          className="absolute left-0 flex items-center gap-2 text-2xl font-black text-white md:left-auto md:right-0"
+        >
+          <LogoMark />
           GWM
         </Link>
-        <nav className="hidden items-center gap-7 text-xs font-black uppercase text-white/78 md:flex">
-          {navItems.map((item, index) => (
-            <Link
-              key={`${item.href}-${index}`}
-              href={`/${locale}${item.href ? `/${item.href}` : ""}${item.target ? `#${item.target}` : ""}`}
+
+        <details className="group absolute right-0 md:hidden">
+          <summary className="flex h-9 w-9 cursor-pointer list-none items-center justify-center text-white">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
             >
-              {item[locale]}
-            </Link>
-          ))}
-        </nav>
-        <Link
-          href={`/${alternateLocale}`}
-          className="border-b border-white/50 text-sm font-bold text-white"
-          aria-label={localeLabels[alternateLocale]}
-        >
-          {localeLabels[alternateLocale]}
-        </Link>
+              <path className="group-open:hidden" d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17" />
+              <path className="hidden group-open:block" d="M5 5l14 14M19 5L5 19" />
+            </svg>
+          </summary>
+          <div className="absolute right-0 top-12 w-64 border border-gwm-line bg-gwm-panel p-5 shadow-2xl">
+            <NavLinks
+              locale={locale}
+              labels={navLabels}
+              className="flex flex-col gap-4 text-sm font-black uppercase text-white/85"
+            />
+            <LanguageSwitch
+              locale={locale}
+              languageLabel={languageLabel}
+              className="mt-5 flex items-center gap-4 border-t border-gwm-line pt-5 text-sm"
+            />
+          </div>
+        </details>
       </div>
     </header>
   );
@@ -185,6 +281,98 @@ function IconGlyph({ name }: { name: string }) {
           <path d="M16 20V7M16 7l-3 3M16 7l3 3" />
         </svg>
       );
+    case "heart":
+      return (
+        <svg {...common}>
+          <path d="M12 20.2S3.5 15 3.5 9.2a4.7 4.7 0 0 1 8.5-2.7 4.7 4.7 0 0 1 8.5 2.7c0 5.8-8.5 11-8.5 11z" />
+        </svg>
+      );
+    case "roadside":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="8.5" />
+          <circle cx="12" cy="12" r="2.6" />
+          <path d="M12 3.5V7M12 17v3.5M20.5 12H17M7 12H3.5" />
+        </svg>
+      );
+    default:
+      return <svg {...common} />;
+  }
+}
+
+function SocialGlyph({ name }: { name: string }) {
+  const common = {
+    width: 20,
+    height: 20,
+    viewBox: "0 0 24 24",
+    fill: "currentColor",
+  };
+
+  switch (name) {
+    case "x":
+      return (
+        <svg {...common}>
+          <path
+            d="M4 4l16 16M20 4L4 20"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            fill="none"
+          />
+        </svg>
+      );
+    case "youtube":
+      return (
+        <svg {...common}>
+          <rect
+            x="2.5"
+            y="6"
+            width="19"
+            height="12"
+            rx="3"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+          />
+          <path d="M10.5 9.5l5 2.5-5 2.5z" />
+        </svg>
+      );
+    case "facebook":
+      return (
+        <svg {...common}>
+          <circle
+            cx="12"
+            cy="12"
+            r="9.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+          />
+          <path d="M13.8 21.5v-7.2h2.4l.4-2.8h-2.8V9.6c0-.8.2-1.4 1.4-1.4h1.5V5.7c-.3 0-1.1-.1-2.1-.1-2.1 0-3.5 1.3-3.5 3.6v2.3H8.7v2.8h2.4v7.2z" />
+        </svg>
+      );
+    case "tiktok":
+      return (
+        <svg
+          {...common}
+          stroke="currentColor"
+          strokeWidth="1.6"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5" />
+          <path d="M14 3c.4 2.3 2 4 4.5 4.3" />
+        </svg>
+      );
+    case "instagram":
+      return (
+        <svg {...common} stroke="currentColor" strokeWidth="1.6" fill="none">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17" cy="7" r="1" fill="currentColor" stroke="none" />
+        </svg>
+      );
     default:
       return <svg {...common} />;
   }
@@ -317,7 +505,14 @@ export function SiteFooter({ locale }: { locale: Locale }) {
     },
   ];
 
-  const socials = ["X", "YouTube", "Facebook", "TikTok", "Instagram"];
+  const socials = ["x", "youtube", "facebook", "tiktok", "instagram"];
+  const socialLabels: Record<string, string> = {
+    x: "X",
+    youtube: "YouTube",
+    facebook: "Facebook",
+    tiktok: "TikTok",
+    instagram: "Instagram",
+  };
   const legal =
     locale === "ar"
       ? ["سياسة الخصوصية", "شروط الاستخدام", "سياسة الكوكيز", "إمكانية الوصول"]
@@ -327,21 +522,26 @@ export function SiteFooter({ locale }: { locale: Locale }) {
     <footer className="border-t border-gwm-line bg-black">
       <div className="gwm-container grid gap-10 py-12 lg:grid-cols-[1.1fr_2fr]">
         <div>
-          <div className="text-2xl font-black text-white">GWM</div>
-          <p className="gwm-caption mt-2">
-            {locale === "ar" ? "انطلق مع المزيد" : "Go with more"}
-          </p>
+          <div className="flex items-center gap-3">
+            <LogoMark className="h-7 w-7 text-white" />
+            <span className="text-2xl font-black text-white">GWM</span>
+            <span className="text-gwm-subtle">—</span>
+            <span className="gwm-caption">
+              {locale === "ar" ? "انطلق مع المزيد" : "Go with more"}
+            </span>
+          </div>
           <p className="mt-6 text-xs font-black uppercase text-gwm-muted">
             {locale === "ar" ? "تابع GWM" : "Follow GWM"}
           </p>
-          <div className="mt-3 flex flex-wrap gap-3">
+          <div className="mt-3 flex flex-wrap gap-4">
             {socials.map((social) => (
               <a
                 key={social}
                 href="#"
-                className="border border-gwm-line px-3 py-1.5 text-xs font-bold text-gwm-muted hover:text-white"
+                aria-label={socialLabels[social]}
+                className="text-white/80 hover:text-white"
               >
-                {social}
+                <SocialGlyph name={social} />
               </a>
             ))}
           </div>
@@ -422,7 +622,7 @@ export function PageHero({
         ) : null}
         <div className="max-w-3xl">
           <p className="gwm-eyebrow mb-5">{eyebrow}</p>
-          <h1 className="gwm-display-xl max-w-[12ch]">{title}</h1>
+          <h1 className="gwm-display-xl">{title}</h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-white/78">{intro}</p>
           {children ? <div className="mt-9">{children}</div> : null}
         </div>
@@ -471,7 +671,10 @@ export function StatBand({ stats }: { stats: Array<{ value: string; label: strin
         style={{ gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))` }}
       >
         {stats.map((stat) => (
-          <div key={stat.label} className="bg-gwm-panel px-6 py-6 text-center md:text-start">
+          <div
+            key={stat.label}
+            className="bg-gwm-panel px-6 py-6 text-center md:text-start"
+          >
             <div className="text-4xl font-black text-white">{stat.value}</div>
             <div className="mt-2 text-xs font-black uppercase text-gwm-muted">
               {stat.label}

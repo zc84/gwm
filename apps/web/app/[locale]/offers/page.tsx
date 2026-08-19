@@ -32,7 +32,10 @@ export default async function OffersPage({ params }: OffersPageProps) {
         <div className="gwm-container">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {offers.offers.map((offer) => (
-              <article key={offer.title} className="flex flex-col border border-gwm-line bg-gwm-panel p-5">
+              <article
+                key={offer.title}
+                className="flex flex-col border border-gwm-line bg-gwm-panel p-5"
+              >
                 <p className="text-xs font-black uppercase text-gwm-red">
                   {offer.brand} {offer.model}
                 </p>

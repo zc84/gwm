@@ -85,6 +85,7 @@ export type HomePageContent = {
     ctaLabel: string;
     placeholder: string;
     caption: string;
+    media?: MediaAsset;
     stats: HomeStat[];
     features: TechFeature[];
   };
@@ -100,7 +101,7 @@ export const fallbackHomeContent = {
   en: {
     locale: "en",
     source: "fallback",
-    navItems: ["Models", "Offers", "About GWM", "Technology", "Contact Us"],
+    navItems: ["Brands", "Vehicles", "About GWM", "Technology", "Contact Us"],
     languageLabel: "العربية",
     hero: {
       eyebrow: "GWM Tank",
@@ -127,28 +128,40 @@ export const fallbackHomeContent = {
         summary: "Smart family SUVs for everyday life.",
         placeholder: "Photo: Haval line-up, studio",
         href: "/vehicles",
-        media: { url: "/media/vehicles/all-new-h6/01_hero_exterior.webp", alt: "Haval All-New H6 exterior hero shot" },
+        media: {
+          url: "/media/vehicles/all-new-h6/01_hero_exterior.webp",
+          alt: "Haval All-New H6 exterior hero shot",
+        },
       },
       {
         name: "GWM TANK",
         summary: "Premium luxury off-road icons.",
         placeholder: "Photo: Tank off-road action",
         href: "/vehicles",
-        media: { url: "/media/vehicles/tank-300/02_exterior_lifestyle.webp", alt: "TANK 300 off-road lifestyle shot" },
+        media: {
+          url: "/media/vehicles/tank-300/02_exterior_lifestyle.webp",
+          alt: "TANK 300 off-road lifestyle shot",
+        },
       },
       {
         name: "WEY",
         summary: "Advanced intelligent luxury SUVs.",
         placeholder: "Photo: Wey studio profile",
         href: "/vehicles",
-        media: { url: "/media/vehicles/wey-07/01_hero_exterior.webp", alt: "WEY 07 exterior hero shot" },
+        media: {
+          url: "/media/vehicles/wey-07/01_hero_exterior.webp",
+          alt: "WEY 07 exterior hero shot",
+        },
       },
       {
         name: "ORA",
         summary: "Pure electric fashion-forward coupes.",
         placeholder: "Photo: Ora city night",
         href: "/vehicles",
-        media: { url: "/media/vehicles/ora-07/02_exterior_lifestyle.webp", alt: "ORA 07 exterior lifestyle shot" },
+        media: {
+          url: "/media/vehicles/ora-07/02_exterior_lifestyle.webp",
+          alt: "ORA 07 exterior lifestyle shot",
+        },
       },
     ],
     featuredVehicles: [
@@ -161,7 +174,10 @@ export const fallbackHomeContent = {
         ctaLabel: "Explore",
         placeholder: "Photo: Haval H6, three-quarter front",
         href: "/vehicles/haval-h6-hev",
-        media: { url: "/media/vehicles/haval-h6-hev/01_hero_exterior.webp", alt: "Haval H6 HEV exterior hero shot" },
+        media: {
+          url: "/media/vehicles/haval-h6-hev/01_hero_exterior.webp",
+          alt: "Haval H6 HEV exterior hero shot",
+        },
       },
       {
         brand: "TANK",
@@ -172,7 +188,10 @@ export const fallbackHomeContent = {
         ctaLabel: "Explore",
         placeholder: "Photo: Tank 300 desert",
         href: "/vehicles/tank-500",
-        media: { url: "/media/vehicles/tank-300/01_hero_exterior.webp", alt: "TANK 300 exterior hero shot" },
+        media: {
+          url: "/media/vehicles/tank-300/01_hero_exterior.webp",
+          alt: "TANK 300 exterior hero shot",
+        },
       },
       {
         brand: "ORA",
@@ -183,7 +202,10 @@ export const fallbackHomeContent = {
         ctaLabel: "Explore",
         placeholder: "Photo: Ora 07 studio",
         href: "/vehicles",
-        media: { url: "/media/vehicles/ora-07/01_hero_exterior.webp", alt: "ORA 07 exterior hero shot" },
+        media: {
+          url: "/media/vehicles/ora-07/01_hero_exterior.webp",
+          alt: "ORA 07 exterior hero shot",
+        },
       },
       {
         brand: "POER",
@@ -194,7 +216,10 @@ export const fallbackHomeContent = {
         ctaLabel: "Explore",
         placeholder: "Photo: Poer Sahar night",
         href: "/vehicles/poer-commercial",
-        media: { url: "/media/vehicles/sahar-poer/01_hero_exterior.webp", alt: "SAHAR POER exterior hero shot" },
+        media: {
+          url: "/media/vehicles/sahar-poer/01_hero_exterior.webp",
+          alt: "SAHAR POER exterior hero shot",
+        },
       },
     ],
     viewAllLabel: "View all",
@@ -204,6 +229,10 @@ export const fallbackHomeContent = {
       ctaLabel: "Explore technology",
       placeholder: "Photo: Coffee OS 3 dashboard",
       caption: "Coffee OS 3 - AI Intelligent Space",
+      media: {
+        url: "/media/vehicles/haval-h6-hev/03_interior_cockpit.webp",
+        alt: "Haval H6 HEV interior cockpit with Coffee OS 3 display",
+      },
       stats: [
         { value: "15M+", label: "Global users" },
         { value: "170+", label: "Countries" },
@@ -218,7 +247,8 @@ export const fallbackHomeContent = {
         },
         {
           title: "Coffee OS 3",
-          summary: "AI-powered intelligent cabin: voice, vision and proactive routines, your way.",
+          summary:
+            "AI-powered intelligent cabin: voice, vision and proactive routines, your way.",
           learnMoreLabel: "Learn more",
         },
         {
@@ -304,10 +334,22 @@ export const fallbackHomeContent = {
         region: "GCC",
         label: "Continue to Qatar",
         dealers: [
-          { name: "GWM Doha West Bay", address: "Al Corniche Street, Doha", hours: "Sat–Thu, 9:00–20:00" },
-          { name: "GWM Al Rayyan", address: "Airport Road, Al Rayyan", hours: "Sat–Thu, 9:00–20:00" },
+          {
+            name: "GWM Doha West Bay",
+            address: "Al Corniche Street, Doha",
+            hours: "Sat–Thu, 9:00–20:00",
+          },
+          {
+            name: "GWM Al Rayyan",
+            address: "Airport Road, Al Rayyan",
+            hours: "Sat–Thu, 9:00–20:00",
+          },
         ],
-        contact: { hours: "Sat–Thu, 9:00 AM–8:00 PM", email: "care.qa@gwm-me.com", phone: "800 700 100" },
+        contact: {
+          hours: "Sat–Thu, 9:00 AM–8:00 PM",
+          email: "care.qa@gwm-me.com",
+          phone: "800 700 100",
+        },
       },
       {
         country: "Kuwait",
@@ -316,10 +358,22 @@ export const fallbackHomeContent = {
         region: "GCC",
         label: "Continue to Kuwait",
         dealers: [
-          { name: "GWM Kuwait City", address: "Al Soor Street, Kuwait City", hours: "Sat–Thu, 9:00–20:00" },
-          { name: "GWM Hawally", address: "Tunis Street, Hawally", hours: "Sat–Thu, 9:00–20:00" },
+          {
+            name: "GWM Kuwait City",
+            address: "Al Soor Street, Kuwait City",
+            hours: "Sat–Thu, 9:00–20:00",
+          },
+          {
+            name: "GWM Hawally",
+            address: "Tunis Street, Hawally",
+            hours: "Sat–Thu, 9:00–20:00",
+          },
         ],
-        contact: { hours: "Sat–Thu, 9:00 AM–8:00 PM", email: "care.kw@gwm-me.com", phone: "1807 100" },
+        contact: {
+          hours: "Sat–Thu, 9:00 AM–8:00 PM",
+          email: "care.kw@gwm-me.com",
+          phone: "1807 100",
+        },
       },
       {
         country: "Bahrain",
@@ -328,10 +382,22 @@ export const fallbackHomeContent = {
         region: "GCC",
         label: "Continue to Bahrain",
         dealers: [
-          { name: "GWM Manama", address: "Sheikh Khalifa Highway, Manama", hours: "Sat–Thu, 9:00–20:00" },
-          { name: "GWM Riffa", address: "Shaikh Salman Highway, Riffa", hours: "Sat–Thu, 9:00–20:00" },
+          {
+            name: "GWM Manama",
+            address: "Sheikh Khalifa Highway, Manama",
+            hours: "Sat–Thu, 9:00–20:00",
+          },
+          {
+            name: "GWM Riffa",
+            address: "Shaikh Salman Highway, Riffa",
+            hours: "Sat–Thu, 9:00–20:00",
+          },
         ],
-        contact: { hours: "Sat–Thu, 9:00 AM–8:00 PM", email: "care.bh@gwm-me.com", phone: "800 800 96" },
+        contact: {
+          hours: "Sat–Thu, 9:00 AM–8:00 PM",
+          email: "care.bh@gwm-me.com",
+          phone: "800 800 96",
+        },
       },
       {
         country: "Oman",
@@ -340,10 +406,22 @@ export const fallbackHomeContent = {
         region: "GCC",
         label: "Continue to Oman",
         dealers: [
-          { name: "GWM Muscat", address: "Sultan Qaboos Street, Muscat", hours: "Sat–Thu, 9:00–20:00" },
-          { name: "GWM Salalah", address: "Al Salam Street, Salalah", hours: "Sat–Thu, 9:00–20:00" },
+          {
+            name: "GWM Muscat",
+            address: "Sultan Qaboos Street, Muscat",
+            hours: "Sat–Thu, 9:00–20:00",
+          },
+          {
+            name: "GWM Salalah",
+            address: "Al Salam Street, Salalah",
+            hours: "Sat–Thu, 9:00–20:00",
+          },
         ],
-        contact: { hours: "Sat–Thu, 9:00 AM–8:00 PM", email: "care.om@gwm-me.com", phone: "800 73369" },
+        contact: {
+          hours: "Sat–Thu, 9:00 AM–8:00 PM",
+          email: "care.om@gwm-me.com",
+          phone: "800 73369",
+        },
       },
       {
         country: "Jordan",
@@ -352,10 +430,22 @@ export const fallbackHomeContent = {
         region: "Levant",
         label: "Continue to Jordan",
         dealers: [
-          { name: "GWM Amman", address: "Zahran Street, Amman", hours: "Sun–Thu, 9:00–19:00" },
-          { name: "GWM Irbid", address: "Baghdad Street, Irbid", hours: "Sun–Thu, 9:00–19:00" },
+          {
+            name: "GWM Amman",
+            address: "Zahran Street, Amman",
+            hours: "Sun–Thu, 9:00–19:00",
+          },
+          {
+            name: "GWM Irbid",
+            address: "Baghdad Street, Irbid",
+            hours: "Sun–Thu, 9:00–19:00",
+          },
         ],
-        contact: { hours: "Sun–Thu, 9:00 AM–7:00 PM", email: "care.jo@gwm-me.com", phone: "080 022 900" },
+        contact: {
+          hours: "Sun–Thu, 9:00 AM–7:00 PM",
+          email: "care.jo@gwm-me.com",
+          phone: "080 022 900",
+        },
       },
       {
         country: "Lebanon",
@@ -364,10 +454,22 @@ export const fallbackHomeContent = {
         region: "Levant",
         label: "Continue to Lebanon",
         dealers: [
-          { name: "GWM Beirut", address: "Charles Helou Avenue, Beirut", hours: "Mon–Sat, 9:00–19:00" },
-          { name: "GWM Jounieh", address: "Coastal Highway, Jounieh", hours: "Mon–Sat, 9:00–19:00" },
+          {
+            name: "GWM Beirut",
+            address: "Charles Helou Avenue, Beirut",
+            hours: "Mon–Sat, 9:00–19:00",
+          },
+          {
+            name: "GWM Jounieh",
+            address: "Coastal Highway, Jounieh",
+            hours: "Mon–Sat, 9:00–19:00",
+          },
         ],
-        contact: { hours: "Mon–Sat, 9:00 AM–7:00 PM", email: "care.lb@gwm-me.com", phone: "1233" },
+        contact: {
+          hours: "Mon–Sat, 9:00 AM–7:00 PM",
+          email: "care.lb@gwm-me.com",
+          phone: "1233",
+        },
       },
       {
         country: "Iraq",
@@ -376,10 +478,22 @@ export const fallbackHomeContent = {
         region: "Levant",
         label: "Continue to Iraq",
         dealers: [
-          { name: "GWM Baghdad", address: "Al Mansour District, Baghdad", hours: "Sun–Thu, 9:00–19:00" },
-          { name: "GWM Erbil", address: "60 Meter Road, Erbil", hours: "Sun–Thu, 9:00–19:00" },
+          {
+            name: "GWM Baghdad",
+            address: "Al Mansour District, Baghdad",
+            hours: "Sun–Thu, 9:00–19:00",
+          },
+          {
+            name: "GWM Erbil",
+            address: "60 Meter Road, Erbil",
+            hours: "Sun–Thu, 9:00–19:00",
+          },
         ],
-        contact: { hours: "Sun–Thu, 9:00 AM–7:00 PM", email: "care.iq@gwm-me.com", phone: "800 100 200" },
+        contact: {
+          hours: "Sun–Thu, 9:00 AM–7:00 PM",
+          email: "care.iq@gwm-me.com",
+          phone: "800 100 200",
+        },
       },
       {
         country: "Syria",
@@ -388,17 +502,29 @@ export const fallbackHomeContent = {
         region: "Levant",
         label: "Continue to Syria",
         dealers: [
-          { name: "GWM Damascus", address: "Mezzeh Highway, Damascus", hours: "Sun–Thu, 9:00–19:00" },
-          { name: "GWM Aleppo", address: "Al Furqan Street, Aleppo", hours: "Sun–Thu, 9:00–19:00" },
+          {
+            name: "GWM Damascus",
+            address: "Mezzeh Highway, Damascus",
+            hours: "Sun–Thu, 9:00–19:00",
+          },
+          {
+            name: "GWM Aleppo",
+            address: "Al Furqan Street, Aleppo",
+            hours: "Sun–Thu, 9:00–19:00",
+          },
         ],
-        contact: { hours: "Sun–Thu, 9:00 AM–7:00 PM", email: "care.sy@gwm-me.com", phone: "011 800 100" },
+        contact: {
+          hours: "Sun–Thu, 9:00 AM–7:00 PM",
+          email: "care.sy@gwm-me.com",
+          phone: "011 800 100",
+        },
       },
     ],
   },
   ar: {
     locale: "ar",
     source: "fallback",
-    navItems: ["الطرازات", "العروض", "عن GWM", "التكنولوجيا", "اتصل بنا"],
+    navItems: ["العلامات التجارية", "المركبات", "عن GWM", "التكنولوجيا", "اتصل بنا"],
     languageLabel: "English",
     hero: {
       eyebrow: "جي دبليو إم تانك",
@@ -425,28 +551,40 @@ export const fallbackHomeContent = {
         summary: "سيارات SUV عائلية ذكية للحياة اليومية.",
         placeholder: "صورة: تشكيلة هافال، استوديو",
         href: "/vehicles",
-        media: { url: "/media/vehicles/all-new-h6/01_hero_exterior.webp", alt: "هافال All-New H6، لقطة خارجية رئيسية" },
+        media: {
+          url: "/media/vehicles/all-new-h6/01_hero_exterior.webp",
+          alt: "هافال All-New H6، لقطة خارجية رئيسية",
+        },
       },
       {
         name: "جي دبليو إم تانك",
         summary: "رموز فاخرة للطرق الوعرة.",
         placeholder: "صورة: تانك في مشهد وعر",
         href: "/vehicles",
-        media: { url: "/media/vehicles/tank-300/02_exterior_lifestyle.webp", alt: "تانك 300، لقطة نمط حياة للطرق الوعرة" },
+        media: {
+          url: "/media/vehicles/tank-300/02_exterior_lifestyle.webp",
+          alt: "تانك 300، لقطة نمط حياة للطرق الوعرة",
+        },
       },
       {
         name: "وي",
         summary: "سيارات SUV فاخرة وذكية متقدمة.",
         placeholder: "صورة: وي، استوديو",
         href: "/vehicles",
-        media: { url: "/media/vehicles/wey-07/01_hero_exterior.webp", alt: "وي 07، لقطة خارجية رئيسية" },
+        media: {
+          url: "/media/vehicles/wey-07/01_hero_exterior.webp",
+          alt: "وي 07، لقطة خارجية رئيسية",
+        },
       },
       {
         name: "أورا",
         summary: "سيارات كوبيه كهربائية عصرية بالكامل.",
         placeholder: "صورة: أورا في المدينة ليلاً",
         href: "/vehicles",
-        media: { url: "/media/vehicles/ora-07/02_exterior_lifestyle.webp", alt: "أورا 07، لقطة نمط حياة خارجية" },
+        media: {
+          url: "/media/vehicles/ora-07/02_exterior_lifestyle.webp",
+          alt: "أورا 07، لقطة نمط حياة خارجية",
+        },
       },
     ],
     featuredVehicles: [
@@ -459,7 +597,10 @@ export const fallbackHomeContent = {
         ctaLabel: "استكشف",
         placeholder: "صورة: هافال H6، أمامية جانبية",
         href: "/vehicles/haval-h6-hev",
-        media: { url: "/media/vehicles/haval-h6-hev/01_hero_exterior.webp", alt: "هافال H6 HEV، لقطة خارجية رئيسية" },
+        media: {
+          url: "/media/vehicles/haval-h6-hev/01_hero_exterior.webp",
+          alt: "هافال H6 HEV، لقطة خارجية رئيسية",
+        },
       },
       {
         brand: "تانك",
@@ -470,7 +611,10 @@ export const fallbackHomeContent = {
         ctaLabel: "استكشف",
         placeholder: "صورة: تانك 300 في الصحراء",
         href: "/vehicles/tank-500",
-        media: { url: "/media/vehicles/tank-300/01_hero_exterior.webp", alt: "تانك 300، لقطة خارجية رئيسية" },
+        media: {
+          url: "/media/vehicles/tank-300/01_hero_exterior.webp",
+          alt: "تانك 300، لقطة خارجية رئيسية",
+        },
       },
       {
         brand: "أورا",
@@ -481,7 +625,10 @@ export const fallbackHomeContent = {
         ctaLabel: "استكشف",
         placeholder: "صورة: أورا 07، استوديو",
         href: "/vehicles",
-        media: { url: "/media/vehicles/ora-07/01_hero_exterior.webp", alt: "أورا 07، لقطة خارجية رئيسية" },
+        media: {
+          url: "/media/vehicles/ora-07/01_hero_exterior.webp",
+          alt: "أورا 07، لقطة خارجية رئيسية",
+        },
       },
       {
         brand: "بوير",
@@ -492,7 +639,10 @@ export const fallbackHomeContent = {
         ctaLabel: "استكشف",
         placeholder: "صورة: بوير Sahar ليلاً",
         href: "/vehicles/poer-commercial",
-        media: { url: "/media/vehicles/sahar-poer/01_hero_exterior.webp", alt: "سيهار بوير، لقطة خارجية رئيسية" },
+        media: {
+          url: "/media/vehicles/sahar-poer/01_hero_exterior.webp",
+          alt: "سيهار بوير، لقطة خارجية رئيسية",
+        },
       },
     ],
     viewAllLabel: "عرض الكل",
@@ -502,6 +652,10 @@ export const fallbackHomeContent = {
       ctaLabel: "استكشف التكنولوجيا",
       placeholder: "صورة: لوحة قيادة Coffee OS 3",
       caption: "Coffee OS 3 - مساحة ذكية بالذكاء الاصطناعي",
+      media: {
+        url: "/media/vehicles/haval-h6-hev/03_interior_cockpit.webp",
+        alt: "مقصورة قيادة هافال H6 HEV مع شاشة Coffee OS 3",
+      },
       stats: [
         { value: "+15M", label: "مستخدمون عالميون" },
         { value: "+170", label: "دولة" },
@@ -528,7 +682,10 @@ export const fallbackHomeContent = {
     news: [
       { date: "يوليو 2026", title: "وصول TANK 700 Hi4-Z إلى الشرق الأوسط" },
       { date: "يونيو 2026", title: "طرح Coffee OS 3 عبر أسطول الشرق الأوسط" },
-      { date: "مايو 2026", title: "GWM توسّع شبكة الوكلاء إلى أكثر من 80 نقطة في الخليج" },
+      {
+        date: "مايو 2026",
+        title: "GWM توسّع شبكة الوكلاء إلى أكثر من 80 نقطة في الخليج",
+      },
     ],
     newsAllLabel: "الكل",
     networkTitle: "شبكة GWM في الشرق الأوسط",
@@ -600,10 +757,22 @@ export const fallbackHomeContent = {
         region: "الخليج",
         label: "الاستمرار إلى قطر",
         dealers: [
-          { name: "جي دبليو إم الخليج الغربي", address: "شارع الكورنيش، الدوحة", hours: "السبت–الخميس، 9:00–20:00" },
-          { name: "جي دبليو إم الريان", address: "طريق المطار، الريان", hours: "السبت–الخميس، 9:00–20:00" },
+          {
+            name: "جي دبليو إم الخليج الغربي",
+            address: "شارع الكورنيش، الدوحة",
+            hours: "السبت–الخميس، 9:00–20:00",
+          },
+          {
+            name: "جي دبليو إم الريان",
+            address: "طريق المطار، الريان",
+            hours: "السبت–الخميس، 9:00–20:00",
+          },
         ],
-        contact: { hours: "السبت–الخميس، 9:00 ص–8:00 م", email: "care.qa@gwm-me.com", phone: "800 700 100" },
+        contact: {
+          hours: "السبت–الخميس، 9:00 ص–8:00 م",
+          email: "care.qa@gwm-me.com",
+          phone: "800 700 100",
+        },
       },
       {
         country: "الكويت",
@@ -612,10 +781,22 @@ export const fallbackHomeContent = {
         region: "الخليج",
         label: "الاستمرار إلى الكويت",
         dealers: [
-          { name: "جي دبليو إم مدينة الكويت", address: "شارع السور، مدينة الكويت", hours: "السبت–الخميس، 9:00–20:00" },
-          { name: "جي دبليو إم حولي", address: "شارع تونس، حولي", hours: "السبت–الخميس، 9:00–20:00" },
+          {
+            name: "جي دبليو إم مدينة الكويت",
+            address: "شارع السور، مدينة الكويت",
+            hours: "السبت–الخميس، 9:00–20:00",
+          },
+          {
+            name: "جي دبليو إم حولي",
+            address: "شارع تونس، حولي",
+            hours: "السبت–الخميس، 9:00–20:00",
+          },
         ],
-        contact: { hours: "السبت–الخميس، 9:00 ص–8:00 م", email: "care.kw@gwm-me.com", phone: "1807 100" },
+        contact: {
+          hours: "السبت–الخميس، 9:00 ص–8:00 م",
+          email: "care.kw@gwm-me.com",
+          phone: "1807 100",
+        },
       },
       {
         country: "البحرين",
@@ -624,10 +805,22 @@ export const fallbackHomeContent = {
         region: "الخليج",
         label: "الاستمرار إلى البحرين",
         dealers: [
-          { name: "جي دبليو إم المنامة", address: "طريق الشيخ خليفة، المنامة", hours: "السبت–الخميس، 9:00–20:00" },
-          { name: "جي دبليو إم الرفاع", address: "طريق الشيخ سلمان، الرفاع", hours: "السبت–الخميس، 9:00–20:00" },
+          {
+            name: "جي دبليو إم المنامة",
+            address: "طريق الشيخ خليفة، المنامة",
+            hours: "السبت–الخميس، 9:00–20:00",
+          },
+          {
+            name: "جي دبليو إم الرفاع",
+            address: "طريق الشيخ سلمان، الرفاع",
+            hours: "السبت–الخميس، 9:00–20:00",
+          },
         ],
-        contact: { hours: "السبت–الخميس، 9:00 ص–8:00 م", email: "care.bh@gwm-me.com", phone: "800 800 96" },
+        contact: {
+          hours: "السبت–الخميس، 9:00 ص–8:00 م",
+          email: "care.bh@gwm-me.com",
+          phone: "800 800 96",
+        },
       },
       {
         country: "عُمان",
@@ -636,10 +829,22 @@ export const fallbackHomeContent = {
         region: "الخليج",
         label: "الاستمرار إلى عُمان",
         dealers: [
-          { name: "جي دبليو إم مسقط", address: "شارع السلطان قابوس، مسقط", hours: "السبت–الخميس، 9:00–20:00" },
-          { name: "جي دبليو إم صلالة", address: "شارع السلام، صلالة", hours: "السبت–الخميس، 9:00–20:00" },
+          {
+            name: "جي دبليو إم مسقط",
+            address: "شارع السلطان قابوس، مسقط",
+            hours: "السبت–الخميس، 9:00–20:00",
+          },
+          {
+            name: "جي دبليو إم صلالة",
+            address: "شارع السلام، صلالة",
+            hours: "السبت–الخميس، 9:00–20:00",
+          },
         ],
-        contact: { hours: "السبت–الخميس، 9:00 ص–8:00 م", email: "care.om@gwm-me.com", phone: "800 73369" },
+        contact: {
+          hours: "السبت–الخميس، 9:00 ص–8:00 م",
+          email: "care.om@gwm-me.com",
+          phone: "800 73369",
+        },
       },
       {
         country: "الأردن",
@@ -648,10 +853,22 @@ export const fallbackHomeContent = {
         region: "بلاد الشام",
         label: "الاستمرار إلى الأردن",
         dealers: [
-          { name: "جي دبليو إم عمّان", address: "شارع زهران، عمّان", hours: "الأحد–الخميس، 9:00–19:00" },
-          { name: "جي دبليو إم إربد", address: "شارع بغداد، إربد", hours: "الأحد–الخميس، 9:00–19:00" },
+          {
+            name: "جي دبليو إم عمّان",
+            address: "شارع زهران، عمّان",
+            hours: "الأحد–الخميس، 9:00–19:00",
+          },
+          {
+            name: "جي دبليو إم إربد",
+            address: "شارع بغداد، إربد",
+            hours: "الأحد–الخميس، 9:00–19:00",
+          },
         ],
-        contact: { hours: "الأحد–الخميس، 9:00 ص–7:00 م", email: "care.jo@gwm-me.com", phone: "080 022 900" },
+        contact: {
+          hours: "الأحد–الخميس، 9:00 ص–7:00 م",
+          email: "care.jo@gwm-me.com",
+          phone: "080 022 900",
+        },
       },
       {
         country: "لبنان",
@@ -660,10 +877,22 @@ export const fallbackHomeContent = {
         region: "بلاد الشام",
         label: "الاستمرار إلى لبنان",
         dealers: [
-          { name: "جي دبليو إم بيروت", address: "شارع شارل حلو، بيروت", hours: "الاثنين–السبت، 9:00–19:00" },
-          { name: "جي دبليو إم جونية", address: "الطريق الساحلي، جونية", hours: "الاثنين–السبت، 9:00–19:00" },
+          {
+            name: "جي دبليو إم بيروت",
+            address: "شارع شارل حلو، بيروت",
+            hours: "الاثنين–السبت، 9:00–19:00",
+          },
+          {
+            name: "جي دبليو إم جونية",
+            address: "الطريق الساحلي، جونية",
+            hours: "الاثنين–السبت، 9:00–19:00",
+          },
         ],
-        contact: { hours: "الاثنين–السبت، 9:00 ص–7:00 م", email: "care.lb@gwm-me.com", phone: "1233" },
+        contact: {
+          hours: "الاثنين–السبت، 9:00 ص–7:00 م",
+          email: "care.lb@gwm-me.com",
+          phone: "1233",
+        },
       },
       {
         country: "العراق",
@@ -672,10 +901,22 @@ export const fallbackHomeContent = {
         region: "بلاد الشام",
         label: "الاستمرار إلى العراق",
         dealers: [
-          { name: "جي دبليو إم بغداد", address: "حي المنصور، بغداد", hours: "الأحد–الخميس، 9:00–19:00" },
-          { name: "جي دبليو إم أربيل", address: "شارع 60 متر، أربيل", hours: "الأحد–الخميس، 9:00–19:00" },
+          {
+            name: "جي دبليو إم بغداد",
+            address: "حي المنصور، بغداد",
+            hours: "الأحد–الخميس، 9:00–19:00",
+          },
+          {
+            name: "جي دبليو إم أربيل",
+            address: "شارع 60 متر، أربيل",
+            hours: "الأحد–الخميس، 9:00–19:00",
+          },
         ],
-        contact: { hours: "الأحد–الخميس، 9:00 ص–7:00 م", email: "care.iq@gwm-me.com", phone: "800 100 200" },
+        contact: {
+          hours: "الأحد–الخميس، 9:00 ص–7:00 م",
+          email: "care.iq@gwm-me.com",
+          phone: "800 100 200",
+        },
       },
       {
         country: "سوريا",
@@ -684,10 +925,22 @@ export const fallbackHomeContent = {
         region: "بلاد الشام",
         label: "الاستمرار إلى سوريا",
         dealers: [
-          { name: "جي دبليو إم دمشق", address: "طريق المزة، دمشق", hours: "الأحد–الخميس، 9:00–19:00" },
-          { name: "جي دبليو إم حلب", address: "شارع الفرقان، حلب", hours: "الأحد–الخميس، 9:00–19:00" },
+          {
+            name: "جي دبليو إم دمشق",
+            address: "طريق المزة، دمشق",
+            hours: "الأحد–الخميس، 9:00–19:00",
+          },
+          {
+            name: "جي دبليو إم حلب",
+            address: "شارع الفرقان، حلب",
+            hours: "الأحد–الخميس، 9:00–19:00",
+          },
         ],
-        contact: { hours: "الأحد–الخميس، 9:00 ص–7:00 م", email: "care.sy@gwm-me.com", phone: "011 800 100" },
+        contact: {
+          hours: "الأحد–الخميس، 9:00 ص–7:00 م",
+          email: "care.sy@gwm-me.com",
+          phone: "011 800 100",
+        },
       },
     ],
   },

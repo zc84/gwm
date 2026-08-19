@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getTextDirection, isLocale, localeLabels, type Locale } from "@gwm/shared";
+import { getTextDirection, isLocale, type Locale } from "@gwm/shared";
 import { getHomeContent } from "../../lib/strapi";
-import { CtaBand, PhotoPlaceholder, QuickActionBar, SiteFooter } from "./components";
+import {
+  CtaBand,
+  PhotoPlaceholder,
+  QuickActionBar,
+  SiteFooter,
+  SiteHeader,
+} from "./components";
 
 type HomePageProps = {
   params: Promise<{ locale: string }>;
@@ -17,38 +23,22 @@ export default async function HomePage({ params }: HomePageProps) {
 
   const locale = localeParam as Locale;
   const content = await getHomeContent(locale);
-  const alternateLocale = locale === "en" ? "ar" : "en";
   const isRtl = getTextDirection(locale) === "rtl";
+  const navLabels = content.navItems as unknown as readonly [
+    string,
+    string,
+    string,
+    string,
+    string,
+  ];
 
   return (
     <main className="gwm-app-shell text-gwm-text">
-      <header className="absolute inset-x-0 top-0 z-20 border-b border-white/10 bg-black/45 backdrop-blur">
-        <div className="gwm-container flex h-20 items-center justify-between">
-          <Link href={`/${locale}`} className="text-2xl font-black text-white">
-            GWM
-          </Link>
-          <nav className="hidden items-center gap-7 text-xs font-black uppercase text-white/78 md:flex">
-            {[
-              { label: content.navItems[0], href: `/${locale}/vehicles` },
-              { label: content.navItems[1], href: `/${locale}/offers` },
-              { label: content.navItems[2], href: `/${locale}/about` },
-              { label: content.navItems[3], href: "#technology" },
-              { label: content.navItems[4], href: `/${locale}/forms` },
-            ].map((item) => (
-              <a key={item.label} href={item.href}>
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <Link
-            href={`/${alternateLocale}`}
-            className="border-b border-white/50 text-sm font-bold text-white"
-            aria-label={localeLabels[alternateLocale]}
-          >
-            {content.languageLabel}
-          </Link>
-        </div>
-      </header>
+      <SiteHeader
+        locale={locale}
+        navLabels={navLabels}
+        languageLabel={content.languageLabel}
+      />
 
       <section className="gwm-hero-media">
         {content.hero.media ? (
@@ -62,7 +52,7 @@ export default async function HomePage({ params }: HomePageProps) {
         <div className="gwm-container relative z-10 flex min-h-[min(820px,88vh)] flex-col justify-end pb-16 pt-32 md:pb-20">
           <div className="max-w-3xl">
             <p className="gwm-eyebrow mb-5">{content.hero.eyebrow}</p>
-            <h1 className="gwm-display-xl max-w-[11ch]">{content.hero.title}</h1>
+            <h1 className="gwm-display-xl max-w-2xl">{content.hero.title}</h1>
             <div className="mt-9 flex flex-wrap gap-3">
               <a href="#vehicles" className="gwm-button gwm-button-primary">
                 {content.hero.primaryCta} →
@@ -89,18 +79,26 @@ export default async function HomePage({ params }: HomePageProps) {
           </h2>
           <div className="grid gap-4 md:grid-cols-4">
             {content.brands.map((brand) => (
-              <article key={brand.name} className="border border-gwm-line bg-gwm-panel p-5">
+              <article
+                key={brand.name}
+                className="border border-gwm-line bg-gwm-panel p-5"
+              >
                 {brand.media ? (
                   <div
-                    className="mb-5 aspect-[4/3] bg-cover bg-center"
+                    className="mb-5 aspect-[4/3] gwm-media-fade bg-cover bg-center"
                     role="img"
                     aria-label={brand.media.alt}
                     style={{ backgroundImage: `url(${brand.media.url})` }}
                   />
                 ) : (
-                  <PhotoPlaceholder label={brand.placeholder} className="mb-5 aspect-[4/3]" />
+                  <PhotoPlaceholder
+                    label={brand.placeholder}
+                    className="mb-5 aspect-[4/3]"
+                  />
                 )}
-                <div className="text-lg font-black uppercase text-white">{brand.name}</div>
+                <div className="text-lg font-black uppercase text-white">
+                  {brand.name}
+                </div>
                 <p className="gwm-copy mt-2 text-sm">{brand.summary}</p>
                 <Link
                   href={`/${locale}${brand.href}`}
@@ -117,7 +115,9 @@ export default async function HomePage({ params }: HomePageProps) {
       <section id="vehicles" className="border-y border-gwm-line bg-gwm-panel-soft">
         <div className="gwm-container gwm-section">
           <div className="mb-8 flex items-end justify-between gap-5">
-            <h2 className="gwm-heading-lg">{isRtl ? "الطرازات المختارة" : "Featured Models"}</h2>
+            <h2 className="gwm-heading-lg">
+              {isRtl ? "الطرازات المختارة" : "Featured Models"}
+            </h2>
             <Link
               href={`/${locale}/vehicles`}
               className="whitespace-nowrap text-xs font-black uppercase text-gwm-red hover:text-white"
@@ -133,13 +133,16 @@ export default async function HomePage({ params }: HomePageProps) {
               >
                 {vehicle.media ? (
                   <div
-                    className="mb-5 aspect-[4/3] bg-cover bg-center"
+                    className="mb-5 aspect-[4/3] gwm-media-fade bg-cover bg-center"
                     role="img"
                     aria-label={vehicle.media.alt}
                     style={{ backgroundImage: `url(${vehicle.media.url})` }}
                   />
                 ) : (
-                  <PhotoPlaceholder label={vehicle.placeholder} className="mb-5 aspect-[4/3]" />
+                  <PhotoPlaceholder
+                    label={vehicle.placeholder}
+                    className="mb-5 aspect-[4/3]"
+                  />
                 )}
                 <h3 className="text-xl font-black text-white">
                   {vehicle.brand} {vehicle.model}
@@ -170,8 +173,22 @@ export default async function HomePage({ params }: HomePageProps) {
           </div>
           <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
             <div className="relative">
-              <PhotoPlaceholder label={content.technology.placeholder} className="aspect-[4/3]" />
-              <p className="mt-3 text-sm font-bold text-white">{content.technology.caption}</p>
+              {content.technology.media ? (
+                <div
+                  className="aspect-[4/3] gwm-media-fade bg-cover bg-center"
+                  role="img"
+                  aria-label={content.technology.media.alt}
+                  style={{ backgroundImage: `url(${content.technology.media.url})` }}
+                />
+              ) : (
+                <PhotoPlaceholder
+                  label={content.technology.placeholder}
+                  className="aspect-[4/3]"
+                />
+              )}
+              <p className="mt-3 text-sm font-bold text-white">
+                {content.technology.caption}
+              </p>
             </div>
             <div className="flex flex-col gap-4">
               <div className="grid grid-cols-3 gap-px bg-gwm-line">
@@ -185,7 +202,10 @@ export default async function HomePage({ params }: HomePageProps) {
                 ))}
               </div>
               {content.technology.features.map((feature) => (
-                <div key={feature.title} className="border border-gwm-line bg-gwm-panel p-4">
+                <div
+                  key={feature.title}
+                  className="border border-gwm-line bg-gwm-panel p-4"
+                >
                   <h3 className="text-sm font-black text-white">{feature.title}</h3>
                   <p className="gwm-copy mt-2 text-sm">{feature.summary}</p>
                   <a
@@ -231,7 +251,10 @@ export default async function HomePage({ params }: HomePageProps) {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Link href={`/${locale}/countries`} className="gwm-button gwm-button-secondary">
+            <Link
+              href={`/${locale}/countries`}
+              className="gwm-button gwm-button-secondary"
+            >
               {content.findDealerLabel}
             </Link>
           </div>
@@ -242,7 +265,9 @@ export default async function HomePage({ params }: HomePageProps) {
         <div className="gwm-container">
           <div className="border border-gwm-line bg-gwm-panel p-6 md:p-8">
             <div className="mb-6 flex items-center justify-between gap-5">
-              <h2 className="gwm-heading-lg">{isRtl ? "آخر أخبار GWM" : "Latest from GWM"}</h2>
+              <h2 className="gwm-heading-lg">
+                {isRtl ? "آخر أخبار GWM" : "Latest from GWM"}
+              </h2>
               <Link
                 href={`/${locale}/news`}
                 className="text-xs font-black uppercase text-gwm-red hover:text-white"
@@ -258,7 +283,9 @@ export default async function HomePage({ params }: HomePageProps) {
                   className="flex items-center justify-between gap-4 py-4"
                 >
                   <div>
-                    <div className="text-xs font-black uppercase text-gwm-muted">{item.date}</div>
+                    <div className="text-xs font-black uppercase text-gwm-muted">
+                      {item.date}
+                    </div>
                     <div className="mt-1 font-bold text-white">{item.title}</div>
                   </div>
                   <span className="text-gwm-red">→</span>

@@ -1,7 +1,14 @@
 import { isLocale, type Locale } from "@gwm/shared";
 import { notFound } from "next/navigation";
 import { getSiteContent } from "../../../lib/content/site";
-import { Icon, PageHero, QuickActionBar, SectionHeading, SiteFooter, SiteHeader } from "../components";
+import {
+  Icon,
+  PageHero,
+  QuickActionBar,
+  SectionHeading,
+  SiteFooter,
+  SiteHeader,
+} from "../components";
 
 type FormsPageProps = {
   params: Promise<{ locale: string }>;
@@ -31,14 +38,21 @@ export default async function FormsPage({ params }: FormsPageProps) {
         <div className="gwm-container">
           <div className="mb-8 flex flex-wrap justify-center gap-2">
             {forms.tabs.map((tab, index) => (
-              <span key={tab} className={`gwm-chip ${index === 0 ? "gwm-chip-active" : ""}`}>
+              <span
+                key={tab}
+                className={`gwm-chip ${index === 0 ? "gwm-chip-active" : ""}`}
+              >
                 {tab}
               </span>
             ))}
           </div>
 
           <form className="mx-auto max-w-3xl border border-gwm-line bg-gwm-panel p-5 md:p-8">
-            <SectionHeading eyebrow={forms.hero.eyebrow} title={forms.formTitle} summary={forms.formSubtitle} />
+            <SectionHeading
+              eyebrow={forms.hero.eyebrow}
+              title={forms.formTitle}
+              summary={forms.formSubtitle}
+            />
             <div className="grid gap-4 md:grid-cols-2">
               {forms.fields.map((field) => (
                 <label key={field.label} className={field.half ? "" : "md:col-span-2"}>

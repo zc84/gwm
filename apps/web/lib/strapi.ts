@@ -1,6 +1,11 @@
 import qs from "qs";
 import type { Locale } from "@gwm/shared";
-import { getFallbackHomeContent, type HomePageContent, type HomeStat, type MediaAsset } from "./content/home";
+import {
+  getFallbackHomeContent,
+  type HomePageContent,
+  type HomeStat,
+  type MediaAsset,
+} from "./content/home";
 
 type StrapiResponse<T> = {
   data?: T | null;

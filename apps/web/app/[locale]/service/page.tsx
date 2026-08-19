@@ -45,7 +45,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <h2 className="gwm-heading-lg mb-8">{service.needsTitle}</h2>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {service.needs.map((item) => (
-              <article key={item.title} className="border border-gwm-line bg-gwm-panel p-5">
+              <article
+                key={item.title}
+                className="border border-gwm-line bg-gwm-panel p-5"
+              >
                 <Icon name={item.icon} className="text-gwm-red" />
                 <h3 className="mt-4 text-lg font-black text-white">{item.title}</h3>
                 <p className="gwm-copy mt-2 text-sm">{item.summary}</p>
@@ -73,8 +76,14 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 <p className="mt-1 text-sm font-bold text-gwm-muted">{plan.price}</p>
                 <ul className="mt-5 space-y-2">
                   {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-sm text-gwm-copy">
-                      <Icon name="check" className="mt-0.5 shrink-0 text-gwm-red" />
+                    <li
+                      key={feature}
+                      className="flex items-start gap-2 text-sm text-gwm-copy"
+                    >
+                      <Icon
+                        name="wrench"
+                        className="mt-0.5 h-4 w-4 shrink-0 text-gwm-red"
+                      />
                       <span className="gwm-copy">{feature}</span>
                     </li>
                   ))}
@@ -93,10 +102,17 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
       <section className="gwm-section">
         <div className="gwm-container">
-          <SectionHeading eyebrow={service.hero.eyebrow} title={service.ownership.title} summary={service.ownership.summary} />
+          <SectionHeading
+            eyebrow={service.hero.eyebrow}
+            title={service.ownership.title}
+            summary={service.ownership.summary}
+          />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {service.ownership.features.map((feature) => (
-              <div key={feature.title} className="border border-gwm-line bg-gwm-panel p-5">
+              <div
+                key={feature.title}
+                className="border border-gwm-line bg-gwm-panel p-5"
+              >
                 <Icon name={feature.icon} className="text-gwm-red" />
                 <h3 className="mt-4 text-sm font-black text-white">{feature.title}</h3>
                 <p className="gwm-copy mt-2 text-sm">{feature.summary}</p>
@@ -130,7 +146,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Link href={`/${locale}/countries`} className="gwm-button gwm-button-secondary">
+            <Link
+              href={`/${locale}/countries`}
+              className="gwm-button gwm-button-secondary"
+            >
               {service.findServiceLabel}
             </Link>
           </div>

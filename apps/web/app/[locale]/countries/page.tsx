@@ -9,7 +9,10 @@ type CountriesPageProps = {
   searchParams: Promise<{ country?: string }>;
 };
 
-export default async function CountriesPage({ params, searchParams }: CountriesPageProps) {
+export default async function CountriesPage({
+  params,
+  searchParams,
+}: CountriesPageProps) {
   const { locale: localeParam } = await params;
   const { country: countryParam } = await searchParams;
 
@@ -81,7 +84,10 @@ export default async function CountriesPage({ params, searchParams }: CountriesP
               </p>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {selected.dealers.map((dealer) => (
-                  <div key={dealer.name} className="border border-gwm-line bg-gwm-panel-soft p-4">
+                  <div
+                    key={dealer.name}
+                    className="border border-gwm-line bg-gwm-panel-soft p-4"
+                  >
                     <div className="text-sm font-black text-white">{dealer.name}</div>
                     <div className="gwm-copy mt-2 text-xs">{dealer.address}</div>
                     <div className="gwm-caption mt-3">{dealer.hours}</div>

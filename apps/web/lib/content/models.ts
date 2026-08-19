@@ -24,6 +24,70 @@ export type BrandGroup = {
   models: ModelEntry[];
 };
 
+/**
+ * Model name -> media pack image folder, sourced from
+ * `GWM_ME_Website_Content_Media_Pack/Vehicles/vehicle_master.json`. Every
+ * catalogue entry above has a matching folder of 5 stills under
+ * `apps/web/public/media/vehicles/<slug>/`.
+ */
+const modelImageSlugs: Record<string, string> = {
+  Jolion: "jolion",
+  "Jolion Pro": "jolion-pro",
+  "Jolion Max": "jolion-max",
+  "All-New H6": "all-new-h6",
+  "H6 HEV": "h6-hev",
+  "H6 GT": "h6-gt",
+  H7: "h7",
+  H9: "h9",
+  V7: "v7",
+  DARGO: "dargo",
+  "TANK 300": "tank-300",
+  "TANK 300 HEV": "tank-300-hev",
+  "TANK 300 Polar Edition": "tank-300-polar-edition",
+  "TANK 400": "tank-400",
+  "TANK 400 Hi4-T": "tank-400-hi4-t",
+  "TANK 500": "tank-500",
+  "TANK 500 HEV": "tank-500-hev",
+  "TANK 500 Hi4-T": "tank-500-hi4-t",
+  "TANK 500 Hi4-Z": "tank-500-hi4-z",
+  "TANK 700": "tank-700",
+  "ORA 03 Pure": "ora-03-pure",
+  "ORA 03 Pro": "ora-03-pro",
+  "ORA 03 GT": "ora-03-gt",
+  "ORA 07": "ora-07",
+  "ORA 07 Touring": "ora-07-touring",
+  "ORA 5": "ora-5",
+  "Good Cat Standard": "good-cat-standard",
+  "Good Cat Long Range": "good-cat-long-range",
+  "Good Cat GT": "good-cat-gt",
+  "Ballet Cat": "ballet-cat",
+  "WEY 03": "wey-03",
+  "WEY 05": "wey-05",
+  "WEY 07": "wey-07",
+  "WEY 80": "wey-80",
+  "WEY G9": "wey-g9",
+  "Coffee 01": "coffee-01",
+  "Coffee 02": "coffee-02",
+  "Mocha DHT-PHEV": "mocha-dht-phev",
+  Lanshan: "lanshan",
+  Gaoshan: "gaoshan",
+  "POER Facelift": "poer-facelift",
+  "POER 2.4T Passenger": "poer-2-4t-passenger",
+  "POER 2.4T Commercial": "poer-2-4t-commercial",
+  "POER Off-Road": "poer-off-road",
+  "POER King Kong": "poer-king-kong",
+  "King Kong 8AT": "king-kong-8at",
+  "Wingle 5": "wingle-5",
+  "Wingle 7": "wingle-7",
+  "SAHAR POER": "sahar-poer",
+  "SAHAR POER Hi4-T": "sahar-poer-hi4-t",
+};
+
+export function getModelThumbnail(name: string): string | undefined {
+  const slug = modelImageSlugs[name];
+  return slug ? `/media/vehicles/${slug}/01_hero_exterior.webp` : undefined;
+}
+
 export const modelCatalogue: Record<Locale, BrandGroup[]> = {
   en: [
     {
@@ -478,7 +542,8 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           status: "referenced",
           segment: "SUV مدمجة",
           tagline: "مساحة أكبر لطموحات كل يوم",
-          intro: "تصور لسيارة SUV مدمجة تجمع بين المساحة العملية والراحة والتقنيات سهلة الاستخدام.",
+          intro:
+            "تصور لسيارة SUV مدمجة تجمع بين المساحة العملية والراحة والتقنيات سهلة الاستخدام.",
         },
         {
           name: "Jolion Max",
@@ -526,7 +591,8 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           status: "live",
           segment: "SUV كبيرة",
           tagline: "راحة للعائلة وقدرات للمغامرة",
-          intro: "سيارة SUV كبيرة توفر مساحة عائلية وراحة راقية وثقة للانطلاق خارج الطرق المعبدة.",
+          intro:
+            "سيارة SUV كبيرة توفر مساحة عائلية وراحة راقية وثقة للانطلاق خارج الطرق المعبدة.",
         },
         {
           name: "V7",
@@ -673,7 +739,8 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           status: "seed",
           segment: "سيارة كهربائية للرحلات",
           tagline: "مساحة أكبر للرحلات الكهربائية",
-          intro: "طراز كهربائي موجه للرحلات يضيف مرونة أكبر للأمتعة مع الحفاظ على لغة تصميم ORA المميزة.",
+          intro:
+            "طراز كهربائي موجه للرحلات يضيف مرونة أكبر للأمتعة مع الحفاظ على لغة تصميم ORA المميزة.",
         },
         {
           name: "ORA 5",
@@ -774,7 +841,8 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           status: "seed",
           segment: "SUV كهربائية فاخرة مدمجة",
           tagline: "فخامة مدمجة واتصال ذكي",
-          intro: "طراز فاخر مدمج مخصص لاختبار التوطين وإدارة الأسماء السوقية المختلفة ضمن مجموعة WEY.",
+          intro:
+            "طراز فاخر مدمج مخصص لاختبار التوطين وإدارة الأسماء السوقية المختلفة ضمن مجموعة WEY.",
         },
         {
           name: "Mocha DHT-PHEV",
@@ -797,7 +865,8 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           status: "seed",
           segment: "MPV فاخرة",
           tagline: "رحلات فاخرة بتفاصيل مدروسة",
-          intro: "طراز MPV فاخر يركز على مرونة المقاعد والراحة الهادئة وتجربة راقية للركاب.",
+          intro:
+            "طراز MPV فاخر يركز على مرونة المقاعد والراحة الهادئة وتجربة راقية للركاب.",
         },
       ],
     },
@@ -835,7 +904,8 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           status: "seed",
           segment: "بيك أب للطرق الوعرة",
           tagline: "اعمل بقوة واستكشف أبعد",
-          intro: "بيك أب للطرق الوعرة يجمع بين العملية اليومية والقدرات المغامرة والتصميم القوي.",
+          intro:
+            "بيك أب للطرق الوعرة يجمع بين العملية اليومية والقدرات المغامرة والتصميم القوي.",
         },
         {
           name: "POER King Kong",
@@ -850,7 +920,8 @@ export const modelCatalogue: Record<Locale, BrandGroup[]> = {
           status: "seed",
           segment: "بيك أب تجارية أوتوماتيكية",
           tagline: "راحة أكبر ليوم العمل",
-          intro: "نسخة أوتوماتيكية ضمن المحتوى تضيف سهولة أكبر في الاستخدام اليومي إلى طراز بيك أب تجاري متين.",
+          intro:
+            "نسخة أوتوماتيكية ضمن المحتوى تضيف سهولة أكبر في الاستخدام اليومي إلى طراز بيك أب تجاري متين.",
         },
         {
           name: "Wingle 5",

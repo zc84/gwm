@@ -85,7 +85,19 @@ export function Viewer360({ frames, alt, dragLabel, className = "" }: Viewer360P
           className="pointer-events-none h-full w-full select-none object-contain"
           draggable={false}
         />
-        <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white/85">
+        <span className="pointer-events-none absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-black/55 px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white/85">
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          >
+            <path d="M20 12a8 8 0 1 1-3-6.2" />
+            <path d="M20 3v5h-5" />
+          </svg>
           {dragLabel}
         </span>
       </div>

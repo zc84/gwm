@@ -124,12 +124,23 @@ html[dir="rtl"] .gwm-hero-media::after {
 }
 
 .gwm-eyebrow {
-  color: var(--gwm-color-red);
+  align-items: center;
+  color: var(--gwm-color-muted);
+  display: inline-flex;
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0;
+  gap: 0.6rem;
+  letter-spacing: 0.02em;
   line-height: 1.35;
   text-transform: uppercase;
+}
+
+.gwm-eyebrow::before {
+  background: var(--gwm-color-muted);
+  content: "";
+  display: inline-block;
+  height: 1px;
+  width: 20px;
 }
 
 html[dir="rtl"] .gwm-eyebrow {
@@ -235,6 +246,33 @@ html[dir="rtl"] .gwm-button {
   color: var(--gwm-color-text);
 }
 
+.gwm-tabs {
+  border-bottom: 1px solid var(--gwm-color-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+}
+
+.gwm-tab {
+  border-bottom: 2px solid transparent;
+  color: var(--gwm-color-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  padding-bottom: 0.85rem;
+  text-transform: uppercase;
+}
+
+html[dir="rtl"] .gwm-tab {
+  text-transform: none;
+}
+
+.gwm-tab-active {
+  border-bottom-color: var(--gwm-color-red);
+  color: var(--gwm-color-text);
+}
+
 .gwm-card-grid {
   display: grid;
   gap: 1rem;
@@ -324,6 +362,18 @@ html[dir="rtl"] .gwm-photo-placeholder span {
   border: 0;
   inset: 0;
   min-height: 0;
+  position: absolute;
+}
+
+.gwm-media-fade {
+  position: relative;
+}
+
+.gwm-media-fade::after {
+  background: linear-gradient(180deg, rgba(5, 5, 6, 0) 55%, rgba(5, 5, 6, 0.5) 100%);
+  content: "";
+  inset: 0;
+  pointer-events: none;
   position: absolute;
 }
 
