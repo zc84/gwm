@@ -16,31 +16,25 @@ export default async function NewsPage({ params }: NewsPageProps) {
 
   const locale = localeParam as Locale;
   const {
-    home: { news },
+    home: { news: newsItems },
+    news,
   } = getSiteContent(locale);
 
   return (
     <main className="gwm-app-shell">
       <SiteHeader locale={locale} />
       <PageHero
-        eyebrow={locale === "ar" ? "الأخبار" : "News"}
-        title={locale === "ar" ? "آخر تحديثات GWM" : "Latest from GWM"}
-        intro={
-          locale === "ar"
-            ? "محتوى ثابت للـ MVP يغطي أخبار المنتجات والخدمة والمنصة الإقليمية."
-            : "Static MVP content covering product, service and regional platform updates."
-        }
-        placeholder={locale === "ar" ? "صورة: غرفة أخبار GWM" : "Photo: GWM newsroom"}
+        eyebrow={news.hero.eyebrow}
+        title={news.hero.title}
+        intro={news.hero.intro}
+        placeholder={news.hero.placeholder}
       />
 
       <section className="gwm-section">
         <div className="gwm-container">
-          <SectionHeading
-            eyebrow={locale === "ar" ? "المستجدات" : "Updates"}
-            title={locale === "ar" ? "قائمة تحريرية مركزة" : "A focused editorial list"}
-          />
+          <SectionHeading eyebrow={news.section.eyebrow} title={news.section.title} />
           <div className="divide-y divide-gwm-line border-y border-gwm-line">
-            {news.map((item) => (
+            {newsItems.map((item) => (
               <article
                 key={`${item.date}-${item.title}`}
                 className="flex items-center justify-between gap-4 py-6"

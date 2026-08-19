@@ -98,7 +98,7 @@ export const fallbackHomeContent = {
   en: {
     locale: "en",
     source: "fallback",
-    navItems: ["Brands", "Vehicles", "About GWM", "Technology", "Contact Us"],
+    navItems: ["Models", "Offers", "About GWM", "Technology", "Contact Us"],
     languageLabel: "العربية",
     hero: {
       eyebrow: "GWM Tank",
@@ -388,7 +388,7 @@ export const fallbackHomeContent = {
   ar: {
     locale: "ar",
     source: "fallback",
-    navItems: ["العلامات", "المركبات", "عن GWM", "التكنولوجيا", "اتصل بنا"],
+    navItems: ["الطرازات", "العروض", "عن GWM", "التكنولوجيا", "اتصل بنا"],
     languageLabel: "English",
     hero: {
       eyebrow: "جي دبليو إم تانك",

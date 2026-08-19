@@ -1,5 +1,6 @@
 import type { Locale } from "@gwm/shared";
 import { getFallbackHomeContent, type HomePageContent } from "./home";
+import type { ModelStatus } from "./models";
 
 export type QuickStat = { value: string; unit: string; label: string };
 export type WhyCard = { title: string; summary: string; placeholder: string };
@@ -96,11 +97,51 @@ export type FormContent = {
   submitLabel: string;
 };
 
+export type CatalogueContent = {
+  hero: { eyebrow: string; title: string; intro: string; placeholder: string };
+  detailedSection: { eyebrow: string; title: string; summary: string };
+  fullRangeSection: { eyebrow: string; title: string; summary: string };
+  discoverLabel: string;
+  bookTestDriveLabel: string;
+  viewDetailsLabel: string;
+  statusLabels: Record<ModelStatus, string>;
+};
+
+export type NewsPageContent = {
+  hero: { eyebrow: string; title: string; intro: string; placeholder: string };
+  section: { eyebrow: string; title: string };
+};
+
+export type AboutContent = {
+  hero: { eyebrow: string; title: string; intro: string; placeholder: string };
+  sections: Array<{ title: string; summary: string }>;
+  disclaimer: string;
+};
+
+export type OfferCard = {
+  brand: string;
+  model: string;
+  title: string;
+  validity: string;
+  terms: string;
+  ctaLabel: string;
+};
+
+export type OffersContent = {
+  hero: { eyebrow: string; title: string; intro: string; placeholder: string };
+  offers: OfferCard[];
+  disclaimer: string;
+};
+
 export type SiteContent = {
   home: HomePageContent;
   vehicles: Vehicle[];
   service: ServiceContent;
   forms: FormContent;
+  catalogue: CatalogueContent;
+  news: NewsPageContent;
+  about: AboutContent;
+  offers: OffersContent;
 };
 
 const content = {
@@ -510,6 +551,128 @@ const content = {
         "I agree to the processing of my personal data by GWM and its authorized distributors to respond to this request, in accordance with the Privacy Policy (GDPR / PDPL).",
       submitLabel: "Request a Test Drive",
     },
+    catalogue: {
+      hero: {
+        eyebrow: "Vehicle Catalogue",
+        title: "Find your GWM.",
+        intro: "Browse by brand, body style and powertrain.",
+        placeholder: "Photo: GWM line-up, studio",
+      },
+      detailedSection: {
+        eyebrow: "Line-up",
+        title: "Regional-ready vehicles",
+        summary: "Each card surfaces brand family, body type, powertrain and the next customer action.",
+      },
+      fullRangeSection: {
+        eyebrow: "Full Range",
+        title: "Explore the GWM family by brand",
+        summary:
+          "Model availability varies by market. Status reflects the current Saudi reference catalogue used to build this content seed; local launch and availability must be confirmed before publication.",
+      },
+      discoverLabel: "Discover",
+      bookTestDriveLabel: "Book a Test Drive",
+      viewDetailsLabel: "View details",
+      statusLabels: {
+        live: "Available now",
+        referenced: "Selected markets",
+        seed: "Coming soon",
+      },
+    },
+    news: {
+      hero: {
+        eyebrow: "News",
+        title: "Latest market news and launches",
+        intro:
+          "Product launches, events and corporate stories from across the GWM Middle East network.",
+        placeholder: "Photo: GWM newsroom",
+      },
+      section: {
+        eyebrow: "Updates",
+        title: "A focused editorial list",
+      },
+    },
+    about: {
+      hero: {
+        eyebrow: "About GWM",
+        title: "Technology built for better journeys",
+        intro:
+          "Great Wall Motor Middle East brings together SUVs, pickups, hybrid and electric mobility under one regional platform, backed by GWM's global engineering and manufacturing scale.",
+        placeholder: "Photo: GWM global manufacturing",
+      },
+      sections: [
+        {
+          title: "GWM Overview",
+          summary:
+            "Great Wall Motor is a multi-brand automotive group building SUVs, pickups, hybrid and electric vehicles for markets around the world, including a growing regional presence across the Middle East.",
+        },
+        {
+          title: "Global Footprint",
+          summary:
+            "GWM vehicles and aftersales support reach markets across Asia, Europe, Africa, Latin America and the Middle East, backed by regional distributor and dealer networks.",
+        },
+        {
+          title: "Brand Portfolio",
+          summary:
+            "HAVAL, GWM TANK, ORA, WEY and GWM POER each address a distinct customer need — from family SUVs and luxury off-roaders to electric mobility and premium pickups.",
+        },
+        {
+          title: "R&D and Intelligent Mobility",
+          summary:
+            "Ongoing investment in hybrid architectures, intelligent four-wheel drive and connected cockpit technology shapes every new GWM model.",
+        },
+        {
+          title: "Manufacturing and Quality",
+          summary:
+            "Vehicles sold in this region are built to GWM's global manufacturing and quality standards, with market-specific specification and testing.",
+        },
+        {
+          title: "Sustainability Direction",
+          summary:
+            "GWM is expanding its hybrid and electric line-up as part of a broader move toward lower-emission mobility across every brand.",
+        },
+      ],
+      disclaimer:
+        "Facts and figures on this page are illustrative placeholders; live metrics are centrally governed and dated before publication.",
+    },
+    offers: {
+      hero: {
+        eyebrow: "Offers",
+        title: "Current offers for your market",
+        intro:
+          "Model-specific offers, updated by market. Pricing and finance terms shown here require local approval before publication.",
+        placeholder: "Photo: GWM showroom promotion",
+      },
+      offers: [
+        {
+          brand: "HAVAL",
+          model: "H6 HEV",
+          title: "Complimentary service plan on H6 HEV",
+          validity: "Ends 30 Sep 2026",
+          terms:
+            "Applies to new retail contracts signed within the offer period. Subject to dealer stock and market approval.",
+          ctaLabel: "Get a Quote",
+        },
+        {
+          brand: "TANK",
+          model: "500",
+          title: "Extended warranty upgrade on TANK 500",
+          validity: "Ends 30 Sep 2026",
+          terms:
+            "Available on select trims while stocks last. Terms vary by market and are subject to change without notice.",
+          ctaLabel: "Get a Quote",
+        },
+        {
+          brand: "POER",
+          model: "Commercial",
+          title: "Fleet finance rates on POER Commercial",
+          validity: "Ends 30 Sep 2026",
+          terms: "For registered fleet and business customers. Finance rates require market approval.",
+          ctaLabel: "Enquire for Fleet",
+        },
+      ],
+      disclaimer:
+        "All offers shown are indicative content seeds. Final pricing, finance terms and validity must be approved by the local market before publication.",
+    },
   },
   ar: {
     home: getFallbackHomeContent("ar"),
@@ -881,6 +1044,125 @@ const content = {
       consent:
         "أوافق على معالجة بياناتي الشخصية من قبل GWM وموزعيها المعتمدين للرد على هذا الطلب، وفقاً لسياسة الخصوصية (GDPR / PDPL).",
       submitLabel: "طلب تجربة قيادة",
+    },
+    catalogue: {
+      hero: {
+        eyebrow: "كتالوج السيارات",
+        title: "اعثر على GWM المناسبة لك",
+        intro: "تصفح حسب العلامة ونوع الهيكل ونظام الدفع.",
+        placeholder: "صورة: تشكيلة GWM، استوديو",
+      },
+      detailedSection: {
+        eyebrow: "المجموعة",
+        title: "مركبات جاهزة للمنطقة",
+        summary: "كل بطاقة تعرض العائلة، نوع الهيكل، منظومة الحركة ومسار الطلب التالي.",
+      },
+      fullRangeSection: {
+        eyebrow: "التشكيلة الكاملة",
+        title: "استكشف عائلة GWM حسب العلامة",
+        summary:
+          "يختلف توفر الطراز حسب السوق. تعكس الحالة المعروضة كتالوج السعودية المرجعي الحالي المستخدم لإعداد هذا المحتوى؛ يجب تأكيد الإطلاق والتوفر المحلي قبل النشر.",
+      },
+      discoverLabel: "اكتشف",
+      bookTestDriveLabel: "احجز تجربة قيادة",
+      viewDetailsLabel: "عرض التفاصيل",
+      statusLabels: {
+        live: "متوفرة حالياً",
+        referenced: "أسواق مختارة",
+        seed: "قريباً",
+      },
+    },
+    news: {
+      hero: {
+        eyebrow: "الأخبار",
+        title: "أحدث أخبار السوق والإطلاقات",
+        intro: "إطلاقات المنتجات والفعاليات وأخبار الشركة من شبكة GWM في الشرق الأوسط.",
+        placeholder: "صورة: غرفة أخبار GWM",
+      },
+      section: {
+        eyebrow: "المستجدات",
+        title: "قائمة تحريرية مركزة",
+      },
+    },
+    about: {
+      hero: {
+        eyebrow: "عن GWM",
+        title: "تقنيات مصممة لرحلات أفضل",
+        intro:
+          "تجمع جريت وول موتور في الشرق الأوسط سيارات SUV والبيك أب والتنقل الهجين والكهربائي في منصة إقليمية واحدة، بدعم من نطاق الهندسة والتصنيع العالمي لـ GWM.",
+        placeholder: "صورة: تصنيع GWM العالمي",
+      },
+      sections: [
+        {
+          title: "نظرة عامة على GWM",
+          summary:
+            "شركة جريت وول موتور مجموعة سيارات متعددة العلامات تصنع سيارات SUV والبيك أب والمركبات الهجينة والكهربائية لأسواق حول العالم، مع حضور إقليمي متنامٍ في الشرق الأوسط.",
+        },
+        {
+          title: "الحضور العالمي",
+          summary:
+            "تصل سيارات GWM وخدمات ما بعد البيع إلى أسواق في آسيا وأوروبا وأفريقيا وأمريكا اللاتينية والشرق الأوسط، بدعم من شبكات موزعين ووكلاء إقليمية.",
+        },
+        {
+          title: "محفظة العلامات",
+          summary:
+            "تلبي كل من هافال وجي دبليو إم تانك وأورا ووي وجي دبليو إم بوير حاجة مختلفة للعملاء - من سيارات SUV العائلية إلى الطرازات الفاخرة للطرق الوعرة والتنقل الكهربائي والبيك أب الفاخرة.",
+        },
+        {
+          title: "البحث والتطوير والتنقل الذكي",
+          summary:
+            "استثمار مستمر في الأنظمة الهجينة والدفع الرباعي الذكي وتقنيات المقصورة المتصلة يشكل كل طراز جديد من GWM.",
+        },
+        {
+          title: "التصنيع والجودة",
+          summary:
+            "تُصنع السيارات المباعة في هذه المنطقة وفق معايير GWM العالمية للتصنيع والجودة، مع مواصفات واختبارات خاصة بكل سوق.",
+        },
+        {
+          title: "توجهات الاستدامة",
+          summary:
+            "تعمل GWM على توسيع تشكيلتها الهجينة والكهربائية كجزء من توجه أوسع نحو تنقل أقل انبعاثات في جميع علاماتها.",
+        },
+      ],
+      disclaimer:
+        "الأرقام والحقائق في هذه الصفحة هي عناصر توضيحية مؤقتة؛ يتم إدارة المقاييس الفعلية مركزياً وتحديد تاريخها قبل النشر.",
+    },
+    offers: {
+      hero: {
+        eyebrow: "العروض",
+        title: "العروض الحالية في سوقك",
+        intro:
+          "عروض خاصة بكل طراز، مُحدثة حسب السوق. تتطلب الأسعار وشروط التمويل الظاهرة هنا اعتماد السوق قبل النشر.",
+        placeholder: "صورة: عرض ترويجي في صالة عرض GWM",
+      },
+      offers: [
+        {
+          brand: "هافال",
+          model: "H6 HEV",
+          title: "خطة صيانة مجانية مع H6 HEV",
+          validity: "ينتهي في 30 سبتمبر 2026",
+          terms: "تنطبق على عقود البيع الجديدة الموقعة خلال فترة العرض. تخضع لتوفر المخزون واعتماد السوق.",
+          ctaLabel: "اطلب عرض سعر",
+        },
+        {
+          brand: "تانك",
+          model: "500",
+          title: "ترقية ضمان ممتد مع TANK 500",
+          validity: "ينتهي في 30 سبتمبر 2026",
+          terms: "متوفر على فئات مختارة حتى نفاد الكمية. تختلف الشروط حسب السوق وقابلة للتغيير دون إشعار.",
+          ctaLabel: "اطلب عرض سعر",
+        },
+        {
+          brand: "بوير",
+          model: "Commercial",
+          title: "أسعار تمويل للأساطيل مع بوير Commercial",
+          validity: "ينتهي في 30 سبتمبر 2026",
+          terms: "لعملاء الأساطيل والأعمال المسجلين. تتطلب أسعار التمويل اعتماد السوق.",
+          ctaLabel: "استفسار للأساطيل",
+        },
+      ],
+      disclaimer:
+        "جميع العروض المعروضة هي محتوى تجريبي إرشادي. يجب اعتماد الأسعار النهائية وشروط التمويل وفترة الصلاحية من السوق المحلي قبل النشر.",
     },
   },
 } satisfies Record<Locale, SiteContent>;

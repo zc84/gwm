@@ -2,9 +2,9 @@ import Link from "next/link";
 import { localeLabels, type Locale } from "@gwm/shared";
 
 const navItems = [
-  { href: "vehicles", en: "Brands", ar: "العلامات", target: "vehicles" },
-  { href: "vehicles", en: "Vehicles", ar: "المركبات", target: "" },
-  { href: "", en: "About GWM", ar: "عن GWM", target: "" },
+  { href: "vehicles", en: "Models", ar: "الطرازات", target: "" },
+  { href: "offers", en: "Offers", ar: "العروض", target: "" },
+  { href: "about", en: "About GWM", ar: "عن GWM", target: "" },
   { href: "", en: "Technology", ar: "التكنولوجيا", target: "technology" },
   { href: "forms", en: "Contact Us", ar: "اتصل بنا", target: "" },
 ] as const;
@@ -249,33 +249,71 @@ export function SiteFooter({ locale }: { locale: Locale }) {
       title: locale === "ar" ? "المركبات" : "Vehicles",
       links:
         locale === "ar"
-          ? ["هافال", "تانك", "أورا", "بوير", "وي", "مقارنة الطرازات"]
-          : ["Haval", "Tank", "Ora", "Poer", "Wey", "Compare Models"],
-      href: `/${locale}/vehicles`,
+          ? [
+              { label: "هافال", href: "vehicles" },
+              { label: "تانك", href: "vehicles" },
+              { label: "أورا", href: "vehicles" },
+              { label: "بوير", href: "vehicles" },
+              { label: "وي", href: "vehicles" },
+              { label: "العروض", href: "offers" },
+            ]
+          : [
+              { label: "Haval", href: "vehicles" },
+              { label: "Tank", href: "vehicles" },
+              { label: "Ora", href: "vehicles" },
+              { label: "Poer", href: "vehicles" },
+              { label: "Wey", href: "vehicles" },
+              { label: "Offers", href: "offers" },
+            ],
     },
     {
       title: locale === "ar" ? "الملكية" : "Owners",
       links:
         locale === "ar"
-          ? ["أدلة المالك", "الضمان", "عناية GWM", "حجز الصيانة", "قطع غيار أصلية"]
-          : ["Owner Manuals", "Warranty", "GWM Care", "Service Booking", "Genuine Parts"],
-      href: `/${locale}/service`,
+          ? [
+              { label: "أدلة المالك", href: "service" },
+              { label: "الضمان", href: "service" },
+              { label: "عناية GWM", href: "service" },
+              { label: "حجز الصيانة", href: "service" },
+              { label: "قطع غيار أصلية", href: "service" },
+            ]
+          : [
+              { label: "Owner Manuals", href: "service" },
+              { label: "Warranty", href: "service" },
+              { label: "GWM Care", href: "service" },
+              { label: "Service Booking", href: "service" },
+              { label: "Genuine Parts", href: "service" },
+            ],
     },
     {
       title: locale === "ar" ? "الشركة" : "Company",
       links:
         locale === "ar"
-          ? ["غرفة الأخبار", "عن GWM", "الوظائف", "التكنولوجيا", "الاستدامة", "رياضة السيارات"]
-          : ["Newsroom", "About GWM", "Careers", "Technology", "Sustainability", "Motorsport"],
-      href: `/${locale}/news`,
+          ? [
+              { label: "غرفة الأخبار", href: "news" },
+              { label: "عن GWM", href: "about" },
+              { label: "التكنولوجيا", href: "about" },
+            ]
+          : [
+              { label: "Newsroom", href: "news" },
+              { label: "About GWM", href: "about" },
+              { label: "Technology", href: "about" },
+            ],
     },
     {
       title: locale === "ar" ? "الدعم" : "Support",
       links:
         locale === "ar"
-          ? ["اتصل بنا", "ابحث عن وكيل", "الأسئلة الشائعة", "الأسطول والأعمال"]
-          : ["Contact Us", "Find a Dealer", "FAQ", "Fleet & Business"],
-      href: `/${locale}/forms`,
+          ? [
+              { label: "اتصل بنا", href: "forms" },
+              { label: "ابحث عن وكيل", href: "countries" },
+              { label: "الأسطول والأعمال", href: "forms" },
+            ]
+          : [
+              { label: "Contact Us", href: "forms" },
+              { label: "Find a Dealer", href: "countries" },
+              { label: "Fleet & Business", href: "forms" },
+            ],
     },
   ];
 
@@ -314,9 +352,9 @@ export function SiteFooter({ locale }: { locale: Locale }) {
               <h3 className="text-sm font-black text-white">{column.title}</h3>
               <ul className="mt-4 space-y-2 text-sm font-bold text-gwm-muted">
                 {column.links.map((link) => (
-                  <li key={link}>
-                    <Link href={column.href} className="hover:text-white">
-                      {link}
+                  <li key={link.label}>
+                    <Link href={`/${locale}/${link.href}`} className="hover:text-white">
+                      {link.label}
                     </Link>
                   </li>
                 ))}

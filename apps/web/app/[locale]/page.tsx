@@ -29,9 +29,9 @@ export default async function HomePage({ params }: HomePageProps) {
           </Link>
           <nav className="hidden items-center gap-7 text-xs font-black uppercase text-white/78 md:flex">
             {[
-              { label: content.navItems[0], href: "#brands" },
-              { label: content.navItems[1], href: `/${locale}/vehicles` },
-              { label: content.navItems[2], href: `/${locale}` },
+              { label: content.navItems[0], href: `/${locale}/vehicles` },
+              { label: content.navItems[1], href: `/${locale}/offers` },
+              { label: content.navItems[2], href: `/${locale}/about` },
               { label: content.navItems[3], href: "#technology" },
               { label: content.navItems[4], href: `/${locale}/forms` },
             ].map((item) => (
