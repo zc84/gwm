@@ -2,7 +2,7 @@ import Link from "next/link";
 import { isLocale, type Locale } from "@gwm/shared";
 import { notFound } from "next/navigation";
 import { getSiteContent } from "../../../lib/content/site";
-import { getModelCatalogue, getModelThumbnail } from "../../../lib/content/models";
+import { getModelCatalogue } from "../../../lib/content/models";
 import {
   PageHero,
   PhotoPlaceholder,
@@ -10,6 +10,7 @@ import {
   SiteFooter,
   SiteHeader,
 } from "../components";
+import { BrandRangeFilter } from "./BrandRangeFilter";
 
 type VehiclesPageProps = {
   params: Promise<{ locale: string }>;
@@ -112,66 +113,15 @@ export default async function VehiclesPage({ params }: VehiclesPageProps) {
             title={catalogue.fullRangeSection.title}
             summary={catalogue.fullRangeSection.summary}
           />
-          <div className="flex flex-col gap-10">
-            {brandGroups.map((group) => (
-              <div key={group.brand}>
-                <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2 border-b border-gwm-line pb-3">
-                  <h3 className="text-xl font-black text-white">{group.brand}</h3>
-                  <p className="gwm-caption">{group.tagline}</p>
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {group.models.map((entry) => {
-                    const thumbnail = getModelThumbnail(entry.name);
-                    return (
-                      <article
-                        key={entry.name}
-                        className="border border-gwm-line bg-gwm-panel p-4"
-                      >
-                        {thumbnail ? (
-                          <div
-                            className="-mx-4 -mt-4 mb-4 aspect-[4/3] gwm-media-fade bg-cover bg-center"
-                            role="img"
-                            aria-label={`${entry.name} exterior shot`}
-                            style={{ backgroundImage: `url(${thumbnail})` }}
-                          />
-                        ) : null}
-                        <div className="flex items-start justify-between gap-3">
-                          <h4 className="text-lg font-black text-white">{entry.name}</h4>
-                          <span className="whitespace-nowrap text-[10px] font-black uppercase text-gwm-muted">
-                            {catalogue.statusLabels[entry.status]}
-                          </span>
-                        </div>
-                        <p className="mt-1 text-xs font-bold uppercase text-gwm-red">
-                          {entry.segment}
-                        </p>
-                        <p className="mt-3 text-sm font-bold text-white">
-                          {entry.tagline}
-                        </p>
-                        <p className="gwm-copy mt-2 text-sm">{entry.intro}</p>
-                        <div className="mt-5">
-                          {entry.slug ? (
-                            <Link
-                              href={`/${locale}/vehicles/${entry.slug}`}
-                              className="border-b border-gwm-red pb-1 text-xs font-black uppercase text-white"
-                            >
-                              {catalogue.viewDetailsLabel}
-                            </Link>
-                          ) : (
-                            <Link
-                              href={`/${locale}/forms`}
-                              className="border-b border-gwm-red pb-1 text-xs font-black uppercase text-white"
-                            >
-                              {catalogue.bookTestDriveLabel}
-                            </Link>
-                          )}
-                        </div>
-                      </article>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
+          <BrandRangeFilter
+            locale={locale}
+            brandGroups={brandGroups}
+            filterLabel={catalogue.brandFilter.label}
+            allOption={catalogue.brandFilter.allOption}
+            viewDetailsLabel={catalogue.viewDetailsLabel}
+            bookTestDriveLabel={catalogue.bookTestDriveLabel}
+            statusLabels={catalogue.statusLabels}
+          />
         </div>
       </section>
       <SiteFooter locale={locale} />

@@ -122,6 +122,7 @@ export type CatalogueContent = {
   bookTestDriveLabel: string;
   viewDetailsLabel: string;
   statusLabels: Record<ModelStatus, string>;
+  brandFilter: { label: string; allOption: string };
 };
 
 export type NewsPageContent = {
@@ -1010,6 +1011,7 @@ const content = {
         referenced: "Selected markets",
         seed: "Coming soon",
       },
+      brandFilter: { label: "Sort by manufacturer", allOption: "All manufacturers" },
     },
     news: {
       hero: {
@@ -1942,6 +1944,7 @@ const content = {
         referenced: "أسواق مختارة",
         seed: "قريباً",
       },
+      brandFilter: { label: "الترتيب حسب الشركة المصنعة", allOption: "كل الشركات المصنعة" },
     },
     news: {
       hero: {
