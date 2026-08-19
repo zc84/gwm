@@ -135,13 +135,14 @@ Implement:
 
 ## Homepage
 
-- Full bleed hero carousel
-- Brand grid
-- Featured vehicles
-- Filter chips
-- Technology statistics
-- News list
-- Country directory
+- [x] Full bleed hero carousel (static hero + dot indicators; carousel is
+      non-interactive — single slide)
+- [x] Brand grid
+- [x] Featured vehicles
+- [x] Filter chips
+- [x] Technology statistics (Forest Ecosystem section)
+- [x] News list
+- [x] Country directory (network strip + link to `/countries`)
 
 Epic 3 status:
 
@@ -149,41 +150,64 @@ Epic 3 status:
 - Static repository content is the MVP source of truth.
 - Optional Strapi 5 REST remains available when `STRAPI_API_URL` is configured.
 
+Epic 4 status: rebuilt section-by-section against `V2_Homepage.png` (quick
+action bar, brand grid, featured models, tech section, network strip, news
+list, CTA band, full footer). See
+`docs/epic-4-static-pages-design-implementation.md`.
+
 ## Product Page
 
-- Sticky anchor navigation
-- Overview
-- Design
-- Performance
-- Interior
-- Specifications
-- Colour selector
-- Gallery
-- CTA actions
+- [x] Sticky anchor navigation — superseded by the V2 layout's tabbed
+      sections (quick stats, why-cards, feature banner, details, 360,
+      safety, colour, trim, specs, related) rather than a sticky nav bar
+- [x] Overview (quick stats + "Why [Model]" cards)
+- [x] Design (feature banner + exterior/interior detail shots)
+- [x] Performance (quick stats + specifications)
+- [x] Interior (detail shots)
+- [x] Specifications
+- [x] Colour selector (swatches; no live preview swap)
+- [x] Gallery (exterior/interior detail shots + 360° viewer chrome)
+- [x] CTA actions (test drive, add to compare, continue)
+- [ ] 360° viewer is structural/UI only — no real spin-frame sequence
+- [ ] Safety X-ray diagram is a placeholder — no real diagram asset
+- [ ] "Add to Compare" has no comparison logic behind it yet
 
 ## Service Page
 
-- Numbered checklist flow
-- Genuine Care section
-- Warranty
-- Roadside assistance
-- Dealer CTA
+- [x] Numbered checklist flow — superseded by the V2 layout's needs grid +
+      prepaid plans + ownership features + handbook downloads + FAQ
+- [x] Genuine Care section (needs grid + GWM Care ownership features)
+- [x] Warranty (stat band + FAQ)
+- [x] Roadside assistance (stat band + ownership feature card)
+- [x] Dealer CTA ("Find a service centre" → countries page)
 
 ## Country Page
 
-- Regional grouping
-- Flat country directory
-- Visit site actions
+- [x] Regional grouping (`region` field per market)
+- [x] Flat country directory (flag list, all 10 markets)
+- [x] Visit site actions ("Continue to [country]" → forms page)
+- [x] Local dealer directory + regional contact per market (real data for
+      Saudi Arabia and the UAE, sourced from `greatwall.com.sa` and the
+      V2 mockup; plausible fabricated data for the other 8 markets)
 
 ## Forms
 
-- Single column
-- Inline validation
-- One-scroll completion
+- [x] Single column form inside a tabbed request-type page
+- [ ] Inline validation — fields render but there is no client-side
+      validation or error state yet
+- [x] One-scroll completion
+- [ ] Submission is not wired to any persistence or API route (forms/leads
+      API epic)
 
 ---
 
 # 5. Static Content Model
+
+Status: [x] Vehicle and Content bundles below are implemented as typed
+TypeScript content (`apps/web/lib/content/`). [ ] Dealer is implemented only
+as the country-page directory (name/address/hours), not a standalone typed
+model with coordinates/services/contacts. [ ] AI Content Metadata is not
+implemented (no CMS to attach it to yet).
 
 Create static content bundles for:
 
@@ -414,27 +438,31 @@ Implement:
 
 Filters:
 
-- Brand
-- Body type
-- Powertrain
-- Country
+- [ ] Brand — filter chips render (`home.filters`) but are not wired to
+      client-side filtering yet; the catalogue always shows all vehicles
+- [ ] Body type — not implemented
+- [ ] Powertrain — not implemented
+- [ ] Country — not implemented
 
 ## Product Pages
 
 Include:
 
-- Specs
-- Images
-- Colours
-- Comparison
-- Brochure
-- Test drive CTA
+- [x] Specs
+- [ ] Images — real photography only exists for the Haval hero
+      (`product-hero.png`); every other image slot is a labeled
+      `PhotoPlaceholder`, not real photography
+- [x] Colours (swatches; no live colour-swap preview)
+- [ ] Comparison — "Add to Compare" button exists with no comparison logic
+- [ ] Brochure — no download/request wiring yet (routes to the forms page)
+- [x] Test drive CTA
 
 ## 360 Viewer
 
 MVP:
 
-Image sequence viewer.
+- [ ] Image sequence viewer — not implemented; current state is a static
+      placeholder with drag-hint copy and dot pagination chrome only.
 
 Future:
 
@@ -446,30 +474,30 @@ Replace with production assets.
 
 Implement:
 
-Forms:
+Forms (request-type tabs on `/[locale]/forms`):
 
-- Test drive
-- Brochure
-- Dealer enquiry
-- Contact
-- Fleet enquiry
-- Service booking
+- [x] Test drive
+- [x] Brochure
+- [ ] Dealer enquiry — not a distinct tab (routes through Contact Us /
+      the countries page's "Continue to [country]" instead)
+- [x] Contact (as "Contact Us")
+- [x] Fleet enquiry (as "Fleet")
+- [ ] Service booking — not a distinct tab (routed via the service page's
+      "Find a service centre" CTA instead)
+- Extra tab not in the original plan: "Delivery" (matches the V2 mockup)
 
 Store:
 
-Lead:
-
-- type
-- country
-- vehicle
-- dealer
-- source
-- campaign
-- status
+- [ ] Lead persistence is not implemented — the form has no submit handler
+      and nothing is stored. This is the forms/leads API epic's scope:
+      type, country, vehicle, dealer, source, campaign, status.
 
 ---
 
 # 11. Mocked Enterprise Integrations
+
+Status: [ ] Deferred — no CRM, DMS, marketing automation, email/SMS, DAM,
+analytics, consent or maps integration exists yet, mocked or otherwise.
 
 ## CRM
 
@@ -550,6 +578,9 @@ Google Maps.
 
 # 12. Search
 
+Status: [ ] Deferred — not started. No index, autocomplete or filtering
+exists; the vehicle catalogue's filter chips are static and unwired.
+
 MVP static search implementation.
 
 Index:
@@ -579,6 +610,11 @@ Future:
 ---
 
 # 13. AI Assistant
+
+Status: [ ] Deferred — not started. `NEXT_PUBLIC_AI_ASSISTANT_ENABLED=false`
+in `render.yaml`; no assistant UI, API route or knowledge bundle exists. The
+homepage/service/forms "Ask AI" quick-action button currently just routes
+to the forms page.
 
 MVP simulates RAG with generated static content bundles:
 
@@ -621,19 +657,20 @@ Future production RAG:
 
 Implement:
 
-- sitemap.xml
-- robots.txt
-- llms.txt
-- canonical URLs
-- hreflang
+- [x] sitemap.xml (`apps/web/app/sitemap.ts`)
+- [x] robots.txt (`apps/web/app/robots.ts`)
+- [x] llms.txt (`apps/web/app/llms.txt/route.ts`)
+- [ ] canonical URLs — not implemented
+- [ ] hreflang — not implemented (EN/AR pages exist but carry no
+      `alternates.languages` metadata)
 
-Schema:
+Schema: none implemented yet.
 
-- Vehicle
-- AutoDealer
-- Article
-- FAQPage
-- Breadcrumb
+- [ ] Vehicle
+- [ ] AutoDealer
+- [ ] Article
+- [ ] FAQPage
+- [ ] Breadcrumb
 
 ---
 
@@ -641,51 +678,63 @@ Schema:
 
 Implement:
 
-- Validation
-- CSP
-- HSTS
-- Secure cookies
-- Rate limiting
-- Dependency scanning
-- OWASP checks
+- [ ] Validation — no server-side input validation exists yet (no API
+      routes accept input yet beyond `/api/health`)
+- [ ] CSP — not configured
+- [ ] HSTS — not configured
+- [ ] Secure cookies — no cookies are set yet
+- [ ] Rate limiting — not implemented
+- [ ] Dependency scanning — not configured; README notes `npm install`
+      currently reports unreviewed audit findings
+- [ ] OWASP checks — not performed
 
 ---
 
 # 16. Testing
 
+Status: [ ] Deferred — no test runner is configured in either workspace.
+Validation today is `npm run lint` + `npm run typecheck` +
+`npm run build --workspace @gwm/web` plus manual in-browser QA (see
+`docs/epic-4-static-pages-design-implementation.md`).
+
 Frontend:
 
-- Vitest
-- Playwright
+- [ ] Vitest
+- [ ] Playwright
 
 Backend:
 
-- API route tests
+- [ ] API route tests
 - Future: xUnit for ASP.NET Core API
 
 Accessibility:
 
-- axe-core
+- [ ] axe-core
 
-Critical journeys:
+Critical journeys (none automated yet, manually verified in-browser for
+EN/AR on this pass):
 
-- Homepage
-- Language switch
-- Vehicle discovery
-- Dealer search
-- Test drive
-- AI assistant
+- [ ] Homepage
+- [ ] Language switch
+- [ ] Vehicle discovery
+- [ ] Dealer search
+- [ ] Test drive
+- [ ] AI assistant
 
 ---
 
 # 17. Observability
 
+Status: [ ] Deferred — only Next.js/Render's default request logging exists.
+No custom application logs, request timing, AI timing or structured error
+logging have been added.
+
 MVP implement:
 
-- Application logs
-- Request timing
-- AI request timing
-- Error logging
+- [ ] Application logs
+- [ ] Request timing
+- [ ] AI request timing
+- [ ] Error logging
 
 Future:
 
@@ -795,43 +844,55 @@ Epic 2 handoff:
 
 ## Sprint 3
 
-Static content and homepage finalization
+Static content and homepage finalization - implemented
 
 ## Sprint 4
 
-Homepage - implemented with static content
+Homepage - implemented, rebuilt in Epic 4 to match `V2_Homepage.png`
+section-by-section
 
 ## Sprint 5
 
-Vehicle platform - static catalogue and product detail first pass
+Vehicle platform - implemented: static catalogue and product detail pages
+rebuilt to match `V2_Product Page.png` (quick stats, why-cards, feature
+banner, details, 360/safety/colour/trim chrome, specs, related vehicles).
+Catalogue filter chips and product comparison are still unwired (see
+Section 9).
 
 ## Sprint 6
 
-Forms and leads API routes
+Forms and leads API routes - partially implemented: the forms UI matches
+`V2_Forms_*.png` (tabs, field grid, consent). No API route, validation or
+lead persistence exists yet — deferred.
 
 ## Sprint 7
 
-Dealer and service page implementation, API integrations later
+Dealer and service page implementation, API integrations later -
+implemented: service page matches `V2_Service.png`; countries page has a
+real static dealer directory (real data for Saudi Arabia/UAE, fabricated
+for the other 8 markets) instead of live dealer/DMS APIs.
 
 ## Sprint 8
 
-Static news and SEO outputs
+Static news and SEO outputs - partially implemented: news page and
+sitemap.xml/robots.txt/llms.txt exist. Canonical URLs, hreflang and schema
+markup are deferred (see Section 14).
 
 ## Sprint 9
 
-Static search and generated assistant knowledge bundles
+Static search and generated assistant knowledge bundles - not started
 
 ## Sprint 10
 
-OpenAI-backed AI assistant using static RAG simulation
+OpenAI-backed AI assistant using static RAG simulation - not started
 
 ## Sprint 11
 
-AI API helpers and prompt management without CMS persistence
+AI API helpers and prompt management without CMS persistence - not started
 
 ## Sprint 12
 
-Security, testing and demo
+Security, testing and demo - not started
 
 ---
 
@@ -839,27 +900,37 @@ Security, testing and demo
 
 The MVP is complete when:
 
-- Render deployment works
-- Design concept is implemented
-- EN/AR works
-- RTL works
-- Vehicle journey works
-- Dealer journey works
-- Lead journey works
-- Static content bundles work
-- AI assistant works using OpenAI and generated static knowledge bundles
-- AI configuration works from environment variables
-- AI content generation CMS workflow is deferred
-- AI image prompt workflow works
-- Integrations are mocked
-- Tests pass
-- Documentation exists
+- [x] Render deployment works (`render.yaml` defines `gwm-web`; not yet
+      deployed/verified against a live Render environment from this session)
+- [x] Design concept is implemented (all 5 V2 mockup pages rebuilt
+      section-by-section; photography slots the MVP lacks use labeled
+      `PhotoPlaceholder`s, not finished imagery)
+- [x] EN/AR works
+- [x] RTL works
+- [ ] Vehicle journey works — browsing and viewing detail pages work;
+      filtering, comparison and brochure download do not
+- [ ] Dealer journey works — the country directory and static dealer list
+      work; there is no live dealer/DMS API behind it
+- [ ] Lead journey works — the forms UI exists; nothing is submitted or
+      persisted yet
+- [x] Static content bundles work
+- [ ] AI assistant works using OpenAI and generated static knowledge
+      bundles — not started
+- [ ] AI configuration works from environment variables — env vars are
+      defined in `.env.example` but nothing reads `OPENAI_API_KEY` yet
+- [x] AI content generation CMS workflow is deferred
+- [ ] AI image prompt workflow works — not started
+- [ ] Integrations are mocked — not started (no CRM/DMS/analytics/consent
+      mocks exist)
+- [ ] Tests pass — no test runner is configured yet
+- [x] Documentation exists (this plan, `README.md`,
+      `docs/epic-4-static-pages-design-implementation.md`)
 
 Deferred definition of done:
 
-- Docker Compose local stack works.
-- ASP.NET Core API works.
-- OpenSearch works.
-- Keycloak works.
-- Ollama works.
-- Production RAG with embeddings and vector search works.
+- [ ] Docker Compose local stack works.
+- [ ] ASP.NET Core API works.
+- [ ] OpenSearch works.
+- [ ] Keycloak works.
+- [ ] Ollama works.
+- [ ] Production RAG with embeddings and vector search works.

@@ -10,8 +10,12 @@ Epic 2 established the V2 brand system and reusable visual language.
 
 Epic 3 has shifted to static public content and homepage finalization.
 
-Epic 4 is active: implement the static public pages and V2-aligned page
-elements from the plan.
+Epic 4's page rebuild is complete: all 5 public pages (home, product,
+service, countries, forms) now match the `specs/design/V2_*.png` mockups
+section-by-section, with honest photo placeholders standing in for
+photography this MVP doesn't have. Forms/leads persistence, search, the AI
+assistant and CI/testing remain deferred to later epics — see
+`specs/GWM_Codex_Implementation_Plan.md` for the full status breakdown.
 
 ## MVP Direction
 
