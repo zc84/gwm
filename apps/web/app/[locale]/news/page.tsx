@@ -7,14 +7,6 @@ type NewsPageProps = {
   params: Promise<{ locale: string }>;
 };
 
-function formatDate(date: string, locale: Locale): string {
-  return new Intl.DateTimeFormat(locale === "ar" ? "ar" : "en", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(date));
-}
-
 export default async function NewsPage({ params }: NewsPageProps) {
   const { locale: localeParam } = await params;
 
@@ -38,7 +30,7 @@ export default async function NewsPage({ params }: NewsPageProps) {
             ? "محتوى ثابت للـ MVP يغطي أخبار المنتجات والخدمة والمنصة الإقليمية."
             : "Static MVP content covering product, service and regional platform updates."
         }
-        image="/media/contact-hero.png"
+        placeholder={locale === "ar" ? "صورة: غرفة أخبار GWM" : "Photo: GWM newsroom"}
       />
 
       <section className="gwm-section">
@@ -51,15 +43,15 @@ export default async function NewsPage({ params }: NewsPageProps) {
             {news.map((item) => (
               <article
                 key={`${item.date}-${item.title}`}
-                className="grid gap-4 py-8 md:grid-cols-[220px_1fr]"
+                className="flex items-center justify-between gap-4 py-6"
               >
-                <time className="text-sm font-black uppercase text-gwm-red">
-                  {formatDate(item.date, locale)}
-                </time>
                 <div>
-                  <h2 className="text-2xl font-black text-white">{item.title}</h2>
-                  <p className="gwm-copy mt-3 max-w-3xl">{item.summary}</p>
+                  <time className="text-xs font-black uppercase text-gwm-muted">
+                    {item.date}
+                  </time>
+                  <h2 className="mt-1 text-xl font-black text-white">{item.title}</h2>
                 </div>
+                <span className="text-gwm-red">→</span>
               </article>
             ))}
           </div>

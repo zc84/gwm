@@ -2,14 +2,16 @@ import Link from "next/link";
 import { isLocale, type Locale } from "@gwm/shared";
 import { notFound } from "next/navigation";
 import { getSiteContent } from "../../../lib/content/site";
-import { PageHero, SectionHeading, SiteFooter, SiteHeader } from "../components";
+import { Icon, SiteFooter, SiteHeader } from "../components";
 
 type CountriesPageProps = {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ country?: string }>;
 };
 
-export default async function CountriesPage({ params }: CountriesPageProps) {
+export default async function CountriesPage({ params, searchParams }: CountriesPageProps) {
   const { locale: localeParam } = await params;
+  const { country: countryParam } = await searchParams;
 
   if (!isLocale(localeParam)) {
     notFound();
@@ -19,106 +21,105 @@ export default async function CountriesPage({ params }: CountriesPageProps) {
   const {
     home: { countries },
   } = getSiteContent(locale);
-  const selected = countries[0];
+  const selected =
+    countries.find((item) => item.isoCode === countryParam) || countries[0];
+  const isRtl = locale === "ar";
 
   return (
     <main className="gwm-app-shell">
       <SiteHeader locale={locale} />
-      <PageHero
-        eyebrow={locale === "ar" ? "دليل الدول" : "Country directory"}
-        title={locale === "ar" ? "اختر منطقتك" : "Choose your region"}
-        intro={
-          locale === "ar"
-            ? "ابدأ من سوقك للوصول إلى الوكلاء والخدمة والتواصل المحلي."
-            : "Start from your market to reach dealers, service and local contact paths."
-        }
-        image="/media/contact-hero.png"
-      />
 
-      <section className="gwm-section">
-        <div className="gwm-container grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-          <aside className="border border-gwm-line bg-gwm-panel p-5">
-            <p className="gwm-eyebrow mb-5">{locale === "ar" ? "الأسواق" : "Markets"}</p>
-            <div className="space-y-2">
-              {countries.map((country, index) => (
-                <a
-                  key={country.country}
-                  href={`#${country.country}`}
-                  className={`flex items-center justify-between border border-gwm-line px-4 py-3 text-sm font-bold ${
-                    index === 0
-                      ? "bg-gwm-red text-white"
-                      : "bg-gwm-panel-raised text-gwm-muted"
-                  }`}
-                >
-                  <span>{country.country}</span>
-                  <span>{index === 0 ? "●" : "○"}</span>
-                </a>
-              ))}
-            </div>
-          </aside>
+      <section className="gwm-container pb-6 pt-32">
+        <Link
+          href={`/${locale}`}
+          className="inline-flex items-center gap-2 text-xs font-black uppercase text-gwm-muted hover:text-white"
+        >
+          → {isRtl ? "العودة للرئيسية" : "Back to home"}
+        </Link>
+        <h1 className="gwm-display-xl mt-6 max-w-[14ch]">
+          {isRtl ? "اختر منطقتك" : "Choose your region"}
+        </h1>
+        <p className="gwm-copy mt-4 max-w-xl">
+          {isRtl
+            ? "اختر من بين 10 أسواق للأسعار المحلية والوكلاء والعروض."
+            : "Select among 10 markets for local pricing, dealers and offers."}
+        </p>
+      </section>
 
-          <section className="border border-gwm-line bg-gwm-panel p-6">
-            <SectionHeading
-              eyebrow={selected.region}
-              title={selected.country}
-              summary={
-                locale === "ar"
-                  ? "ابدأ من السوق المحدد للوصول إلى مراكز البيع والخدمة والتواصل."
-                  : "Use the selected market to reach sales, service and contact destinations."
-              }
-            />
-            <div className="grid gap-4 md:grid-cols-3">
-              {[
-                locale === "ar" ? "المبيعات" : "Sales",
-                locale === "ar" ? "الصيانة" : "Service",
-                locale === "ar" ? "الدعم" : "Support",
-              ].map((item) => (
-                <div key={item} className="bg-gwm-panel-raised p-5">
-                  <div className="text-sm font-black text-gwm-red">{item}</div>
-                  <p className="gwm-copy mt-8">
-                    {locale === "ar"
-                      ? "مسار إقليمي تجريبي للـ MVP."
-                      : "MVP regional destination path."}
-                  </p>
-                </div>
-              ))}
+      <section className="gwm-section pt-6">
+        <div className="gwm-container grid gap-10 lg:grid-cols-[0.9fr_1.3fr]">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-2">
+            {countries.map((country) => (
+              <Link
+                key={country.isoCode}
+                href={`/${locale}/countries?country=${country.isoCode}`}
+                className={`flex items-center gap-3 border px-4 py-4 text-sm font-bold ${
+                  country.isoCode === selected.isoCode
+                    ? "border-white bg-gwm-panel-raised text-white"
+                    : "border-gwm-line text-gwm-muted hover:text-white"
+                }`}
+              >
+                <span className="text-xl leading-none">{country.flag}</span>
+                <span>{country.country}</span>
+              </Link>
+            ))}
+          </div>
+
+          <div className="border border-gwm-line bg-gwm-panel p-6 md:p-8">
+            <p className="gwm-eyebrow mb-2">
+              {isRtl ? "يُعرض حالياً" : "Currently viewing"}
+            </p>
+            <h2 className="flex items-center gap-3 text-2xl font-black text-white">
+              <span className="text-2xl leading-none">{selected.flag}</span>
+              {selected.country}
+            </h2>
+
+            <div className="mt-8">
+              <p className="mb-4 flex items-center gap-2 text-sm font-black uppercase text-gwm-muted">
+                <Icon name="dealer" />
+                {isRtl ? "الوكلاء المحليون" : "Local dealers"} ({selected.dealers.length})
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {selected.dealers.map((dealer) => (
+                  <div key={dealer.name} className="border border-gwm-line bg-gwm-panel-soft p-4">
+                    <div className="text-sm font-black text-white">{dealer.name}</div>
+                    <div className="gwm-copy mt-2 text-xs">{dealer.address}</div>
+                    <div className="gwm-caption mt-3">{dealer.hours}</div>
+                  </div>
+                ))}
+              </div>
             </div>
+
+            <div className="mt-8 grid gap-3 border-t border-gwm-line pt-6 sm:grid-cols-3">
+              <p className="text-sm font-black uppercase text-gwm-muted sm:col-span-3">
+                {isRtl ? "التواصل الإقليمي" : "Regional contact"}
+              </p>
+              <div className="flex items-center gap-2 text-sm text-white">
+                <Icon name="clock" className="text-gwm-red" />
+                {selected.contact.hours}
+              </div>
+              <a
+                href={`mailto:${selected.contact.email}`}
+                className="flex items-center gap-2 text-sm text-white hover:text-gwm-red"
+              >
+                <Icon name="mail" className="text-gwm-red" />
+                {selected.contact.email}
+              </a>
+              <a
+                href={`tel:${selected.contact.phone.replace(/\s+/g, "")}`}
+                className="flex items-center gap-2 text-sm text-white hover:text-gwm-red"
+              >
+                <Icon name="phone" className="text-gwm-red" />
+                {selected.contact.phone}
+              </a>
+            </div>
+
             <Link
               href={`/${locale}/forms`}
-              className="gwm-button gwm-button-primary mt-8"
+              className="gwm-button gwm-button-primary mt-8 w-full"
             >
               {selected.label}
             </Link>
-          </section>
-        </div>
-      </section>
-
-      <section className="border-t border-gwm-line bg-gwm-panel-soft">
-        <div className="gwm-container gwm-section">
-          <SectionHeading
-            eyebrow={locale === "ar" ? "كل الأسواق" : "All markets"}
-            title={
-              locale === "ar" ? "دليل مسطح وسريع" : "Flat directory for quick access"
-            }
-          />
-          <div className="grid gap-px bg-gwm-line md:grid-cols-2 lg:grid-cols-3">
-            {countries.map((country) => (
-              <Link
-                key={country.country}
-                href={`/${locale}/forms`}
-                className="grid min-h-32 bg-gwm-panel p-5 transition-colors hover:bg-gwm-panel-raised"
-              >
-                <span className="text-xs font-black uppercase text-gwm-muted">
-                  {country.region}
-                </span>
-                <span className="self-end text-xl font-black text-white">
-                  {country.country}
-                </span>
-                <span className="mt-3 text-sm font-bold text-gwm-red">
-                  {country.label}
-                </span>
-              </Link>
-            ))}
           </div>
         </div>
       </section>

@@ -287,6 +287,46 @@ html[dir="rtl"] .gwm-button {
   text-align: center;
 }
 
+.gwm-photo-placeholder {
+  align-items: flex-end;
+  background-color: var(--gwm-color-panel);
+  background-image: repeating-linear-gradient(
+    135deg,
+    var(--gwm-color-panel) 0px,
+    var(--gwm-color-panel) 10px,
+    var(--gwm-color-panel-raised) 10px,
+    var(--gwm-color-panel-raised) 20px
+  );
+  border: 1px dashed var(--gwm-color-line-strong);
+  display: flex;
+  min-height: 160px;
+  padding: 0.85rem;
+  width: 100%;
+}
+
+.gwm-photo-placeholder span {
+  background: rgba(5, 5, 6, 0.72);
+  border-radius: var(--gwm-radius-sm);
+  color: var(--gwm-color-subtle);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.3;
+  padding: 0.35rem 0.6rem;
+  text-transform: uppercase;
+}
+
+html[dir="rtl"] .gwm-photo-placeholder span {
+  text-transform: none;
+}
+
+.gwm-photo-placeholder--fill {
+  border: 0;
+  inset: 0;
+  min-height: 0;
+  position: absolute;
+}
+
 .gwm-mobile-action-bar {
   background: rgba(8, 8, 8, 0.9);
   border-top: 1px solid var(--gwm-color-line);

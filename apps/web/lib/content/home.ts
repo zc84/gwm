@@ -13,6 +13,8 @@ export type HomeStat = {
 export type HomeBrand = {
   name: string;
   summary: string;
+  placeholder: string;
+  href: string;
 };
 
 export type HomeVehicle = {
@@ -22,19 +24,39 @@ export type HomeVehicle = {
   powertrain: string;
   summary: string;
   ctaLabel: string;
-  media?: MediaAsset;
+  placeholder: string;
+  href: string;
 };
 
 export type HomeNewsItem = {
   date: string;
   title: string;
-  summary: string;
+};
+
+export type Dealer = {
+  name: string;
+  address: string;
+  hours: string;
 };
 
 export type HomeCountry = {
   country: string;
+  isoCode: string;
+  flag: string;
   region: string;
   label: string;
+  dealers: Dealer[];
+  contact: {
+    hours: string;
+    email: string;
+    phone: string;
+  };
+};
+
+export type TechFeature = {
+  title: string;
+  summary: string;
+  learnMoreLabel: string;
 };
 
 export type HomePageContent = {
@@ -54,27 +76,36 @@ export type HomePageContent = {
   stats: HomeStat[];
   brands: HomeBrand[];
   featuredVehicles: HomeVehicle[];
+  viewAllLabel: string;
   technology: {
     eyebrow: string;
     title: string;
-    summary: string;
+    ctaLabel: string;
+    placeholder: string;
+    caption: string;
+    stats: HomeStat[];
+    features: TechFeature[];
   };
   news: HomeNewsItem[];
+  newsAllLabel: string;
   countries: HomeCountry[];
+  networkTitle: string;
+  networkMapLabel: string;
+  findDealerLabel: string;
 };
 
 export const fallbackHomeContent = {
   en: {
     locale: "en",
     source: "fallback",
-    navItems: ["Brands", "Vehicles", "Technology", "News", "Countries"],
+    navItems: ["Brands", "Vehicles", "About GWM", "Technology", "Contact Us"],
     languageLabel: "العربية",
     hero: {
-      eyebrow: "GWM Middle East",
-      title: "Go With More",
+      eyebrow: "GWM Tank",
+      title: "Conquer Every Terrain",
       intro:
         "Explore a regional line-up built around intelligent SUVs, efficient pickups, electrified mobility and aftersales care across the Middle East.",
-      primaryCta: "Explore vehicles",
+      primaryCta: "Discover more",
       secondaryCta: "Find a dealer",
       media: {
         url: "/media/home-hero.png",
@@ -91,108 +122,280 @@ export const fallbackHomeContent = {
     brands: [
       {
         name: "HAVAL",
-        summary: "Smart SUVs for family, business and daily confidence.",
+        summary: "Smart family SUVs for everyday life.",
+        placeholder: "Photo: Haval line-up, studio",
+        href: "/vehicles",
       },
       {
-        name: "TANK",
-        summary: "Premium off-road engineering with long-distance comfort.",
+        name: "GWM TANK",
+        summary: "Premium luxury off-road icons.",
+        placeholder: "Photo: Tank off-road action",
+        href: "/vehicles",
+      },
+      {
+        name: "WEY",
+        summary: "Advanced intelligent luxury SUVs.",
+        placeholder: "Photo: Wey studio profile",
+        href: "/vehicles",
       },
       {
         name: "ORA",
-        summary: "Distinctive electric mobility for the city and beyond.",
-      },
-      {
-        name: "POER",
-        summary: "Capable pickups for work, travel and active weekends.",
+        summary: "Pure electric fashion-forward coupes.",
+        placeholder: "Photo: Ora city night",
+        href: "/vehicles",
       },
     ],
     featuredVehicles: [
       {
         brand: "HAVAL",
-        model: "H6 HEV",
+        model: "H6",
         bodyType: "SUV",
         powertrain: "Hybrid",
-        summary:
-          "A confident hybrid SUV with intelligent safety, calm cabin space and everyday efficiency.",
-        ctaLabel: "View model",
-        media: {
-          url: "/media/product-hero.png",
-          alt: "Hybrid SUV on a desert highway at dusk",
-        },
+        summary: "Intelligent family SUV",
+        ctaLabel: "Explore",
+        placeholder: "Photo: Haval H6, three-quarter front",
+        href: "/vehicles/haval-h6-hev",
       },
       {
         brand: "TANK",
-        model: "500",
+        model: "300",
         bodyType: "SUV",
         powertrain: "Petrol",
-        summary:
-          "Body-on-frame strength, premium appointments and all-terrain technology for regional journeys.",
-        ctaLabel: "View model",
-        media: {
-          url: "/media/home-hero.png",
-          alt: "Premium SUV on a regional road at dusk",
-        },
+        summary: "Smart luxury off-roader",
+        ctaLabel: "Explore",
+        placeholder: "Photo: Tank 300 desert",
+        href: "/vehicles/tank-500",
+      },
+      {
+        brand: "ORA",
+        model: "07",
+        bodyType: "Coupe",
+        powertrain: "Electric",
+        summary: "Electric sports coupe",
+        ctaLabel: "Explore",
+        placeholder: "Photo: Ora 07 studio",
+        href: "/vehicles",
       },
       {
         brand: "POER",
-        model: "Commercial",
+        model: "Sahar",
         bodyType: "Pickup",
         powertrain: "Diesel",
-        summary:
-          "Durable utility with the comfort and connectivity expected from a modern pickup.",
-        ctaLabel: "View model",
-        media: {
-          url: "/media/service-hero.png",
-          alt: "Dark vehicle in a premium service environment",
-        },
+        summary: "High-performance pickup",
+        ctaLabel: "Explore",
+        placeholder: "Photo: Poer Sahar night",
+        href: "/vehicles/poer-commercial",
       },
     ],
+    viewAllLabel: "View all",
     technology: {
-      eyebrow: "Technology",
-      title: "Intelligent platforms for regional roads",
-      summary:
-        "GWM combines electrified powertrains, driver assistance systems and connected cabin experiences with durability tuned for Middle East conditions.",
+      eyebrow: "Forest Ecosystem",
+      title: "Forest Ecosystem Intelligence Platform",
+      ctaLabel: "Explore technology",
+      placeholder: "Photo: Coffee OS 3 dashboard",
+      caption: "Coffee OS 3 - AI Intelligent Space",
+      stats: [
+        { value: "15M+", label: "Global users" },
+        { value: "170+", label: "Countries" },
+        { value: "25K+", label: "R&D staff" },
+      ],
+      features: [
+        {
+          title: "Hi4 Technology",
+          summary:
+            "Intelligent four-wheel-drive hybrid. Performance, efficiency and proactive response, made simple.",
+          learnMoreLabel: "Learn more",
+        },
+        {
+          title: "Coffee OS 3",
+          summary: "AI-powered intelligent cabin: voice, vision and proactive routines, your way.",
+          learnMoreLabel: "Learn more",
+        },
+        {
+          title: "Coffee Pilot Ultra",
+          summary:
+            "Full-scenario navigate-on-autopilot with L2+ ADAS and 360° surround view and transparent chassis.",
+          learnMoreLabel: "Learn more",
+        },
+      ],
     },
     news: [
-      {
-        date: "2026-08-18",
-        title: "GWM expands its regional digital platform",
-        summary:
-          "The Middle East experience is being shaped around localized content, country journeys and AI-assisted operations.",
-      },
-      {
-        date: "2026-08-12",
-        title: "Hybrid SUVs lead the featured line-up",
-        summary:
-          "Featured models prioritize efficient performance, safety technology and practical family space.",
-      },
-      {
-        date: "2026-08-05",
-        title: "Aftersales content moves closer to customers",
-        summary:
-          "Service, warranty and roadside assistance journeys are being organized for faster regional access.",
-      },
+      { date: "Jul 2026", title: "TANK 700 Hi4-Z Arrives in the Middle East" },
+      { date: "Jun 2026", title: "Coffee OS 3 Rolls Out Across Middle East Fleet" },
+      { date: "May 2026", title: "GWM Expands Dealer Network to 80+ Points Across GCC" },
     ],
+    newsAllLabel: "All",
+    networkTitle: "GWM Middle East Network",
+    networkMapLabel: "Map",
+    findDealerLabel: "Find your nearest dealer",
     countries: [
-      { country: "United Arab Emirates", region: "GCC", label: "Visit site" },
-      { country: "Saudi Arabia", region: "GCC", label: "Visit site" },
-      { country: "Qatar", region: "GCC", label: "Visit site" },
-      { country: "Kuwait", region: "GCC", label: "Visit site" },
-      { country: "Jordan", region: "Levant", label: "Visit site" },
-      { country: "Lebanon", region: "Levant", label: "Visit site" },
+      {
+        country: "United Arab Emirates",
+        isoCode: "AE",
+        flag: "🇦🇪",
+        region: "GCC",
+        label: "Continue to United Arab Emirates",
+        dealers: [
+          {
+            name: "GWM Dubai — Sheikh Zayed Road",
+            address: "Al Quoz 1, Dubai",
+            hours: "Sat–Thu, 8:00–20:00 Gulf time",
+          },
+          {
+            name: "GWM Abu Dhabi — Airport Road",
+            address: "Al Zahia, Abu Dhabi",
+            hours: "Sat–Thu, 8:00–20:00 Gulf time",
+          },
+          {
+            name: "GWM Sharjah — Al Wahda Street",
+            address: "Industrial Area 5, Sharjah",
+            hours: "Sat–Thu, 8:00–20:00 Gulf time",
+          },
+        ],
+        contact: {
+          hours: "Sat–Thu, 8:00–20:00 Gulf time",
+          email: "care.uae@gwm-me.com",
+          phone: "800 496 000",
+        },
+      },
+      {
+        country: "Saudi Arabia",
+        isoCode: "SA",
+        flag: "🇸🇦",
+        region: "GCC",
+        label: "Continue to Saudi Arabia",
+        dealers: [
+          {
+            name: "Automall Showroom",
+            address: "King Abdulaziz Rd, Al Mohammadiyyah, Jeddah 23617",
+            hours: "Sat–Thu, 8:30–12:30 & 16:30–21:00",
+          },
+          {
+            name: "Khurais Showroom",
+            address: "Khurais Rd, Ar Rawdah, Riyadh 13211",
+            hours: "Sat–Thu, 8:30–12:30 & 16:30–21:00",
+          },
+          {
+            name: "Khobar Showroom",
+            address: "King Fahd Road, Al Rakah Al Janubiyah, Al Khobar 34226",
+            hours: "Sat–Thu, 8:30–12:30 & 16:30–21:00",
+          },
+        ],
+        contact: {
+          hours: "Sat–Thu, 8:00 AM–6:00 PM",
+          email: "care.sa@gwm-me.com",
+          phone: "800 124 2223",
+        },
+      },
+      {
+        country: "Qatar",
+        isoCode: "QA",
+        flag: "🇶🇦",
+        region: "GCC",
+        label: "Continue to Qatar",
+        dealers: [
+          { name: "GWM Doha West Bay", address: "Al Corniche Street, Doha", hours: "Sat–Thu, 9:00–20:00" },
+          { name: "GWM Al Rayyan", address: "Airport Road, Al Rayyan", hours: "Sat–Thu, 9:00–20:00" },
+        ],
+        contact: { hours: "Sat–Thu, 9:00 AM–8:00 PM", email: "care.qa@gwm-me.com", phone: "800 700 100" },
+      },
+      {
+        country: "Kuwait",
+        isoCode: "KW",
+        flag: "🇰🇼",
+        region: "GCC",
+        label: "Continue to Kuwait",
+        dealers: [
+          { name: "GWM Kuwait City", address: "Al Soor Street, Kuwait City", hours: "Sat–Thu, 9:00–20:00" },
+          { name: "GWM Hawally", address: "Tunis Street, Hawally", hours: "Sat–Thu, 9:00–20:00" },
+        ],
+        contact: { hours: "Sat–Thu, 9:00 AM–8:00 PM", email: "care.kw@gwm-me.com", phone: "1807 100" },
+      },
+      {
+        country: "Bahrain",
+        isoCode: "BH",
+        flag: "🇧🇭",
+        region: "GCC",
+        label: "Continue to Bahrain",
+        dealers: [
+          { name: "GWM Manama", address: "Sheikh Khalifa Highway, Manama", hours: "Sat–Thu, 9:00–20:00" },
+          { name: "GWM Riffa", address: "Shaikh Salman Highway, Riffa", hours: "Sat–Thu, 9:00–20:00" },
+        ],
+        contact: { hours: "Sat–Thu, 9:00 AM–8:00 PM", email: "care.bh@gwm-me.com", phone: "800 800 96" },
+      },
+      {
+        country: "Oman",
+        isoCode: "OM",
+        flag: "🇴🇲",
+        region: "GCC",
+        label: "Continue to Oman",
+        dealers: [
+          { name: "GWM Muscat", address: "Sultan Qaboos Street, Muscat", hours: "Sat–Thu, 9:00–20:00" },
+          { name: "GWM Salalah", address: "Al Salam Street, Salalah", hours: "Sat–Thu, 9:00–20:00" },
+        ],
+        contact: { hours: "Sat–Thu, 9:00 AM–8:00 PM", email: "care.om@gwm-me.com", phone: "800 73369" },
+      },
+      {
+        country: "Jordan",
+        isoCode: "JO",
+        flag: "🇯🇴",
+        region: "Levant",
+        label: "Continue to Jordan",
+        dealers: [
+          { name: "GWM Amman", address: "Zahran Street, Amman", hours: "Sun–Thu, 9:00–19:00" },
+          { name: "GWM Irbid", address: "Baghdad Street, Irbid", hours: "Sun–Thu, 9:00–19:00" },
+        ],
+        contact: { hours: "Sun–Thu, 9:00 AM–7:00 PM", email: "care.jo@gwm-me.com", phone: "080 022 900" },
+      },
+      {
+        country: "Lebanon",
+        isoCode: "LB",
+        flag: "🇱🇧",
+        region: "Levant",
+        label: "Continue to Lebanon",
+        dealers: [
+          { name: "GWM Beirut", address: "Charles Helou Avenue, Beirut", hours: "Mon–Sat, 9:00–19:00" },
+          { name: "GWM Jounieh", address: "Coastal Highway, Jounieh", hours: "Mon–Sat, 9:00–19:00" },
+        ],
+        contact: { hours: "Mon–Sat, 9:00 AM–7:00 PM", email: "care.lb@gwm-me.com", phone: "1233" },
+      },
+      {
+        country: "Iraq",
+        isoCode: "IQ",
+        flag: "🇮🇶",
+        region: "Levant",
+        label: "Continue to Iraq",
+        dealers: [
+          { name: "GWM Baghdad", address: "Al Mansour District, Baghdad", hours: "Sun–Thu, 9:00–19:00" },
+          { name: "GWM Erbil", address: "60 Meter Road, Erbil", hours: "Sun–Thu, 9:00–19:00" },
+        ],
+        contact: { hours: "Sun–Thu, 9:00 AM–7:00 PM", email: "care.iq@gwm-me.com", phone: "800 100 200" },
+      },
+      {
+        country: "Syria",
+        isoCode: "SY",
+        flag: "🇸🇾",
+        region: "Levant",
+        label: "Continue to Syria",
+        dealers: [
+          { name: "GWM Damascus", address: "Mezzeh Highway, Damascus", hours: "Sun–Thu, 9:00–19:00" },
+          { name: "GWM Aleppo", address: "Al Furqan Street, Aleppo", hours: "Sun–Thu, 9:00–19:00" },
+        ],
+        contact: { hours: "Sun–Thu, 9:00 AM–7:00 PM", email: "care.sy@gwm-me.com", phone: "011 800 100" },
+      },
     ],
   },
   ar: {
     locale: "ar",
     source: "fallback",
-    navItems: ["العلامات", "المركبات", "التكنولوجيا", "الأخبار", "الدول"],
+    navItems: ["العلامات", "المركبات", "عن GWM", "التكنولوجيا", "اتصل بنا"],
     languageLabel: "English",
     hero: {
-      eyebrow: "جي دبليو إم الشرق الأوسط",
-      title: "انطلق مع المزيد",
+      eyebrow: "جي دبليو إم تانك",
+      title: "تغلّب على كل تضاريس",
       intro:
         "استكشف مجموعة إقليمية تجمع بين سيارات SUV الذكية، والبيك أب العملية، والتنقل الكهربائي، وخدمات ما بعد البيع في الشرق الأوسط.",
-      primaryCta: "استكشف المركبات",
+      primaryCta: "اكتشف المزيد",
       secondaryCta: "ابحث عن وكيل",
       media: {
         url: "/media/home-hero.png",
@@ -208,94 +411,266 @@ export const fallbackHomeContent = {
     ],
     brands: [
       {
-        name: "HAVAL",
-        summary: "سيارات SUV ذكية للعائلة والعمل والثقة اليومية.",
+        name: "هافال",
+        summary: "سيارات SUV عائلية ذكية للحياة اليومية.",
+        placeholder: "صورة: تشكيلة هافال، استوديو",
+        href: "/vehicles",
       },
       {
-        name: "TANK",
-        summary: "هندسة فاخرة للطرق الوعرة مع راحة للمسافات الطويلة.",
+        name: "جي دبليو إم تانك",
+        summary: "رموز فاخرة للطرق الوعرة.",
+        placeholder: "صورة: تانك في مشهد وعر",
+        href: "/vehicles",
       },
       {
-        name: "ORA",
-        summary: "تنقل كهربائي مميز للمدينة وما بعدها.",
+        name: "وي",
+        summary: "سيارات SUV فاخرة وذكية متقدمة.",
+        placeholder: "صورة: وي، استوديو",
+        href: "/vehicles",
       },
       {
-        name: "POER",
-        summary: "بيك أب قادرة للعمل والسفر ونهايات الأسبوع النشطة.",
+        name: "أورا",
+        summary: "سيارات كوبيه كهربائية عصرية بالكامل.",
+        placeholder: "صورة: أورا في المدينة ليلاً",
+        href: "/vehicles",
       },
     ],
     featuredVehicles: [
       {
-        brand: "HAVAL",
-        model: "H6 HEV",
+        brand: "هافال",
+        model: "H6",
         bodyType: "SUV",
         powertrain: "هايبرد",
-        summary:
-          "سيارة SUV هايبرد واثقة مع سلامة ذكية، ومساحة داخلية هادئة، وكفاءة للاستخدام اليومي.",
-        ctaLabel: "عرض الطراز",
-        media: {
-          url: "/media/product-hero.png",
-          alt: "سيارة SUV هايبرد على طريق صحراوي وقت الغروب",
-        },
+        summary: "SUV عائلية ذكية",
+        ctaLabel: "استكشف",
+        placeholder: "صورة: هافال H6، أمامية جانبية",
+        href: "/vehicles/haval-h6-hev",
       },
       {
-        brand: "TANK",
-        model: "500",
+        brand: "تانك",
+        model: "300",
         bodyType: "SUV",
         powertrain: "بنزين",
-        summary: "قوة هيكلية، وتجهيزات فاخرة، وتقنيات لجميع التضاريس للرحلات الإقليمية.",
-        ctaLabel: "عرض الطراز",
-        media: {
-          url: "/media/home-hero.png",
-          alt: "سيارة SUV فاخرة على طريق إقليمي وقت الغروب",
-        },
+        summary: "فخامة ذكية للطرق الوعرة",
+        ctaLabel: "استكشف",
+        placeholder: "صورة: تانك 300 في الصحراء",
+        href: "/vehicles/tank-500",
       },
       {
-        brand: "POER",
-        model: "Commercial",
+        brand: "أورا",
+        model: "07",
+        bodyType: "كوبيه",
+        powertrain: "كهربائي",
+        summary: "كوبيه رياضية كهربائية",
+        ctaLabel: "استكشف",
+        placeholder: "صورة: أورا 07، استوديو",
+        href: "/vehicles",
+      },
+      {
+        brand: "بوير",
+        model: "Sahar",
         bodyType: "بيك أب",
         powertrain: "ديزل",
-        summary: "عملية متينة مع الراحة والاتصال المتوقعين من بيك أب حديثة.",
-        ctaLabel: "عرض الطراز",
-        media: {
-          url: "/media/service-hero.png",
-          alt: "مركبة داكنة في مركز خدمة فاخر",
-        },
+        summary: "بيك أب عالية الأداء",
+        ctaLabel: "استكشف",
+        placeholder: "صورة: بوير Sahar ليلاً",
+        href: "/vehicles/poer-commercial",
       },
     ],
+    viewAllLabel: "عرض الكل",
     technology: {
-      eyebrow: "التكنولوجيا",
-      title: "منصات ذكية للطرق الإقليمية",
-      summary:
-        "تجمع GWM بين منظومات الحركة الكهربائية، وأنظمة مساعدة السائق، وتجارب المقصورة المتصلة مع متانة ملائمة لظروف الشرق الأوسط.",
+      eyebrow: "منظومة الغابة",
+      title: "منصة ذكاء منظومة الغابة",
+      ctaLabel: "استكشف التكنولوجيا",
+      placeholder: "صورة: لوحة قيادة Coffee OS 3",
+      caption: "Coffee OS 3 - مساحة ذكية بالذكاء الاصطناعي",
+      stats: [
+        { value: "+15M", label: "مستخدمون عالميون" },
+        { value: "+170", label: "دولة" },
+        { value: "+25K", label: "طاقم بحث وتطوير" },
+      ],
+      features: [
+        {
+          title: "تقنية Hi4",
+          summary: "دفع رباعي هجين ذكي. أداء وكفاءة واستجابة استباقية ببساطة.",
+          learnMoreLabel: "اعرف المزيد",
+        },
+        {
+          title: "Coffee OS 3",
+          summary: "مقصورة ذكية بالذكاء الاصطناعي: صوت ورؤية وروتين استباقي بأسلوبك.",
+          learnMoreLabel: "اعرف المزيد",
+        },
+        {
+          title: "Coffee Pilot Ultra",
+          summary: "قيادة ذاتية شاملة بمساعدة متقدمة، ورؤية محيطية 360° وهيكل شفاف.",
+          learnMoreLabel: "اعرف المزيد",
+        },
+      ],
     },
     news: [
-      {
-        date: "2026-08-18",
-        title: "GWM توسع منصتها الرقمية الإقليمية",
-        summary:
-          "تتشكل تجربة الشرق الأوسط حول محتوى محلي، ورحلات خاصة بكل دولة، وعمليات مدعومة بالذكاء الاصطناعي.",
-      },
-      {
-        date: "2026-08-12",
-        title: "سيارات SUV الهايبرد تتصدر المجموعة المختارة",
-        summary:
-          "تركز الطرازات المختارة على الأداء الكفء وتقنيات السلامة والمساحة العملية للعائلة.",
-      },
-      {
-        date: "2026-08-05",
-        title: "محتوى خدمات ما بعد البيع أقرب إلى العملاء",
-        summary:
-          "يتم تنظيم رحلات الخدمة والضمان والمساعدة على الطريق لتسهيل الوصول الإقليمي.",
-      },
+      { date: "يوليو 2026", title: "وصول TANK 700 Hi4-Z إلى الشرق الأوسط" },
+      { date: "يونيو 2026", title: "طرح Coffee OS 3 عبر أسطول الشرق الأوسط" },
+      { date: "مايو 2026", title: "GWM توسّع شبكة الوكلاء إلى أكثر من 80 نقطة في الخليج" },
     ],
+    newsAllLabel: "الكل",
+    networkTitle: "شبكة GWM في الشرق الأوسط",
+    networkMapLabel: "الخريطة",
+    findDealerLabel: "ابحث عن أقرب وكيل",
     countries: [
-      { country: "الإمارات العربية المتحدة", region: "الخليج", label: "زيارة الموقع" },
-      { country: "المملكة العربية السعودية", region: "الخليج", label: "زيارة الموقع" },
-      { country: "قطر", region: "الخليج", label: "زيارة الموقع" },
-      { country: "الكويت", region: "الخليج", label: "زيارة الموقع" },
-      { country: "الأردن", region: "بلاد الشام", label: "زيارة الموقع" },
-      { country: "لبنان", region: "بلاد الشام", label: "زيارة الموقع" },
+      {
+        country: "الإمارات العربية المتحدة",
+        isoCode: "AE",
+        flag: "🇦🇪",
+        region: "الخليج",
+        label: "الاستمرار إلى الإمارات العربية المتحدة",
+        dealers: [
+          {
+            name: "جي دبليو إم دبي — شارع الشيخ زايد",
+            address: "القوز 1، دبي",
+            hours: "السبت–الخميس، 8:00–20:00 بتوقيت الخليج",
+          },
+          {
+            name: "جي دبليو إم أبوظبي — طريق المطار",
+            address: "الزاهية، أبوظبي",
+            hours: "السبت–الخميس، 8:00–20:00 بتوقيت الخليج",
+          },
+          {
+            name: "جي دبليو إم الشارقة — شارع الوحدة",
+            address: "المنطقة الصناعية 5، الشارقة",
+            hours: "السبت–الخميس، 8:00–20:00 بتوقيت الخليج",
+          },
+        ],
+        contact: {
+          hours: "السبت–الخميس، 8:00–20:00 بتوقيت الخليج",
+          email: "care.uae@gwm-me.com",
+          phone: "800 496 000",
+        },
+      },
+      {
+        country: "المملكة العربية السعودية",
+        isoCode: "SA",
+        flag: "🇸🇦",
+        region: "الخليج",
+        label: "الاستمرار إلى المملكة العربية السعودية",
+        dealers: [
+          {
+            name: "معرض أوتومول",
+            address: "طريق الملك عبدالعزيز، المحمدية، جدة 23617",
+            hours: "السبت–الخميس، 8:30–12:30 و16:30–21:00",
+          },
+          {
+            name: "معرض خريص",
+            address: "طريق خريص، الروضة، الرياض 13211",
+            hours: "السبت–الخميس، 8:30–12:30 و16:30–21:00",
+          },
+          {
+            name: "معرض الخبر",
+            address: "طريق الملك فهد، الراكة الجنوبية، الخبر 34226",
+            hours: "السبت–الخميس، 8:30–12:30 و16:30–21:00",
+          },
+        ],
+        contact: {
+          hours: "السبت–الخميس، 8:00 ص–6:00 م",
+          email: "care.sa@gwm-me.com",
+          phone: "800 124 2223",
+        },
+      },
+      {
+        country: "قطر",
+        isoCode: "QA",
+        flag: "🇶🇦",
+        region: "الخليج",
+        label: "الاستمرار إلى قطر",
+        dealers: [
+          { name: "جي دبليو إم الخليج الغربي", address: "شارع الكورنيش، الدوحة", hours: "السبت–الخميس، 9:00–20:00" },
+          { name: "جي دبليو إم الريان", address: "طريق المطار، الريان", hours: "السبت–الخميس، 9:00–20:00" },
+        ],
+        contact: { hours: "السبت–الخميس، 9:00 ص–8:00 م", email: "care.qa@gwm-me.com", phone: "800 700 100" },
+      },
+      {
+        country: "الكويت",
+        isoCode: "KW",
+        flag: "🇰🇼",
+        region: "الخليج",
+        label: "الاستمرار إلى الكويت",
+        dealers: [
+          { name: "جي دبليو إم مدينة الكويت", address: "شارع السور، مدينة الكويت", hours: "السبت–الخميس، 9:00–20:00" },
+          { name: "جي دبليو إم حولي", address: "شارع تونس، حولي", hours: "السبت–الخميس، 9:00–20:00" },
+        ],
+        contact: { hours: "السبت–الخميس، 9:00 ص–8:00 م", email: "care.kw@gwm-me.com", phone: "1807 100" },
+      },
+      {
+        country: "البحرين",
+        isoCode: "BH",
+        flag: "🇧🇭",
+        region: "الخليج",
+        label: "الاستمرار إلى البحرين",
+        dealers: [
+          { name: "جي دبليو إم المنامة", address: "طريق الشيخ خليفة، المنامة", hours: "السبت–الخميس، 9:00–20:00" },
+          { name: "جي دبليو إم الرفاع", address: "طريق الشيخ سلمان، الرفاع", hours: "السبت–الخميس، 9:00–20:00" },
+        ],
+        contact: { hours: "السبت–الخميس، 9:00 ص–8:00 م", email: "care.bh@gwm-me.com", phone: "800 800 96" },
+      },
+      {
+        country: "عُمان",
+        isoCode: "OM",
+        flag: "🇴🇲",
+        region: "الخليج",
+        label: "الاستمرار إلى عُمان",
+        dealers: [
+          { name: "جي دبليو إم مسقط", address: "شارع السلطان قابوس، مسقط", hours: "السبت–الخميس، 9:00–20:00" },
+          { name: "جي دبليو إم صلالة", address: "شارع السلام، صلالة", hours: "السبت–الخميس، 9:00–20:00" },
+        ],
+        contact: { hours: "السبت–الخميس، 9:00 ص–8:00 م", email: "care.om@gwm-me.com", phone: "800 73369" },
+      },
+      {
+        country: "الأردن",
+        isoCode: "JO",
+        flag: "🇯🇴",
+        region: "بلاد الشام",
+        label: "الاستمرار إلى الأردن",
+        dealers: [
+          { name: "جي دبليو إم عمّان", address: "شارع زهران، عمّان", hours: "الأحد–الخميس، 9:00–19:00" },
+          { name: "جي دبليو إم إربد", address: "شارع بغداد، إربد", hours: "الأحد–الخميس، 9:00–19:00" },
+        ],
+        contact: { hours: "الأحد–الخميس، 9:00 ص–7:00 م", email: "care.jo@gwm-me.com", phone: "080 022 900" },
+      },
+      {
+        country: "لبنان",
+        isoCode: "LB",
+        flag: "🇱🇧",
+        region: "بلاد الشام",
+        label: "الاستمرار إلى لبنان",
+        dealers: [
+          { name: "جي دبليو إم بيروت", address: "شارع شارل حلو، بيروت", hours: "الاثنين–السبت، 9:00–19:00" },
+          { name: "جي دبليو إم جونية", address: "الطريق الساحلي، جونية", hours: "الاثنين–السبت، 9:00–19:00" },
+        ],
+        contact: { hours: "الاثنين–السبت، 9:00 ص–7:00 م", email: "care.lb@gwm-me.com", phone: "1233" },
+      },
+      {
+        country: "العراق",
+        isoCode: "IQ",
+        flag: "🇮🇶",
+        region: "بلاد الشام",
+        label: "الاستمرار إلى العراق",
+        dealers: [
+          { name: "جي دبليو إم بغداد", address: "حي المنصور، بغداد", hours: "الأحد–الخميس، 9:00–19:00" },
+          { name: "جي دبليو إم أربيل", address: "شارع 60 متر، أربيل", hours: "الأحد–الخميس، 9:00–19:00" },
+        ],
+        contact: { hours: "الأحد–الخميس، 9:00 ص–7:00 م", email: "care.iq@gwm-me.com", phone: "800 100 200" },
+      },
+      {
+        country: "سوريا",
+        isoCode: "SY",
+        flag: "🇸🇾",
+        region: "بلاد الشام",
+        label: "الاستمرار إلى سوريا",
+        dealers: [
+          { name: "جي دبليو إم دمشق", address: "طريق المزة، دمشق", hours: "الأحد–الخميس، 9:00–19:00" },
+          { name: "جي دبليو إم حلب", address: "شارع الفرقان، حلب", hours: "الأحد–الخميس، 9:00–19:00" },
+        ],
+        contact: { hours: "الأحد–الخميس، 9:00 ص–7:00 م", email: "care.sy@gwm-me.com", phone: "011 800 100" },
+      },
     ],
   },
 } satisfies Record<Locale, HomePageContent>;

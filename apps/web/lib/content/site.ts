@@ -1,6 +1,11 @@
 import type { Locale } from "@gwm/shared";
 import { getFallbackHomeContent, type HomePageContent } from "./home";
 
+export type QuickStat = { value: string; unit: string; label: string };
+export type WhyCard = { title: string; summary: string; placeholder: string };
+export type DetailShot = { caption: string; placeholder: string };
+export type Trim = { name: string; price: string; featured: boolean; note?: string };
+
 export type Vehicle = {
   slug: string;
   brand: string;
@@ -9,13 +14,34 @@ export type Vehicle = {
   powertrain: string;
   priceLabel: string;
   summary: string;
-  media: {
-    url: string;
-    alt: string;
+  heroPlaceholder: string;
+  heroMedia?: { url: string; alt: string };
+  quickStats: QuickStat[];
+  whyCards: WhyCard[];
+  featureBanner: {
+    tabs: string[];
+    title: string;
+    description: string;
+    stat: { value: string; label: string };
+    placeholder: string;
   };
-  highlights: string[];
-  specs: Array<{ label: string; value: string }>;
+  details: {
+    exterior: DetailShot[];
+    interior: DetailShot[];
+  };
+  spinCaption: string;
+  safety: {
+    title: string;
+    tabs: string[];
+    placeholder: string;
+    caption: string;
+    features: Array<{ title: string; summary: string }>;
+  };
   colors: Array<{ name: string; value: string }>;
+  colorPlaceholder: string;
+  trims: Trim[];
+  continueLabel: string;
+  specs: Array<{ label: string; value: string }>;
 };
 
 export type ServiceContent = {
@@ -23,10 +49,29 @@ export type ServiceContent = {
     eyebrow: string;
     title: string;
     intro: string;
+    backLabel: string;
   };
   stats: Array<{ value: string; label: string }>;
-  care: Array<{ title: string; summary: string }>;
-  warranty: Array<{ title: string; detail: string }>;
+  needsTitle: string;
+  needs: Array<{ icon: string; title: string; summary: string }>;
+  plansTitle: string;
+  plans: Array<{
+    name: string;
+    price: string;
+    featured: boolean;
+    badge?: string;
+    features: string[];
+    ctaLabel: string;
+  }>;
+  ownership: {
+    title: string;
+    summary: string;
+    features: Array<{ icon: string; title: string; summary: string }>;
+  };
+  handbooksTitle: string;
+  handbookKind: string;
+  findServiceLabel: string;
+  faqTitle: string;
   faq: Array<{ question: string; answer: string }>;
 };
 
@@ -36,12 +81,17 @@ export type FormContent = {
     title: string;
     intro: string;
   };
-  types: string[];
+  tabs: string[];
+  formTitle: string;
+  formSubtitle: string;
   fields: Array<{
     label: string;
     placeholder: string;
-    type?: "text" | "email" | "tel" | "select" | "textarea";
+    type?: "text" | "email" | "tel" | "select" | "date";
+    half?: boolean;
   }>;
+  notRobotLabel: string;
+  notRobotHint: string;
   consent: string;
   submitLabel: string;
 };
@@ -55,16 +105,7 @@ export type SiteContent = {
 
 const content = {
   en: {
-    home: {
-      ...getFallbackHomeContent("en"),
-      hero: {
-        ...getFallbackHomeContent("en").hero,
-        media: {
-          url: "/media/home-hero.png",
-          alt: "Dark SUV on a Middle East road at dusk",
-        },
-      },
-    },
+    home: getFallbackHomeContent("en"),
     vehicles: [
       {
         slug: "haval-h6-hev",
@@ -72,29 +113,88 @@ const content = {
         model: "H6 HEV",
         bodyType: "SUV",
         powertrain: "Hybrid",
-        priceLabel: "Regional launch model",
+        priceLabel: "Starting from AED 109,900",
         summary:
           "An intelligent hybrid SUV built for family use, daily efficiency and confident regional travel.",
-        media: {
-          url: "/media/product-hero.png",
-          alt: "Hybrid SUV on a desert highway at dusk",
+        heroPlaceholder: "Photo: Haval H6 HEV, action shot",
+        heroMedia: { url: "/media/product-hero.png", alt: "Haval H6 HEV on a desert highway at dusk" },
+        quickStats: [
+          { value: "245", unit: "PS", label: "Combined power" },
+          { value: "530", unit: "km", label: "Hybrid range" },
+          { value: "5.4", unit: "L/100km", label: "Fuel economy" },
+          { value: "5", unit: "seats", label: "Family cabin" },
+        ],
+        whyCards: [
+          {
+            title: "Built for Every Commute",
+            summary: "Smart hybrid tuning delivers effortless city and highway driving.",
+            placeholder: "Photo: H6 HEV city driving",
+          },
+          {
+            title: "A Cabin That Rewards",
+            summary: "A 14.6-inch display, connected apps and quiet cabin materials.",
+            placeholder: "Photo: H6 HEV cabin dashboard",
+          },
+          {
+            title: "Confidence by Design",
+            summary: "A wide stance and driver-assistance suite built for family peace of mind.",
+            placeholder: "Photo: H6 HEV rear three-quarter",
+          },
+        ],
+        featureBanner: {
+          tabs: ["Hybrid System", "Safety Suite", "Coffee OS", "Efficiency"],
+          title: "Intelligent Hybrid Drive",
+          description:
+            "By coordinating the engine and electric motor, the H6 HEV blends smooth power delivery with everyday efficiency.",
+          stat: { value: "5.4L", label: "Fuel economy per 100km" },
+          placeholder: "Photo: H6 HEV hybrid powertrain feature",
         },
-        highlights: [
-          "Hybrid powertrain tuned for smooth city and highway driving",
-          "Driver assistance features for daily confidence",
-          "Flexible cabin with quiet materials and connected displays",
-        ],
-        specs: [
-          { label: "Powertrain", value: "Hybrid" },
-          { label: "Body", value: "5-seat SUV" },
-          { label: "Drive", value: "Front wheel drive" },
-          { label: "Safety", value: "Advanced driver assistance" },
-        ],
+        details: {
+          exterior: [
+            { caption: "Full LED headlights & signature grille", placeholder: "Photo: front grille detail" },
+            { caption: "18-inch machined alloy wheels", placeholder: "Photo: alloy wheel detail" },
+            { caption: "Tailgate-mounted spare styling cues", placeholder: "Photo: rear tailgate detail" },
+          ],
+          interior: [
+            { caption: "14.6-inch Coffee OS touchscreen", placeholder: "Photo: infotainment screen detail" },
+            { caption: "Heated and ventilated front seats", placeholder: "Photo: front seat detail" },
+            { caption: "Dual-zone climate console", placeholder: "Photo: climate console detail" },
+          ],
+        },
+        spinCaption: "Drag to spin the H6 HEV, or use the slider to explore every angle.",
+        safety: {
+          title: "Engineered to Protect",
+          tabs: ["Airbags", "Intelligent Driving", "Body Structure"],
+          placeholder: "Photo: H6 HEV safety X-ray diagram",
+          caption: "7-airbag protection",
+          features: [
+            { title: "Dual front airbags", summary: "Comprehensive airbag array whether every occupant is seated." },
+            { title: "Front seat side airbags", summary: "Dual front side and full-length side curtain airbags." },
+            { title: "Full-height side curtains", summary: "Extended coverage across all rows of seating." },
+            { title: "Driver knee airbag", summary: "Additional lower-body protection for the driver." },
+          ],
+        },
         colors: [
           { name: "Obsidian Black", value: "#050506" },
           { name: "Pearl White", value: "#f7f7f2" },
           { name: "Graphite", value: "#343946" },
           { name: "Signal Red", value: "#d50032" },
+        ],
+        colorPlaceholder: "Photo: H6 HEV in selected colour, studio",
+        trims: [
+          { name: "Elite", price: "AED 109,900", featured: false },
+          { name: "Premium", price: "AED 119,900", featured: true, note: "Most popular" },
+          { name: "Ultra", price: "AED 129,900", featured: false },
+        ],
+        continueLabel: "Continue",
+        specs: [
+          { label: "Engine & Performance", value: "1.5T Hybrid" },
+          { label: "Max Power", value: "245 PS" },
+          { label: "Max Torque", value: "530 Nm combined" },
+          { label: "Transmission", value: "DHT 2-speed" },
+          { label: "Drivetrain", value: "Front-wheel drive" },
+          { label: "Body", value: "5-seat SUV" },
+          { label: "Dimensions", value: "4,653 × 1,886 × 1,730 mm" },
         ],
       },
       {
@@ -103,29 +203,87 @@ const content = {
         model: "500",
         bodyType: "SUV",
         powertrain: "Petrol",
-        priceLabel: "Premium off-road",
+        priceLabel: "Starting from AED 149,900",
         summary:
           "A premium body-on-frame SUV with long-distance comfort and serious all-terrain capability.",
-        media: {
-          url: "/media/home-hero.png",
-          alt: "Premium SUV on a regional road at dusk",
+        heroPlaceholder: "Photo: Tank 500 desert action shot",
+        quickStats: [
+          { value: "354", unit: "PS", label: "Twin-turbo power" },
+          { value: "480", unit: "Nm", label: "Peak torque" },
+          { value: "700", unit: "km", label: "Touring range" },
+          { value: "33", unit: "°", label: "Approach angle" },
+        ],
+        whyCards: [
+          {
+            title: "Built for Every Terrain",
+            summary: "Selectable terrain modes and a locking centre differential for serious off-road control.",
+            placeholder: "Photo: Tank 500 off-road climb",
+          },
+          {
+            title: "A Cabin That Rewards",
+            summary: "Twin 12.3-inch displays, napa leather seats and a full-length panoramic roof.",
+            placeholder: "Photo: Tank 500 cabin dashboard",
+          },
+          {
+            title: "Iconic by Design",
+            summary: "A boxy, retro-modern silhouette with a spare wheel mounted tailgate.",
+            placeholder: "Photo: Tank 500 rear three-quarter",
+          },
+        ],
+        featureBanner: {
+          tabs: ["Tank Turn", "Hi4-T Hybrid", "Coffee OS", "All-Terrain"],
+          title: "Intelligent Tank Turn",
+          description:
+            "By independently braking the wheels, the TANK 500 pivots around its own axis — turning tight switchbacks and narrow trails into effortless manoeuvres.",
+          stat: { value: "=0m", label: "Turning radius on roll" },
+          placeholder: "Photo: Tank 500 tank-turn demonstration",
         },
-        highlights: [
-          "Off-road drive modes and robust chassis engineering",
-          "Premium cabin layout for long regional journeys",
-          "Large SUV presence with practical family space",
-        ],
-        specs: [
-          { label: "Powertrain", value: "Petrol" },
-          { label: "Body", value: "Large SUV" },
-          { label: "Drive", value: "4WD" },
-          { label: "Terrain", value: "Multi-mode control" },
-        ],
+        details: {
+          exterior: [
+            { caption: "Round LED headlights & signature grille", placeholder: "Photo: front grille detail" },
+            { caption: "18-inch all-terrain alloy wheels", placeholder: "Photo: alloy wheel detail" },
+            { caption: "Tailgate-mounted spare wheel", placeholder: "Photo: rear tailgate detail" },
+          ],
+          interior: [
+            { caption: "Twin 12.3-inch digital displays", placeholder: "Photo: dashboard display detail" },
+            { caption: "Quilted napa leather seats", placeholder: "Photo: seat stitching detail" },
+            { caption: "Full-length panoramic roof", placeholder: "Photo: panoramic roof detail" },
+          ],
+        },
+        spinCaption: "Drag to spin the TANK 500, or use the slider to explore every angle.",
+        safety: {
+          title: "Engineered to Protect",
+          tabs: ["Airbags", "Intelligent Driving", "Body Structure"],
+          placeholder: "Photo: Tank 500 safety X-ray diagram",
+          caption: "7-airbag protection",
+          features: [
+            { title: "Dual front airbags", summary: "Comprehensive airbag array whether every occupant is seated." },
+            { title: "Front seat side airbags", summary: "Dual front side and full-length side curtain airbags." },
+            { title: "Full-height side curtains", summary: "Extended coverage across all rows of seating." },
+            { title: "Driver knee airbag", summary: "Additional lower-body protection for the driver." },
+          ],
+        },
         colors: [
           { name: "Deep Black", value: "#050506" },
           { name: "Desert Bronze", value: "#8a6a45" },
           { name: "Steel Gray", value: "#6f747d" },
           { name: "White", value: "#ffffff" },
+        ],
+        colorPlaceholder: "Photo: Tank 500 in selected colour, studio",
+        trims: [
+          { name: "Adventure", price: "AED 149,900", featured: false },
+          { name: "Lux", price: "AED 164,900", featured: true, note: "Most popular" },
+          { name: "Ultra", price: "AED 178,900", featured: false },
+        ],
+        continueLabel: "Continue",
+        specs: [
+          { label: "Engine & Performance", value: "3.0T Turbocharged Petrol" },
+          { label: "Max Power", value: "354 PS @ 5,500 rpm" },
+          { label: "Max Torque", value: "480 Nm @ 1,800–5,000 rpm" },
+          { label: "Transmission", value: "9-Speed Automatic" },
+          { label: "Drivetrain", value: "Selectable 4WD" },
+          { label: "Off-Road Capability", value: "Locking centre & rear differential" },
+          { label: "Dimensions", value: "5,078 × 1,934 × 1,905 mm" },
         ],
       },
       {
@@ -134,268 +292,595 @@ const content = {
         model: "Commercial",
         bodyType: "Pickup",
         powertrain: "Diesel",
-        priceLabel: "Work-ready pickup",
+        priceLabel: "Starting from AED 99,900",
         summary:
           "A durable pickup for business, utility and weekend use with the comfort expected from a modern cabin.",
-        media: {
-          url: "/media/service-hero.png",
-          alt: "Dark vehicle in a premium service environment",
+        heroPlaceholder: "Photo: Poer Commercial work-site action shot",
+        quickStats: [
+          { value: "184", unit: "PS", label: "Diesel power" },
+          { value: "480", unit: "Nm", label: "Peak torque" },
+          { value: "1,000", unit: "kg", label: "Payload capacity" },
+          { value: "3,500", unit: "kg", label: "Towing capacity" },
+        ],
+        whyCards: [
+          {
+            title: "Built for Every Job",
+            summary: "A reinforced ladder-frame chassis rated for heavy daily loads.",
+            placeholder: "Photo: Poer Commercial loaded bed",
+          },
+          {
+            title: "A Cabin That Rewards",
+            summary: "A 12.3-inch display, durable trim and comfortable long-shift seating.",
+            placeholder: "Photo: Poer Commercial cabin dashboard",
+          },
+          {
+            title: "Work-Ready by Design",
+            summary: "A double-cab layout with a wide bed and tie-down rated load points.",
+            placeholder: "Photo: Poer Commercial rear three-quarter",
+          },
+        ],
+        featureBanner: {
+          tabs: ["4WD System", "Payload", "Coffee OS", "Durability"],
+          title: "Built to Carry More",
+          description:
+            "A reinforced frame, multi-link rear suspension and selectable 4WD keep the Poer Commercial steady under heavy loads and on loose terrain.",
+          stat: { value: "1,000kg", label: "Maximum payload" },
+          placeholder: "Photo: Poer Commercial towing demonstration",
         },
-        highlights: [
-          "Durable load capability for business and fleet needs",
-          "Comfortable cabin technology for daily use",
-          "Configured for regional work and travel conditions",
-        ],
-        specs: [
-          { label: "Powertrain", value: "Diesel" },
-          { label: "Body", value: "Double cab pickup" },
-          { label: "Drive", value: "4WD available" },
-          { label: "Use", value: "Fleet and private" },
-        ],
+        details: {
+          exterior: [
+            { caption: "LED headlights & signature grille", placeholder: "Photo: front grille detail" },
+            { caption: "17-inch work-rated alloy wheels", placeholder: "Photo: alloy wheel detail" },
+            { caption: "Reinforced load bed & tie-downs", placeholder: "Photo: load bed detail" },
+          ],
+          interior: [
+            { caption: "12.3-inch Coffee OS touchscreen", placeholder: "Photo: infotainment screen detail" },
+            { caption: "Durable wear-resistant upholstery", placeholder: "Photo: seat upholstery detail" },
+            { caption: "Double-cab rear bench seating", placeholder: "Photo: rear bench detail" },
+          ],
+        },
+        spinCaption: "Drag to spin the Poer Commercial, or use the slider to explore every angle.",
+        safety: {
+          title: "Engineered to Protect",
+          tabs: ["Airbags", "Intelligent Driving", "Body Structure"],
+          placeholder: "Photo: Poer Commercial safety X-ray diagram",
+          caption: "6-airbag protection",
+          features: [
+            { title: "Dual front airbags", summary: "Comprehensive airbag array whether every occupant is seated." },
+            { title: "Front seat side airbags", summary: "Dual front side airbags for the driver and passenger." },
+            { title: "Full-height side curtains", summary: "Extended coverage across both rows of seating." },
+            { title: "Reinforced cabin frame", summary: "A high-strength steel cabin cell for cab intrusion protection." },
+          ],
+        },
         colors: [
           { name: "Black", value: "#050506" },
           { name: "Silver", value: "#a7abb2" },
           { name: "White", value: "#ffffff" },
           { name: "Blue Gray", value: "#27313f" },
         ],
+        colorPlaceholder: "Photo: Poer Commercial in selected colour, studio",
+        trims: [
+          { name: "Standard", price: "AED 99,900", featured: false },
+          { name: "Business", price: "AED 109,900", featured: true, note: "Most popular" },
+          { name: "Fleet", price: "AED 94,900", featured: false, note: "Volume pricing" },
+        ],
+        continueLabel: "Continue",
+        specs: [
+          { label: "Engine & Performance", value: "2.0T Turbo Diesel" },
+          { label: "Max Power", value: "184 PS @ 3,600 rpm" },
+          { label: "Max Torque", value: "480 Nm @ 1,500–2,500 rpm" },
+          { label: "Transmission", value: "8-Speed Automatic" },
+          { label: "Drivetrain", value: "Selectable 4WD" },
+          { label: "Body", value: "Double cab pickup" },
+          { label: "Dimensions", value: "5,410 × 1,997 × 1,872 mm" },
+        ],
       },
     ],
     service: {
       hero: {
-        eyebrow: "Genuine care",
+        eyebrow: "Owners & Aftersales",
         title: "Care that goes with more",
         intro:
-          "Plan service, warranty support and roadside assistance through a clear ownership journey built for regional customers.",
+          "Keep your GWM at its best with genuine service, transparent warranty and support wherever the journey takes you.",
+        backLabel: "Back to home",
       },
       stats: [
-        { value: "7/24", label: "Roadside support" },
-        { value: "30+", label: "Dealer hubs" },
-        { value: "10", label: "Markets covered" },
+        { value: "5 yr", label: "Vehicle warranty" },
+        { value: "8 yr", label: "Battery warranty" },
+        { value: "24/7", label: "Roadside help" },
       ],
-      care: [
+      needsTitle: "Everything your GWM needs",
+      needs: [
         {
-          title: "Book service",
-          summary:
-            "Choose your market, vehicle and preferred dealer to begin a service booking request.",
+          icon: "wrench",
+          title: "Service & Maintenance",
+          summary: "Scheduled servicing by GWM-trained technicians.",
         },
         {
-          title: "Warranty clarity",
-          summary:
-            "Review coverage, maintenance expectations and ownership documents in one place.",
+          icon: "shield",
+          title: "Warranty",
+          summary: "Industry-leading 5-year cover with transparent terms.",
         },
         {
-          title: "Roadside assistance",
-          summary:
-            "Get regional contact paths for urgent support and ownership peace of mind.",
+          icon: "manual",
+          title: "Owner's Manuals",
+          summary: "Download the handbook and guides for your model.",
+        },
+        {
+          icon: "calendar",
+          title: "Service Booking",
+          summary: "Reserve a slot at your preferred dealer in a few taps.",
+        },
+        {
+          icon: "gift",
+          title: "GWM Care",
+          summary: "The ownership programme that goes with you everywhere.",
+        },
+        {
+          icon: "parts",
+          title: "Genuine Parts",
+          summary: "Engineered for your GWM — quality and fit guaranteed.",
         },
       ],
-      warranty: [
-        { title: "Basic coverage", detail: "Market-specific vehicle warranty guidance." },
+      plansTitle: "Prepaid peace of mind",
+      plans: [
         {
-          title: "Service plans",
-          detail: "Prepaid maintenance options for selected models.",
+          name: "Essential Care",
+          price: "From AED 899 / yr",
+          featured: false,
+          features: ["Oil & filter change", "Multi-point inspection", "Fluid top-up", "Software updates"],
+          ctaLabel: "Choose Essential Care",
         },
-        { title: "Handbooks", detail: "Owner manuals and quick-start support content." },
+        {
+          name: "Total Care",
+          price: "From AED 1,690 / yr",
+          featured: true,
+          badge: "Popular",
+          features: [
+            "Everything in Essential",
+            "Brake & tyre service",
+            "Cabin & AC service",
+            "Priority booking",
+            "Free pickup & drop-off",
+          ],
+          ctaLabel: "Choose Total Care",
+        },
       ],
+      ownership: {
+        title: "Ownership that goes with more",
+        summary:
+          "GWM Care brings every ownership benefit together in one connected programme — so support is always a tap away.",
+        features: [
+          { icon: "wrench", title: "24/7 Roadside", summary: "Towing & emergency help region-wide." },
+          { icon: "app", title: "GWM App", summary: "Vehicle status & bookings on your phone." },
+          { icon: "bell", title: "Service Reminders", summary: "Never miss a scheduled service." },
+          { icon: "shield", title: "Warranty Tracking", summary: "View cover & history any time." },
+        ],
+      },
+      handbooksTitle: "Download your handbook",
+      handbookKind: "Owner's Manual · PDF",
+      findServiceLabel: "Find a service centre",
+      faqTitle: "Frequently asked",
       faq: [
         {
-          question: "Can I book service online?",
+          question: "How often should I service my GWM?",
           answer:
-            "The MVP captures your request and routes it to the selected market flow.",
+            "We recommend a service every 10,000 km or 12 months, whichever comes first. Your vehicle's on-board system will also remind you when a service is due.",
         },
         {
-          question: "Where are warranty terms shown?",
-          answer: "Warranty content is organized by market and vehicle family.",
+          question: "What does the warranty cover?",
+          answer:
+            "The 5-year vehicle warranty covers manufacturing defects across the powertrain, electronics and chassis, with an 8-year cover on hybrid and EV battery packs.",
+        },
+        {
+          question: "Do you offer roadside assistance?",
+          answer:
+            "Yes — GWM Care includes 24/7 roadside assistance across all markets covered by this platform, including towing and emergency callouts.",
+        },
+        {
+          question: "Can I book a service online?",
+          answer:
+            "The MVP captures your request and routes it to the selected market flow; live dealer slot booking is part of the forms and leads API epic.",
         },
       ],
     },
     forms: {
       hero: {
-        eyebrow: "Start your journey",
-        title: "One form for every request",
+        eyebrow: "Get in touch",
+        title: "Start your journey",
         intro:
-          "Request a test drive, brochure, dealer contact, fleet conversation or service booking from one focused page.",
+          "Whether you'd like to book a test drive, request a brochure, or simply want to get in touch — we're here to help at every step.",
       },
-      types: ["Test drive", "Brochure", "Dealer enquiry", "Fleet", "Service"],
+      tabs: ["Test Drive", "Contact Us", "Fleet", "Brochure", "Delivery"],
+      formTitle: "Book a Test Drive",
+      formSubtitle: "Feel the road. Book a test drive at your nearest showroom.",
       fields: [
-        { label: "Full name", placeholder: "Enter your name" },
-        { label: "Email", placeholder: "name@example.com", type: "email" },
-        { label: "Phone", placeholder: "+971 50 000 0000", type: "tel" },
-        { label: "Country", placeholder: "Select country", type: "select" },
-        { label: "Vehicle", placeholder: "Select model", type: "select" },
-        { label: "Message", placeholder: "Tell us what you need", type: "textarea" },
+        { label: "First Name", placeholder: "Ahmed", half: true },
+        { label: "Family Name", placeholder: "Al Rashid", half: true },
+        { label: "Email", placeholder: "ahmed@email.com", type: "email", half: true },
+        { label: "Phone", placeholder: "+971 50 000 0000", type: "tel", half: true },
+        { label: "Country", placeholder: "Select country", type: "select", half: true },
+        { label: "Model", placeholder: "Select model", type: "select", half: true },
+        { label: "Preferred Date", placeholder: "", type: "date", half: true },
+        { label: "Preferred Time", placeholder: "Any time", type: "select", half: true },
       ],
+      notRobotLabel: "I'm not a robot",
+      notRobotHint: "This helps us protect against unwanted messages.",
       consent:
-        "I agree to be contacted by GWM Middle East or an authorized regional partner about my request.",
-      submitLabel: "Submit request",
+        "I agree to the processing of my personal data by GWM and its authorized distributors to respond to this request, in accordance with the Privacy Policy (GDPR / PDPL).",
+      submitLabel: "Request a Test Drive",
     },
   },
   ar: {
-    home: {
-      ...getFallbackHomeContent("ar"),
-      hero: {
-        ...getFallbackHomeContent("ar").hero,
-        media: {
-          url: "/media/home-hero.png",
-          alt: "سيارة SUV داكنة على طريق في الشرق الأوسط وقت الغروب",
-        },
-      },
-    },
+    home: getFallbackHomeContent("ar"),
     vehicles: [
       {
         slug: "haval-h6-hev",
-        brand: "HAVAL",
+        brand: "هافال",
         model: "H6 HEV",
         bodyType: "SUV",
         powertrain: "هايبرد",
-        priceLabel: "طراز إطلاق إقليمي",
+        priceLabel: "يبدأ من 109,900 درهم",
         summary: "سيارة SUV هايبرد ذكية للعائلة والكفاءة اليومية والسفر الإقليمي بثقة.",
-        media: {
-          url: "/media/product-hero.png",
-          alt: "سيارة SUV هايبرد على طريق صحراوي وقت الغروب",
+        heroPlaceholder: "صورة: هافال H6 HEV، لقطة حركة",
+        heroMedia: { url: "/media/product-hero.png", alt: "هافال H6 HEV على طريق صحراوي وقت الغروب" },
+        quickStats: [
+          { value: "245", unit: "حصان", label: "القوة المجمعة" },
+          { value: "530", unit: "كم", label: "مدى الهايبرد" },
+          { value: "5.4", unit: "لتر/100كم", label: "كفاءة الوقود" },
+          { value: "5", unit: "مقاعد", label: "مقصورة عائلية" },
+        ],
+        whyCards: [
+          {
+            title: "لكل تنقلاتك اليومية",
+            summary: "ضبط هايبرد ذكي لقيادة سلسة داخل المدينة وعلى الطرق السريعة.",
+            placeholder: "صورة: H6 HEV قيادة في المدينة",
+          },
+          {
+            title: "مقصورة تستحق",
+            summary: "شاشة 14.6 بوصة، تطبيقات متصلة، ومواد مقصورة هادئة.",
+            placeholder: "صورة: H6 HEV لوحة القيادة",
+          },
+          {
+            title: "ثقة بالتصميم",
+            summary: "حضور عريض ومنظومة مساعدة سائق لراحة بال العائلة.",
+            placeholder: "صورة: H6 HEV خلفية جانبية",
+          },
+        ],
+        featureBanner: {
+          tabs: ["منظومة الهايبرد", "منظومة السلامة", "Coffee OS", "الكفاءة"],
+          title: "دفع هايبرد ذكي",
+          description: "بتنسيق المحرك والمحرك الكهربائي، يجمع H6 HEV بين قوة سلسة وكفاءة يومية.",
+          stat: { value: "5.4 لتر", label: "استهلاك الوقود لكل 100 كم" },
+          placeholder: "صورة: منظومة الهايبرد في H6 HEV",
         },
-        highlights: [
-          "منظومة هايبرد لقيادة سلسة داخل المدينة وعلى الطرق السريعة",
-          "ميزات مساعدة السائق لتعزيز الثقة اليومية",
-          "مقصورة مرنة بمواد هادئة وشاشات متصلة",
-        ],
-        specs: [
-          { label: "منظومة الحركة", value: "هايبرد" },
-          { label: "الفئة", value: "SUV بخمسة مقاعد" },
-          { label: "الدفع", value: "دفع أمامي" },
-          { label: "السلامة", value: "مساعدة متقدمة للسائق" },
-        ],
+        details: {
+          exterior: [
+            { caption: "مصابيح LED كاملة وشبك أمامي مميز", placeholder: "صورة: تفاصيل الشبك الأمامي" },
+            { caption: "جنوط سبيكة مشغولة 18 بوصة", placeholder: "صورة: تفاصيل الجنط" },
+            { caption: "لمسات تصميم عند الباب الخلفي", placeholder: "صورة: تفاصيل الباب الخلفي" },
+          ],
+          interior: [
+            { caption: "شاشة Coffee OS بحجم 14.6 بوصة", placeholder: "صورة: تفاصيل شاشة المعلومات" },
+            { caption: "مقاعد أمامية مدفأة ومهواة", placeholder: "صورة: تفاصيل المقعد الأمامي" },
+            { caption: "وحدة تحكم مناخ مزدوجة المنطقة", placeholder: "صورة: تفاصيل وحدة التحكم" },
+          ],
+        },
+        spinCaption: "اسحب لتدوير H6 HEV، أو استخدم الشريط لاستكشاف كل زاوية.",
+        safety: {
+          title: "مصممة للحماية",
+          tabs: ["الوسائد الهوائية", "القيادة الذكية", "هيكل السيارة"],
+          placeholder: "صورة: مخطط أشعة السلامة لـ H6 HEV",
+          caption: "حماية بـ 7 وسائد هوائية",
+          features: [
+            { title: "وسادتان أماميتان", summary: "منظومة وسائد شاملة لكل راكب." },
+            { title: "وسائد جانبية أمامية", summary: "وسائد جانبية أمامية وستائر جانبية كاملة الطول." },
+            { title: "ستائر جانبية كاملة الارتفاع", summary: "تغطية ممتدة عبر جميع صفوف المقاعد." },
+            { title: "وسادة ركبة السائق", summary: "حماية إضافية للجزء السفلي من جسم السائق." },
+          ],
+        },
         colors: [
           { name: "أسود", value: "#050506" },
           { name: "أبيض لؤلؤي", value: "#f7f7f2" },
           { name: "جرافيت", value: "#343946" },
           { name: "أحمر", value: "#d50032" },
         ],
+        colorPlaceholder: "صورة: H6 HEV باللون المختار، استوديو",
+        trims: [
+          { name: "Elite", price: "109,900 درهم", featured: false },
+          { name: "Premium", price: "119,900 درهم", featured: true, note: "الأكثر طلباً" },
+          { name: "Ultra", price: "129,900 درهم", featured: false },
+        ],
+        continueLabel: "متابعة",
+        specs: [
+          { label: "المحرك والأداء", value: "1.5T هايبرد" },
+          { label: "أقصى قوة", value: "245 حصان" },
+          { label: "أقصى عزم", value: "530 نيوتن متر مجمع" },
+          { label: "ناقل الحركة", value: "DHT بسرعتين" },
+          { label: "نظام الدفع", value: "دفع أمامي" },
+          { label: "الفئة", value: "SUV بخمسة مقاعد" },
+          { label: "الأبعاد", value: "4,653 × 1,886 × 1,730 مم" },
+        ],
       },
       {
         slug: "tank-500",
-        brand: "TANK",
+        brand: "تانك",
         model: "500",
         bodyType: "SUV",
         powertrain: "بنزين",
-        priceLabel: "فخامة للطرق الوعرة",
-        summary:
-          "سيارة SUV فاخرة بهيكل قوي وراحة للمسافات الطويلة وقدرة جادة لجميع التضاريس.",
-        media: {
-          url: "/media/home-hero.png",
-          alt: "سيارة SUV فاخرة على طريق إقليمي وقت الغروب",
+        priceLabel: "يبدأ من 149,900 درهم",
+        summary: "سيارة SUV فاخرة بهيكل قوي وراحة للمسافات الطويلة وقدرة جادة لجميع التضاريس.",
+        heroPlaceholder: "صورة: تانك 500، لقطة حركة صحراوية",
+        quickStats: [
+          { value: "354", unit: "حصان", label: "قوة توين توربو" },
+          { value: "480", unit: "نيوتن متر", label: "أقصى عزم" },
+          { value: "700", unit: "كم", label: "مدى الرحلات" },
+          { value: "33", unit: "°", label: "زاوية الاقتراب" },
+        ],
+        whyCards: [
+          {
+            title: "لكل التضاريس",
+            summary: "أنماط تضاريس قابلة للاختيار وقفل تفاضلي مركزي لتحكم وعر جاد.",
+            placeholder: "صورة: تانك 500 تسلق وعر",
+          },
+          {
+            title: "مقصورة تستحق",
+            summary: "شاشتان بحجم 12.3 بوصة، مقاعد جلد نابا، وسقف بانورامي كامل.",
+            placeholder: "صورة: تانك 500 لوحة القيادة",
+          },
+          {
+            title: "تصميم أيقوني",
+            summary: "هيكل مربع بطابع كلاسيكي حديث مع إطار احتياطي على الباب الخلفي.",
+            placeholder: "صورة: تانك 500 خلفية جانبية",
+          },
+        ],
+        featureBanner: {
+          tabs: ["دوران تانك", "Hi4-T هايبرد", "Coffee OS", "جميع التضاريس"],
+          title: "دوران تانك الذكي",
+          description:
+            "بكبح العجلات بشكل مستقل، تدور TANK 500 حول محورها — لتحويل المنعطفات الضيقة والمسارات الوعرة إلى مناورات سهلة.",
+          stat: { value: "=0م", label: "نصف قطر الدوران أثناء الدحرجة" },
+          placeholder: "صورة: عرض دوران تانك",
         },
-        highlights: [
-          "أنماط قيادة للطرق الوعرة وهندسة هيكل قوية",
-          "مقصورة فاخرة للرحلات الإقليمية الطويلة",
-          "حضور SUV كبير مع مساحة عملية للعائلة",
-        ],
-        specs: [
-          { label: "منظومة الحركة", value: "بنزين" },
-          { label: "الفئة", value: "SUV كبيرة" },
-          { label: "الدفع", value: "4WD" },
-          { label: "التضاريس", value: "تحكم متعدد الأنماط" },
-        ],
+        details: {
+          exterior: [
+            { caption: "مصابيح LED دائرية وشبك أمامي مميز", placeholder: "صورة: تفاصيل الشبك الأمامي" },
+            { caption: "جنوط سبيكة 18 بوصة لجميع التضاريس", placeholder: "صورة: تفاصيل الجنط" },
+            { caption: "إطار احتياطي على الباب الخلفي", placeholder: "صورة: تفاصيل الباب الخلفي" },
+          ],
+          interior: [
+            { caption: "شاشتان رقميتان 12.3 بوصة", placeholder: "صورة: تفاصيل الشاشة" },
+            { caption: "مقاعد جلد نابا مبطنة", placeholder: "صورة: تفاصيل خياطة المقعد" },
+            { caption: "سقف بانورامي كامل الطول", placeholder: "صورة: تفاصيل السقف البانورامي" },
+          ],
+        },
+        spinCaption: "اسحب لتدوير TANK 500، أو استخدم الشريط لاستكشاف كل زاوية.",
+        safety: {
+          title: "مصممة للحماية",
+          tabs: ["الوسائد الهوائية", "القيادة الذكية", "هيكل السيارة"],
+          placeholder: "صورة: مخطط أشعة السلامة لتانك 500",
+          caption: "حماية بـ 7 وسائد هوائية",
+          features: [
+            { title: "وسادتان أماميتان", summary: "منظومة وسائد شاملة لكل راكب." },
+            { title: "وسائد جانبية أمامية", summary: "وسائد جانبية أمامية وستائر جانبية كاملة الطول." },
+            { title: "ستائر جانبية كاملة الارتفاع", summary: "تغطية ممتدة عبر جميع صفوف المقاعد." },
+            { title: "وسادة ركبة السائق", summary: "حماية إضافية للجزء السفلي من جسم السائق." },
+          ],
+        },
         colors: [
           { name: "أسود عميق", value: "#050506" },
           { name: "برونزي صحراوي", value: "#8a6a45" },
           { name: "رمادي", value: "#6f747d" },
           { name: "أبيض", value: "#ffffff" },
         ],
+        colorPlaceholder: "صورة: تانك 500 باللون المختار، استوديو",
+        trims: [
+          { name: "Adventure", price: "149,900 درهم", featured: false },
+          { name: "Lux", price: "164,900 درهم", featured: true, note: "الأكثر طلباً" },
+          { name: "Ultra", price: "178,900 درهم", featured: false },
+        ],
+        continueLabel: "متابعة",
+        specs: [
+          { label: "المحرك والأداء", value: "3.0T بنزين توربو" },
+          { label: "أقصى قوة", value: "354 حصان عند 5,500 دورة" },
+          { label: "أقصى عزم", value: "480 نيوتن متر عند 1,800–5,000 دورة" },
+          { label: "ناقل الحركة", value: "أوتوماتيك 9 سرعات" },
+          { label: "نظام الدفع", value: "دفع رباعي قابل للاختيار" },
+          { label: "قدرة الطرق الوعرة", value: "قفل تفاضلي مركزي وخلفي" },
+          { label: "الأبعاد", value: "5,078 × 1,934 × 1,905 مم" },
+        ],
       },
       {
         slug: "poer-commercial",
-        brand: "POER",
+        brand: "بوير",
         model: "Commercial",
         bodyType: "بيك أب",
         powertrain: "ديزل",
-        priceLabel: "بيك أب جاهزة للعمل",
-        summary:
-          "بيك أب متينة للأعمال والاستخدام اليومي مع الراحة المتوقعة من مقصورة حديثة.",
-        media: {
-          url: "/media/service-hero.png",
-          alt: "مركبة داكنة في مركز خدمة فاخر",
+        priceLabel: "يبدأ من 99,900 درهم",
+        summary: "بيك أب متينة للأعمال والاستخدام اليومي مع الراحة المتوقعة من مقصورة حديثة.",
+        heroPlaceholder: "صورة: بوير Commercial، لقطة حركة في موقع عمل",
+        quickStats: [
+          { value: "184", unit: "حصان", label: "قوة الديزل" },
+          { value: "480", unit: "نيوتن متر", label: "أقصى عزم" },
+          { value: "1,000", unit: "كجم", label: "الحمولة القصوى" },
+          { value: "3,500", unit: "كجم", label: "قدرة السحب" },
+        ],
+        whyCards: [
+          {
+            title: "لكل مهمة عمل",
+            summary: "هيكل مقوّى من نوع السلم مصنف لتحمل أحمال يومية ثقيلة.",
+            placeholder: "صورة: بوير Commercial محملة",
+          },
+          {
+            title: "مقصورة تستحق",
+            summary: "شاشة 12.3 بوصة، تشطيبات متينة، ومقاعد مريحة للورديات الطويلة.",
+            placeholder: "صورة: بوير Commercial لوحة القيادة",
+          },
+          {
+            title: "جاهزة للعمل بالتصميم",
+            summary: "مقصورة مزدوجة مع صندوق عريض ونقاط تثبيت مصنفة للحمولة.",
+            placeholder: "صورة: بوير Commercial خلفية جانبية",
+          },
+        ],
+        featureBanner: {
+          tabs: ["نظام الدفع الرباعي", "الحمولة", "Coffee OS", "المتانة"],
+          title: "مصممة لحمل المزيد",
+          description:
+            "هيكل مقوّى، تعليق خلفي متعدد الوصلات، ودفع رباعي قابل للاختيار يبقيان بوير Commercial ثابتة تحت الأحمال الثقيلة وعلى الطرق غير الممهدة.",
+          stat: { value: "1,000كجم", label: "أقصى حمولة" },
+          placeholder: "صورة: عرض سحب بوير Commercial",
         },
-        highlights: [
-          "قدرة تحميل متينة لاحتياجات الأعمال والأساطيل",
-          "تقنيات مقصورة مريحة للاستخدام اليومي",
-          "ملائمة لظروف العمل والسفر الإقليمية",
-        ],
-        specs: [
-          { label: "منظومة الحركة", value: "ديزل" },
-          { label: "الفئة", value: "بيك أب مزدوجة المقصورة" },
-          { label: "الدفع", value: "4WD متاح" },
-          { label: "الاستخدام", value: "أساطيل وأفراد" },
-        ],
+        details: {
+          exterior: [
+            { caption: "مصابيح LED وشبك أمامي مميز", placeholder: "صورة: تفاصيل الشبك الأمامي" },
+            { caption: "جنوط سبيكة 17 بوصة مصنفة للعمل", placeholder: "صورة: تفاصيل الجنط" },
+            { caption: "صندوق حمولة مقوى ونقاط تثبيت", placeholder: "صورة: تفاصيل صندوق الحمولة" },
+          ],
+          interior: [
+            { caption: "شاشة Coffee OS بحجم 12.3 بوصة", placeholder: "صورة: تفاصيل شاشة المعلومات" },
+            { caption: "تنجيد متين مقاوم للتآكل", placeholder: "صورة: تفاصيل تنجيد المقعد" },
+            { caption: "مقاعد خلفية لمقصورة مزدوجة", placeholder: "صورة: تفاصيل المقعد الخلفي" },
+          ],
+        },
+        spinCaption: "اسحب لتدوير بوير Commercial، أو استخدم الشريط لاستكشاف كل زاوية.",
+        safety: {
+          title: "مصممة للحماية",
+          tabs: ["الوسائد الهوائية", "القيادة الذكية", "هيكل السيارة"],
+          placeholder: "صورة: مخطط أشعة السلامة لبوير Commercial",
+          caption: "حماية بـ 6 وسائد هوائية",
+          features: [
+            { title: "وسادتان أماميتان", summary: "منظومة وسائد شاملة لكل راكب." },
+            { title: "وسائد جانبية أمامية", summary: "وسائد جانبية أمامية للسائق والراكب." },
+            { title: "ستائر جانبية كاملة الارتفاع", summary: "تغطية ممتدة عبر كلا صفي المقاعد." },
+            { title: "هيكل مقصورة مقوى", summary: "خلية مقصورة فولاذية عالية القوة للحماية من التصادم." },
+          ],
+        },
         colors: [
           { name: "أسود", value: "#050506" },
           { name: "فضي", value: "#a7abb2" },
           { name: "أبيض", value: "#ffffff" },
           { name: "أزرق رمادي", value: "#27313f" },
         ],
+        colorPlaceholder: "صورة: بوير Commercial باللون المختار، استوديو",
+        trims: [
+          { name: "Standard", price: "99,900 درهم", featured: false },
+          { name: "Business", price: "109,900 درهم", featured: true, note: "الأكثر طلباً" },
+          { name: "Fleet", price: "94,900 درهم", featured: false, note: "تسعير كميات" },
+        ],
+        continueLabel: "متابعة",
+        specs: [
+          { label: "المحرك والأداء", value: "2.0T ديزل توربو" },
+          { label: "أقصى قوة", value: "184 حصان عند 3,600 دورة" },
+          { label: "أقصى عزم", value: "480 نيوتن متر عند 1,500–2,500 دورة" },
+          { label: "ناقل الحركة", value: "أوتوماتيك 8 سرعات" },
+          { label: "نظام الدفع", value: "دفع رباعي قابل للاختيار" },
+          { label: "الفئة", value: "بيك أب مزدوجة المقصورة" },
+          { label: "الأبعاد", value: "5,410 × 1,997 × 1,872 مم" },
+        ],
       },
     ],
     service: {
       hero: {
-        eyebrow: "عناية أصلية",
+        eyebrow: "الملكية وخدمات ما بعد البيع",
         title: "عناية ترافقك أكثر",
-        intro:
-          "خطط للصيانة والضمان والمساعدة على الطريق من خلال رحلة ملكية واضحة للعملاء في المنطقة.",
+        intro: "حافظ على أفضل أداء لسيارتك GWM مع صيانة أصلية، وضمان شفاف، ودعم أينما أخذتك الرحلة.",
+        backLabel: "العودة للرئيسية",
       },
       stats: [
-        { value: "7/24", label: "دعم على الطريق" },
-        { value: "+30", label: "مراكز وكلاء" },
-        { value: "10", label: "أسواق مشمولة" },
+        { value: "5 سنوات", label: "ضمان المركبة" },
+        { value: "8 سنوات", label: "ضمان البطارية" },
+        { value: "24/7", label: "مساعدة على الطريق" },
       ],
-      care: [
+      needsTitle: "كل ما تحتاجه سيارتك GWM",
+      needs: [
+        { icon: "wrench", title: "الصيانة", summary: "صيانة مجدولة بواسطة فنيين مدربين من GWM." },
+        { icon: "shield", title: "الضمان", summary: "تغطية رائدة لمدة 5 سنوات بشروط شفافة." },
+        { icon: "manual", title: "أدلة المالك", summary: "حمّل الدليل والكتيبات الخاصة بطرازك." },
+        { icon: "calendar", title: "حجز الصيانة", summary: "احجز موعداً لدى وكيلك المفضل خلال ثوانٍ." },
+        { icon: "gift", title: "عناية GWM", summary: "برنامج الملكية الذي يرافقك أينما ذهبت." },
+        { icon: "parts", title: "قطع غيار أصلية", summary: "مصممة لسيارتك GWM — جودة وملاءمة مضمونة." },
+      ],
+      plansTitle: "راحة بال مسبقة الدفع",
+      plans: [
         {
-          title: "احجز الصيانة",
-          summary: "اختر السوق والمركبة والوكيل المفضل لبدء طلب الصيانة.",
+          name: "العناية الأساسية",
+          price: "تبدأ من 899 درهم / سنة",
+          featured: false,
+          features: ["تغيير الزيت والفلتر", "فحص شامل متعدد النقاط", "تعبئة السوائل", "تحديثات البرامج"],
+          ctaLabel: "اختر العناية الأساسية",
         },
         {
-          title: "وضوح الضمان",
-          summary: "راجع التغطية ومتطلبات الصيانة ووثائق الملكية في مكان واحد.",
-        },
-        {
-          title: "المساعدة على الطريق",
-          summary: "احصل على مسارات تواصل إقليمية للدعم العاجل وراحة البال.",
+          name: "العناية الشاملة",
+          price: "تبدأ من 1,690 درهم / سنة",
+          featured: true,
+          badge: "الأكثر طلباً",
+          features: [
+            "كل ما في العناية الأساسية",
+            "خدمة الفرامل والإطارات",
+            "خدمة المقصورة والتكييف",
+            "أولوية الحجز",
+            "استلام وتوصيل مجاني",
+          ],
+          ctaLabel: "اختر العناية الشاملة",
         },
       ],
-      warranty: [
-        { title: "التغطية الأساسية", detail: "إرشادات ضمان حسب السوق." },
-        { title: "خطط الصيانة", detail: "خيارات صيانة مسبقة الدفع لطرازات مختارة." },
-        { title: "الكتيبات", detail: "أدلة المالك ومحتوى دعم سريع." },
-      ],
+      ownership: {
+        title: "ملكية ترافقك أكثر",
+        summary: "يجمع برنامج عناية GWM كل مزايا الملكية في برنامج واحد متصل — بحيث يكون الدعم دائماً في متناول يدك.",
+        features: [
+          { icon: "wrench", title: "مساعدة 24/7", summary: "سحب ومساعدة طارئة في كل المنطقة." },
+          { icon: "app", title: "تطبيق GWM", summary: "حالة السيارة والحجوزات على هاتفك." },
+          { icon: "bell", title: "تذكير بالصيانة", summary: "لن تفوتك أي صيانة مجدولة." },
+          { icon: "shield", title: "تتبع الضمان", summary: "اطلع على التغطية والسجل في أي وقت." },
+        ],
+      },
+      handbooksTitle: "حمّل دليل المالك",
+      handbookKind: "دليل المالك · PDF",
+      findServiceLabel: "ابحث عن مركز صيانة",
+      faqTitle: "الأسئلة الشائعة",
       faq: [
         {
-          question: "هل يمكنني حجز الصيانة عبر الإنترنت؟",
-          answer: "يلتقط MVP طلبك ويوجهه إلى مسار السوق المحدد.",
+          question: "كم مرة يجب أن أصيّن سيارتي GWM؟",
+          answer: "ننصح بالصيانة كل 10,000 كم أو 12 شهراً أيهما أقرب. سيذكرك النظام المدمج في سيارتك أيضاً عند حلول موعد الصيانة.",
         },
         {
-          question: "أين تظهر شروط الضمان؟",
-          answer: "يتم تنظيم محتوى الضمان حسب السوق وفئة المركبة.",
+          question: "ماذا يغطي الضمان؟",
+          answer: "يغطي ضمان المركبة لمدة 5 سنوات عيوب التصنيع في منظومة الحركة والإلكترونيات والهيكل، مع تغطية 8 سنوات لحزم بطاريات الهايبرد والكهربائية.",
+        },
+        {
+          question: "هل تقدمون مساعدة على الطريق؟",
+          answer: "نعم — يشمل برنامج عناية GWM مساعدة على الطريق على مدار الساعة في جميع الأسواق المشمولة بهذه المنصة.",
+        },
+        {
+          question: "هل يمكنني حجز الصيانة عبر الإنترنت؟",
+          answer: "يلتقط MVP طلبك ويوجهه إلى مسار السوق المحدد؛ سيكون حجز مواعيد الوكلاء المباشر جزءاً من ملحمة النماذج والعملاء.",
         },
       ],
     },
     forms: {
       hero: {
-        eyebrow: "ابدأ رحلتك",
-        title: "نموذج واحد لكل طلب",
-        intro:
-          "اطلب تجربة قيادة أو كتيباً أو تواصلاً مع الوكيل أو محادثة أسطول أو حجز صيانة من صفحة واحدة مركزة.",
+        eyebrow: "تواصل معنا",
+        title: "ابدأ رحلتك",
+        intro: "سواء كنت ترغب في حجز تجربة قيادة، أو طلب كتيّب، أو ببساطة تريد التواصل معنا - نحن هنا لمساعدتك في كل خطوة على الطريق.",
       },
-      types: ["تجربة قيادة", "كتيب", "استفسار وكيل", "أسطول", "صيانة"],
+      tabs: ["تجربة القيادة", "اتصل بنا", "الأسطول", "الكتيب", "الاستلام"],
+      formTitle: "احجز تجربة قيادة",
+      formSubtitle: "اشعر بالطريق. احجز تجربة قيادة في أقرب صالة عرض.",
       fields: [
-        { label: "الاسم الكامل", placeholder: "أدخل اسمك" },
-        { label: "البريد الإلكتروني", placeholder: "name@example.com", type: "email" },
-        { label: "الهاتف", placeholder: "+971 50 000 0000", type: "tel" },
-        { label: "الدولة", placeholder: "اختر الدولة", type: "select" },
-        { label: "المركبة", placeholder: "اختر الطراز", type: "select" },
-        { label: "الرسالة", placeholder: "اكتب ما تحتاجه", type: "textarea" },
+        { label: "الاسم الأول", placeholder: "أحمد", half: true },
+        { label: "اسم العائلة", placeholder: "الراشد", half: true },
+        { label: "البريد الإلكتروني", placeholder: "ahmed@email.com", type: "email", half: true },
+        { label: "الهاتف", placeholder: "+971 50 000 0000", type: "tel", half: true },
+        { label: "الدولة", placeholder: "اختر الدولة", type: "select", half: true },
+        { label: "الموديل المطلوب", placeholder: "اختر الموديل", type: "select", half: true },
+        { label: "التاريخ المفضل", placeholder: "", type: "date", half: true },
+        { label: "الوقت المفضل", placeholder: "أي وقت", type: "select", half: true },
       ],
+      notRobotLabel: "أنا لست روبوت",
+      notRobotHint: "يساعدنا هذا في الحماية من الرسائل غير المرغوب فيها.",
       consent:
-        "أوافق على أن تتواصل معي GWM الشرق الأوسط أو أحد شركائها المعتمدين بخصوص طلبي.",
-      submitLabel: "إرسال الطلب",
+        "أوافق على معالجة بياناتي الشخصية من قبل GWM وموزعيها المعتمدين للرد على هذا الطلب، وفقاً لسياسة الخصوصية (GDPR / PDPL).",
+      submitLabel: "طلب تجربة قيادة",
     },
   },
 } satisfies Record<Locale, SiteContent>;

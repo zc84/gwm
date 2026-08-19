@@ -133,10 +133,11 @@ active API epics.
 Epic 4 implements the static public website pages and V2-aligned elements:
 
 - reusable localized header, footer, hero, section and stat primitives
-- vehicle catalogue and product detail pages
-- service, country, forms and news pages
+- vehicle catalogue and product detail pages matching the V2 mockups section-by-section
+- service, country, forms and news pages matching the V2 mockups
 - static SEO endpoints
-- generated placeholder visual assets
+- honest photo placeholders (`PhotoPlaceholder`) standing in for photography
+  this MVP doesn't have yet, instead of fabricated art
 
 Primary handoff files:
 

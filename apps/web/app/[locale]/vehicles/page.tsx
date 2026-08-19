@@ -2,7 +2,7 @@ import Link from "next/link";
 import { isLocale, type Locale } from "@gwm/shared";
 import { notFound } from "next/navigation";
 import { getSiteContent } from "../../../lib/content/site";
-import { PageHero, SectionHeading, SiteFooter, SiteHeader } from "../components";
+import { PageHero, PhotoPlaceholder, SectionHeading, SiteFooter, SiteHeader } from "../components";
 
 type VehiclesPageProps = {
   params: Promise<{ locale: string }>;
@@ -29,7 +29,7 @@ export default async function VehiclesPage({ params }: VehiclesPageProps) {
             ? "استعرض سيارات SUV والبيك أب والطرازات الهجينة من عائلة GWM الإقليمية."
             : "Explore SUVs, pickups and hybrid models from the regional GWM family."
         }
-        image="/media/home-hero.png"
+        placeholder={locale === "ar" ? "صورة: تشكيلة GWM، استوديو" : "Photo: GWM line-up, studio"}
       >
         <div className="flex flex-wrap gap-2">
           {home.filters.map((filter, index) => (
@@ -60,14 +60,16 @@ export default async function VehiclesPage({ params }: VehiclesPageProps) {
                 key={vehicle.slug}
                 className="border border-gwm-line bg-gwm-panel p-5"
               >
-                <div
-                  aria-label={vehicle.media.alt}
-                  className="mb-5 aspect-[16/10] bg-cover bg-center"
-                  role="img"
-                  style={{
-                    backgroundImage: `linear-gradient(180deg,rgba(5,5,6,0.05),rgba(5,5,6,0.54)),url(${vehicle.media.url})`,
-                  }}
-                />
+                {vehicle.heroMedia ? (
+                  <div
+                    className="mb-5 aspect-[16/10] bg-cover bg-center"
+                    role="img"
+                    aria-label={vehicle.heroMedia.alt}
+                    style={{ backgroundImage: `url(${vehicle.heroMedia.url})` }}
+                  />
+                ) : (
+                  <PhotoPlaceholder label={vehicle.heroPlaceholder} className="mb-5 aspect-[16/10]" />
+                )}
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="text-xs font-black uppercase text-gwm-red">

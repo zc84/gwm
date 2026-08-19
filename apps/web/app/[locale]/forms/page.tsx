@@ -1,7 +1,7 @@
 import { isLocale, type Locale } from "@gwm/shared";
 import { notFound } from "next/navigation";
 import { getSiteContent } from "../../../lib/content/site";
-import { PageHero, SectionHeading, SiteFooter, SiteHeader } from "../components";
+import { Icon, PageHero, QuickActionBar, SectionHeading, SiteFooter, SiteHeader } from "../components";
 
 type FormsPageProps = {
   params: Promise<{ locale: string }>;
@@ -28,62 +28,36 @@ export default async function FormsPage({ params }: FormsPageProps) {
       />
 
       <section className="gwm-section">
-        <div className="gwm-container grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
-          <aside className="border border-gwm-line bg-gwm-panel p-5">
-            <p className="gwm-eyebrow mb-5">
-              {locale === "ar" ? "نوع الطلب" : "Request type"}
-            </p>
-            <div className="flex flex-wrap gap-2 lg:flex-col">
-              {forms.types.map((type, index) => (
-                <span
-                  key={type}
-                  className={`gwm-chip ${index === 0 ? "gwm-chip-active" : ""}`}
-                >
-                  {type}
-                </span>
-              ))}
-            </div>
-          </aside>
+        <div className="gwm-container">
+          <div className="mb-8 flex flex-wrap justify-center gap-2">
+            {forms.tabs.map((tab, index) => (
+              <span key={tab} className={`gwm-chip ${index === 0 ? "gwm-chip-active" : ""}`}>
+                {tab}
+              </span>
+            ))}
+          </div>
 
-          <form className="border border-gwm-line bg-gwm-panel p-5">
-            <SectionHeading
-              eyebrow={locale === "ar" ? "بياناتك" : "Your details"}
-              title={
-                locale === "ar"
-                  ? "أكمل الطلب في صفحة واحدة"
-                  : "Complete the request in one page"
-              }
-              summary={
-                locale === "ar"
-                  ? "النموذج ثابت حالياً وسيتم ربطه بواجهات API في ملحمة النماذج والعملاء."
-                  : "The form is static now and will connect to API routes in the forms and leads epic."
-              }
-            />
+          <form className="mx-auto max-w-3xl border border-gwm-line bg-gwm-panel p-5 md:p-8">
+            <SectionHeading eyebrow={forms.hero.eyebrow} title={forms.formTitle} summary={forms.formSubtitle} />
             <div className="grid gap-4 md:grid-cols-2">
               {forms.fields.map((field) => (
-                <label
-                  key={field.label}
-                  className={field.type === "textarea" ? "md:col-span-2" : ""}
-                >
+                <label key={field.label} className={field.half ? "" : "md:col-span-2"}>
                   <span className="text-sm font-black text-white">{field.label}</span>
                   {field.type === "select" ? (
                     <select className="mt-2 min-h-12 w-full border border-gwm-line bg-gwm-panel-soft px-4 text-gwm-muted">
                       <option>{field.placeholder}</option>
-                      {field.label === (locale === "ar" ? "المركبة" : "Vehicle")
+                      {field.label === "Model" || field.label === "الموديل المطلوب"
                         ? vehicles.map((vehicle) => (
                             <option
                               key={vehicle.slug}
                             >{`${vehicle.brand} ${vehicle.model}`}</option>
                           ))
-                        : home.countries.map((country) => (
-                            <option key={country.country}>{country.country}</option>
-                          ))}
+                        : field.label === "Country" || field.label === "الدولة"
+                          ? home.countries.map((country) => (
+                              <option key={country.country}>{country.country}</option>
+                            ))
+                          : null}
                     </select>
-                  ) : field.type === "textarea" ? (
-                    <textarea
-                      className="mt-2 min-h-32 w-full border border-gwm-line bg-gwm-panel-soft px-4 py-3 text-white"
-                      placeholder={field.placeholder}
-                    />
                   ) : (
                     <input
                       className="mt-2 min-h-12 w-full border border-gwm-line bg-gwm-panel-soft px-4 text-white"
@@ -94,6 +68,16 @@ export default async function FormsPage({ params }: FormsPageProps) {
                 </label>
               ))}
             </div>
+
+            <label className="mt-6 flex items-start gap-3 border border-gwm-line bg-gwm-panel-soft p-4 text-sm leading-6 text-gwm-muted">
+              <input type="checkbox" className="mt-1" />
+              <span className="flex items-center gap-2 text-white">
+                <Icon name="shield" className="text-gwm-red" />
+                {forms.notRobotLabel}
+              </span>
+            </label>
+            <p className="gwm-caption mt-2">{forms.notRobotHint}</p>
+
             <label className="mt-5 flex items-start gap-3 text-sm leading-6 text-gwm-muted">
               <input type="checkbox" className="mt-1" />
               <span>{forms.consent}</span>
@@ -108,6 +92,7 @@ export default async function FormsPage({ params }: FormsPageProps) {
         </div>
       </section>
 
+      <QuickActionBar locale={locale} />
       <SiteFooter locale={locale} />
     </main>
   );
