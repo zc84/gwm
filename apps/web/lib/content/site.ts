@@ -3,8 +3,8 @@ import { getFallbackHomeContent, type HomePageContent } from "./home";
 import type { ModelStatus } from "./models";
 
 export type QuickStat = { value: string; unit: string; label: string };
-export type WhyCard = { title: string; summary: string; placeholder: string };
-export type DetailShot = { caption: string; placeholder: string };
+export type WhyCard = { title: string; summary: string; placeholder: string; media?: { url: string; alt: string } };
+export type DetailShot = { caption: string; placeholder: string; media?: { url: string; alt: string } };
 export type Trim = { name: string; price: string; featured: boolean; note?: string };
 
 export type Vehicle = {
@@ -17,6 +17,7 @@ export type Vehicle = {
   summary: string;
   heroPlaceholder: string;
   heroMedia?: { url: string; alt: string };
+  spin360?: { frames: string[]; alt: string };
   quickStats: QuickStat[];
   whyCards: WhyCard[];
   featureBanner: {
@@ -25,6 +26,7 @@ export type Vehicle = {
     description: string;
     stat: { value: string; label: string };
     placeholder: string;
+    media?: { url: string; alt: string };
   };
   details: {
     exterior: DetailShot[];
@@ -144,6 +146,13 @@ export type SiteContent = {
   offers: OffersContent;
 };
 
+function buildSpinFrames(dir: string, filePrefix: string, count = 36, stepDegrees = 10): string[] {
+  return Array.from(
+    { length: count },
+    (_, i) => `/media/360/${dir}/frames/${filePrefix}_${String(i * stepDegrees).padStart(3, "0")}.webp`,
+  );
+}
+
 const content = {
   en: {
     home: getFallbackHomeContent("en"),
@@ -159,6 +168,10 @@ const content = {
           "An intelligent hybrid SUV built for family use, daily efficiency and confident regional travel.",
         heroPlaceholder: "Photo: Haval H6 HEV, action shot",
         heroMedia: { url: "/media/product-hero.png", alt: "Haval H6 HEV on a desert highway at dusk" },
+        spin360: {
+          frames: buildSpinFrames("haval-h6-hev", "HAVAL_h6-hev_MY26_EXT360"),
+          alt: "360 degree exterior spin of the Haval H6 HEV",
+        },
         quickStats: [
           { value: "245", unit: "PS", label: "Combined power" },
           { value: "530", unit: "km", label: "Hybrid range" },
@@ -170,16 +183,19 @@ const content = {
             title: "Built for Every Commute",
             summary: "Smart hybrid tuning delivers effortless city and highway driving.",
             placeholder: "Photo: H6 HEV city driving",
+            media: { url: "/media/vehicles/haval-h6-hev/02_exterior_lifestyle.webp", alt: "Haval H6 HEV exterior lifestyle shot" },
           },
           {
             title: "A Cabin That Rewards",
             summary: "A 14.6-inch display, connected apps and quiet cabin materials.",
             placeholder: "Photo: H6 HEV cabin dashboard",
+            media: { url: "/media/vehicles/haval-h6-hev/03_interior_cockpit.webp", alt: "Haval H6 HEV interior cockpit" },
           },
           {
             title: "Confidence by Design",
             summary: "A wide stance and driver-assistance suite built for family peace of mind.",
             placeholder: "Photo: H6 HEV rear three-quarter",
+            media: { url: "/media/vehicles/haval-h6-hev/05_rear_side_profile.webp", alt: "Haval H6 HEV rear side profile" },
           },
         ],
         featureBanner: {
@@ -189,15 +205,32 @@ const content = {
             "By coordinating the engine and electric motor, the H6 HEV blends smooth power delivery with everyday efficiency.",
           stat: { value: "5.4L", label: "Fuel economy per 100km" },
           placeholder: "Photo: H6 HEV hybrid powertrain feature",
+          media: { url: "/media/vehicles/haval-h6-hev/04_feature_detail.webp", alt: "Haval H6 HEV hybrid powertrain feature" },
         },
         details: {
           exterior: [
-            { caption: "Full LED headlights & signature grille", placeholder: "Photo: front grille detail" },
-            { caption: "18-inch machined alloy wheels", placeholder: "Photo: alloy wheel detail" },
-            { caption: "Tailgate-mounted spare styling cues", placeholder: "Photo: rear tailgate detail" },
+            {
+              caption: "Full LED headlights & signature grille",
+              placeholder: "Photo: front grille detail",
+              media: { url: "/media/vehicles/haval-h6-hev/01_hero_exterior.webp", alt: "Haval H6 HEV front exterior detail" },
+            },
+            {
+              caption: "18-inch machined alloy wheels",
+              placeholder: "Photo: alloy wheel detail",
+              media: { url: "/media/vehicles/haval-h6-hev/04_feature_detail.webp", alt: "Haval H6 HEV feature detail" },
+            },
+            {
+              caption: "Tailgate-mounted spare styling cues",
+              placeholder: "Photo: rear tailgate detail",
+              media: { url: "/media/vehicles/haval-h6-hev/05_rear_side_profile.webp", alt: "Haval H6 HEV rear tailgate detail" },
+            },
           ],
           interior: [
-            { caption: "14.6-inch Coffee OS touchscreen", placeholder: "Photo: infotainment screen detail" },
+            {
+              caption: "14.6-inch Coffee OS touchscreen",
+              placeholder: "Photo: infotainment screen detail",
+              media: { url: "/media/vehicles/haval-h6-hev/03_interior_cockpit.webp", alt: "Haval H6 HEV interior cockpit" },
+            },
             { caption: "Heated and ventilated front seats", placeholder: "Photo: front seat detail" },
             { caption: "Dual-zone climate console", placeholder: "Photo: climate console detail" },
           ],
@@ -248,6 +281,11 @@ const content = {
         summary:
           "A premium body-on-frame SUV with long-distance comfort and serious all-terrain capability.",
         heroPlaceholder: "Photo: Tank 500 desert action shot",
+        heroMedia: { url: "/media/vehicles/tank-500/01_hero_exterior.webp", alt: "TANK 500 exterior hero shot" },
+        spin360: {
+          frames: buildSpinFrames("tank-500", "TANK_tank-500_MY26_EXT360"),
+          alt: "360 degree exterior spin of the TANK 500",
+        },
         quickStats: [
           { value: "354", unit: "PS", label: "Twin-turbo power" },
           { value: "480", unit: "Nm", label: "Peak torque" },
@@ -259,16 +297,19 @@ const content = {
             title: "Built for Every Terrain",
             summary: "Selectable terrain modes and a locking centre differential for serious off-road control.",
             placeholder: "Photo: Tank 500 off-road climb",
+            media: { url: "/media/vehicles/tank-500/02_exterior_lifestyle.webp", alt: "TANK 500 exterior lifestyle shot" },
           },
           {
             title: "A Cabin That Rewards",
             summary: "Twin 12.3-inch displays, napa leather seats and a full-length panoramic roof.",
             placeholder: "Photo: Tank 500 cabin dashboard",
+            media: { url: "/media/vehicles/tank-500/03_interior_cockpit.webp", alt: "TANK 500 interior cockpit" },
           },
           {
             title: "Iconic by Design",
             summary: "A boxy, retro-modern silhouette with a spare wheel mounted tailgate.",
             placeholder: "Photo: Tank 500 rear three-quarter",
+            media: { url: "/media/vehicles/tank-500/05_rear_side_profile.webp", alt: "TANK 500 rear side profile" },
           },
         ],
         featureBanner: {
@@ -278,15 +319,32 @@ const content = {
             "By independently braking the wheels, the TANK 500 pivots around its own axis — turning tight switchbacks and narrow trails into effortless manoeuvres.",
           stat: { value: "=0m", label: "Turning radius on roll" },
           placeholder: "Photo: Tank 500 tank-turn demonstration",
+          media: { url: "/media/vehicles/tank-500/04_feature_detail.webp", alt: "TANK 500 tank-turn feature demonstration" },
         },
         details: {
           exterior: [
-            { caption: "Round LED headlights & signature grille", placeholder: "Photo: front grille detail" },
-            { caption: "18-inch all-terrain alloy wheels", placeholder: "Photo: alloy wheel detail" },
-            { caption: "Tailgate-mounted spare wheel", placeholder: "Photo: rear tailgate detail" },
+            {
+              caption: "Round LED headlights & signature grille",
+              placeholder: "Photo: front grille detail",
+              media: { url: "/media/vehicles/tank-500/01_hero_exterior.webp", alt: "TANK 500 front exterior detail" },
+            },
+            {
+              caption: "18-inch all-terrain alloy wheels",
+              placeholder: "Photo: alloy wheel detail",
+              media: { url: "/media/vehicles/tank-500/04_feature_detail.webp", alt: "TANK 500 feature detail" },
+            },
+            {
+              caption: "Tailgate-mounted spare wheel",
+              placeholder: "Photo: rear tailgate detail",
+              media: { url: "/media/vehicles/tank-500/05_rear_side_profile.webp", alt: "TANK 500 rear tailgate detail" },
+            },
           ],
           interior: [
-            { caption: "Twin 12.3-inch digital displays", placeholder: "Photo: dashboard display detail" },
+            {
+              caption: "Twin 12.3-inch digital displays",
+              placeholder: "Photo: dashboard display detail",
+              media: { url: "/media/vehicles/tank-500/03_interior_cockpit.webp", alt: "TANK 500 interior cockpit" },
+            },
             { caption: "Quilted napa leather seats", placeholder: "Photo: seat stitching detail" },
             { caption: "Full-length panoramic roof", placeholder: "Photo: panoramic roof detail" },
           ],
@@ -337,6 +395,14 @@ const content = {
         summary:
           "A durable pickup for business, utility and weekend use with the comfort expected from a modern cabin.",
         heroPlaceholder: "Photo: Poer Commercial work-site action shot",
+        heroMedia: {
+          url: "/media/vehicles/poer-commercial/01_hero_exterior.webp",
+          alt: "POER 2.4T Commercial exterior hero shot",
+        },
+        spin360: {
+          frames: buildSpinFrames("poer-commercial", "POER_poer-2-4t-commercial_MY26_EXT360"),
+          alt: "360 degree exterior spin of the POER Commercial",
+        },
         quickStats: [
           { value: "184", unit: "PS", label: "Diesel power" },
           { value: "480", unit: "Nm", label: "Peak torque" },
@@ -348,16 +414,19 @@ const content = {
             title: "Built for Every Job",
             summary: "A reinforced ladder-frame chassis rated for heavy daily loads.",
             placeholder: "Photo: Poer Commercial loaded bed",
+            media: { url: "/media/vehicles/poer-commercial/02_exterior_lifestyle.webp", alt: "POER Commercial exterior lifestyle shot" },
           },
           {
             title: "A Cabin That Rewards",
             summary: "A 12.3-inch display, durable trim and comfortable long-shift seating.",
             placeholder: "Photo: Poer Commercial cabin dashboard",
+            media: { url: "/media/vehicles/poer-commercial/03_interior_cockpit.webp", alt: "POER Commercial interior cockpit" },
           },
           {
             title: "Work-Ready by Design",
             summary: "A double-cab layout with a wide bed and tie-down rated load points.",
             placeholder: "Photo: Poer Commercial rear three-quarter",
+            media: { url: "/media/vehicles/poer-commercial/05_rear_side_profile.webp", alt: "POER Commercial rear side profile" },
           },
         ],
         featureBanner: {
@@ -367,15 +436,32 @@ const content = {
             "A reinforced frame, multi-link rear suspension and selectable 4WD keep the Poer Commercial steady under heavy loads and on loose terrain.",
           stat: { value: "1,000kg", label: "Maximum payload" },
           placeholder: "Photo: Poer Commercial towing demonstration",
+          media: { url: "/media/vehicles/poer-commercial/04_feature_detail.webp", alt: "POER Commercial towing feature demonstration" },
         },
         details: {
           exterior: [
-            { caption: "LED headlights & signature grille", placeholder: "Photo: front grille detail" },
-            { caption: "17-inch work-rated alloy wheels", placeholder: "Photo: alloy wheel detail" },
-            { caption: "Reinforced load bed & tie-downs", placeholder: "Photo: load bed detail" },
+            {
+              caption: "LED headlights & signature grille",
+              placeholder: "Photo: front grille detail",
+              media: { url: "/media/vehicles/poer-commercial/01_hero_exterior.webp", alt: "POER Commercial front exterior detail" },
+            },
+            {
+              caption: "17-inch work-rated alloy wheels",
+              placeholder: "Photo: alloy wheel detail",
+              media: { url: "/media/vehicles/poer-commercial/04_feature_detail.webp", alt: "POER Commercial feature detail" },
+            },
+            {
+              caption: "Reinforced load bed & tie-downs",
+              placeholder: "Photo: load bed detail",
+              media: { url: "/media/vehicles/poer-commercial/05_rear_side_profile.webp", alt: "POER Commercial load bed detail" },
+            },
           ],
           interior: [
-            { caption: "12.3-inch Coffee OS touchscreen", placeholder: "Photo: infotainment screen detail" },
+            {
+              caption: "12.3-inch Coffee OS touchscreen",
+              placeholder: "Photo: infotainment screen detail",
+              media: { url: "/media/vehicles/poer-commercial/03_interior_cockpit.webp", alt: "POER Commercial interior cockpit" },
+            },
             { caption: "Durable wear-resistant upholstery", placeholder: "Photo: seat upholstery detail" },
             { caption: "Double-cab rear bench seating", placeholder: "Photo: rear bench detail" },
           ],
@@ -687,6 +773,10 @@ const content = {
         summary: "سيارة SUV هايبرد ذكية للعائلة والكفاءة اليومية والسفر الإقليمي بثقة.",
         heroPlaceholder: "صورة: هافال H6 HEV، لقطة حركة",
         heroMedia: { url: "/media/product-hero.png", alt: "هافال H6 HEV على طريق صحراوي وقت الغروب" },
+        spin360: {
+          frames: buildSpinFrames("haval-h6-hev", "HAVAL_h6-hev_MY26_EXT360"),
+          alt: "منظور دوراني 360 درجة للمظهر الخارجي لهافال H6 HEV",
+        },
         quickStats: [
           { value: "245", unit: "حصان", label: "القوة المجمعة" },
           { value: "530", unit: "كم", label: "مدى الهايبرد" },
@@ -698,16 +788,19 @@ const content = {
             title: "لكل تنقلاتك اليومية",
             summary: "ضبط هايبرد ذكي لقيادة سلسة داخل المدينة وعلى الطرق السريعة.",
             placeholder: "صورة: H6 HEV قيادة في المدينة",
+            media: { url: "/media/vehicles/haval-h6-hev/02_exterior_lifestyle.webp", alt: "لقطة نمط حياة لهافال H6 HEV" },
           },
           {
             title: "مقصورة تستحق",
             summary: "شاشة 14.6 بوصة، تطبيقات متصلة، ومواد مقصورة هادئة.",
             placeholder: "صورة: H6 HEV لوحة القيادة",
+            media: { url: "/media/vehicles/haval-h6-hev/03_interior_cockpit.webp", alt: "مقصورة قيادة هافال H6 HEV" },
           },
           {
             title: "ثقة بالتصميم",
             summary: "حضور عريض ومنظومة مساعدة سائق لراحة بال العائلة.",
             placeholder: "صورة: H6 HEV خلفية جانبية",
+            media: { url: "/media/vehicles/haval-h6-hev/05_rear_side_profile.webp", alt: "الجانب الخلفي لهافال H6 HEV" },
           },
         ],
         featureBanner: {
@@ -716,15 +809,32 @@ const content = {
           description: "بتنسيق المحرك والمحرك الكهربائي، يجمع H6 HEV بين قوة سلسة وكفاءة يومية.",
           stat: { value: "5.4 لتر", label: "استهلاك الوقود لكل 100 كم" },
           placeholder: "صورة: منظومة الهايبرد في H6 HEV",
+          media: { url: "/media/vehicles/haval-h6-hev/04_feature_detail.webp", alt: "ميزة نظام الهايبرد لهافال H6 HEV" },
         },
         details: {
           exterior: [
-            { caption: "مصابيح LED كاملة وشبك أمامي مميز", placeholder: "صورة: تفاصيل الشبك الأمامي" },
-            { caption: "جنوط سبيكة مشغولة 18 بوصة", placeholder: "صورة: تفاصيل الجنط" },
-            { caption: "لمسات تصميم عند الباب الخلفي", placeholder: "صورة: تفاصيل الباب الخلفي" },
+            {
+              caption: "مصابيح LED كاملة وشبك أمامي مميز",
+              placeholder: "صورة: تفاصيل الشبك الأمامي",
+              media: { url: "/media/vehicles/haval-h6-hev/01_hero_exterior.webp", alt: "تفاصيل المظهر الأمامي لهافال H6 HEV" },
+            },
+            {
+              caption: "جنوط سبيكة مشغولة 18 بوصة",
+              placeholder: "صورة: تفاصيل الجنط",
+              media: { url: "/media/vehicles/haval-h6-hev/04_feature_detail.webp", alt: "تفاصيل ميزة هافال H6 HEV" },
+            },
+            {
+              caption: "لمسات تصميم عند الباب الخلفي",
+              placeholder: "صورة: تفاصيل الباب الخلفي",
+              media: { url: "/media/vehicles/haval-h6-hev/05_rear_side_profile.webp", alt: "تفاصيل الباب الخلفي لهافال H6 HEV" },
+            },
           ],
           interior: [
-            { caption: "شاشة Coffee OS بحجم 14.6 بوصة", placeholder: "صورة: تفاصيل شاشة المعلومات" },
+            {
+              caption: "شاشة Coffee OS بحجم 14.6 بوصة",
+              placeholder: "صورة: تفاصيل شاشة المعلومات",
+              media: { url: "/media/vehicles/haval-h6-hev/03_interior_cockpit.webp", alt: "مقصورة قيادة هافال H6 HEV" },
+            },
             { caption: "مقاعد أمامية مدفأة ومهواة", placeholder: "صورة: تفاصيل المقعد الأمامي" },
             { caption: "وحدة تحكم مناخ مزدوجة المنطقة", placeholder: "صورة: تفاصيل وحدة التحكم" },
           ],
@@ -774,6 +884,11 @@ const content = {
         priceLabel: "يبدأ من 149,900 درهم",
         summary: "سيارة SUV فاخرة بهيكل قوي وراحة للمسافات الطويلة وقدرة جادة لجميع التضاريس.",
         heroPlaceholder: "صورة: تانك 500، لقطة حركة صحراوية",
+        heroMedia: { url: "/media/vehicles/tank-500/01_hero_exterior.webp", alt: "لقطة المظهر الخارجي الرئيسية لتانك 500" },
+        spin360: {
+          frames: buildSpinFrames("tank-500", "TANK_tank-500_MY26_EXT360"),
+          alt: "منظور دوراني 360 درجة للمظهر الخارجي لتانك 500",
+        },
         quickStats: [
           { value: "354", unit: "حصان", label: "قوة توين توربو" },
           { value: "480", unit: "نيوتن متر", label: "أقصى عزم" },
@@ -785,16 +900,19 @@ const content = {
             title: "لكل التضاريس",
             summary: "أنماط تضاريس قابلة للاختيار وقفل تفاضلي مركزي لتحكم وعر جاد.",
             placeholder: "صورة: تانك 500 تسلق وعر",
+            media: { url: "/media/vehicles/tank-500/02_exterior_lifestyle.webp", alt: "لقطة نمط حياة لتانك 500" },
           },
           {
             title: "مقصورة تستحق",
             summary: "شاشتان بحجم 12.3 بوصة، مقاعد جلد نابا، وسقف بانورامي كامل.",
             placeholder: "صورة: تانك 500 لوحة القيادة",
+            media: { url: "/media/vehicles/tank-500/03_interior_cockpit.webp", alt: "مقصورة قيادة تانك 500" },
           },
           {
             title: "تصميم أيقوني",
             summary: "هيكل مربع بطابع كلاسيكي حديث مع إطار احتياطي على الباب الخلفي.",
             placeholder: "صورة: تانك 500 خلفية جانبية",
+            media: { url: "/media/vehicles/tank-500/05_rear_side_profile.webp", alt: "الجانب الخلفي لتانك 500" },
           },
         ],
         featureBanner: {
@@ -804,15 +922,32 @@ const content = {
             "بكبح العجلات بشكل مستقل، تدور TANK 500 حول محورها — لتحويل المنعطفات الضيقة والمسارات الوعرة إلى مناورات سهلة.",
           stat: { value: "=0م", label: "نصف قطر الدوران أثناء الدحرجة" },
           placeholder: "صورة: عرض دوران تانك",
+          media: { url: "/media/vehicles/tank-500/04_feature_detail.webp", alt: "ميزة دوران تانك لتانك 500" },
         },
         details: {
           exterior: [
-            { caption: "مصابيح LED دائرية وشبك أمامي مميز", placeholder: "صورة: تفاصيل الشبك الأمامي" },
-            { caption: "جنوط سبيكة 18 بوصة لجميع التضاريس", placeholder: "صورة: تفاصيل الجنط" },
-            { caption: "إطار احتياطي على الباب الخلفي", placeholder: "صورة: تفاصيل الباب الخلفي" },
+            {
+              caption: "مصابيح LED دائرية وشبك أمامي مميز",
+              placeholder: "صورة: تفاصيل الشبك الأمامي",
+              media: { url: "/media/vehicles/tank-500/01_hero_exterior.webp", alt: "تفاصيل المظهر الأمامي لتانك 500" },
+            },
+            {
+              caption: "جنوط سبيكة 18 بوصة لجميع التضاريس",
+              placeholder: "صورة: تفاصيل الجنط",
+              media: { url: "/media/vehicles/tank-500/04_feature_detail.webp", alt: "تفاصيل ميزة تانك 500" },
+            },
+            {
+              caption: "إطار احتياطي على الباب الخلفي",
+              placeholder: "صورة: تفاصيل الباب الخلفي",
+              media: { url: "/media/vehicles/tank-500/05_rear_side_profile.webp", alt: "تفاصيل الباب الخلفي لتانك 500" },
+            },
           ],
           interior: [
-            { caption: "شاشتان رقميتان 12.3 بوصة", placeholder: "صورة: تفاصيل الشاشة" },
+            {
+              caption: "شاشتان رقميتان 12.3 بوصة",
+              placeholder: "صورة: تفاصيل الشاشة",
+              media: { url: "/media/vehicles/tank-500/03_interior_cockpit.webp", alt: "مقصورة قيادة تانك 500" },
+            },
             { caption: "مقاعد جلد نابا مبطنة", placeholder: "صورة: تفاصيل خياطة المقعد" },
             { caption: "سقف بانورامي كامل الطول", placeholder: "صورة: تفاصيل السقف البانورامي" },
           ],
@@ -862,6 +997,14 @@ const content = {
         priceLabel: "يبدأ من 99,900 درهم",
         summary: "بيك أب متينة للأعمال والاستخدام اليومي مع الراحة المتوقعة من مقصورة حديثة.",
         heroPlaceholder: "صورة: بوير Commercial، لقطة حركة في موقع عمل",
+        heroMedia: {
+          url: "/media/vehicles/poer-commercial/01_hero_exterior.webp",
+          alt: "لقطة المظهر الخارجي الرئيسية لبوير 2.4T Commercial",
+        },
+        spin360: {
+          frames: buildSpinFrames("poer-commercial", "POER_poer-2-4t-commercial_MY26_EXT360"),
+          alt: "منظور دوراني 360 درجة للمظهر الخارجي لبوير Commercial",
+        },
         quickStats: [
           { value: "184", unit: "حصان", label: "قوة الديزل" },
           { value: "480", unit: "نيوتن متر", label: "أقصى عزم" },
@@ -873,16 +1016,19 @@ const content = {
             title: "لكل مهمة عمل",
             summary: "هيكل مقوّى من نوع السلم مصنف لتحمل أحمال يومية ثقيلة.",
             placeholder: "صورة: بوير Commercial محملة",
+            media: { url: "/media/vehicles/poer-commercial/02_exterior_lifestyle.webp", alt: "لقطة نمط حياة لبوير Commercial" },
           },
           {
             title: "مقصورة تستحق",
             summary: "شاشة 12.3 بوصة، تشطيبات متينة، ومقاعد مريحة للورديات الطويلة.",
             placeholder: "صورة: بوير Commercial لوحة القيادة",
+            media: { url: "/media/vehicles/poer-commercial/03_interior_cockpit.webp", alt: "مقصورة قيادة بوير Commercial" },
           },
           {
             title: "جاهزة للعمل بالتصميم",
             summary: "مقصورة مزدوجة مع صندوق عريض ونقاط تثبيت مصنفة للحمولة.",
             placeholder: "صورة: بوير Commercial خلفية جانبية",
+            media: { url: "/media/vehicles/poer-commercial/05_rear_side_profile.webp", alt: "الجانب الخلفي لبوير Commercial" },
           },
         ],
         featureBanner: {
@@ -892,15 +1038,32 @@ const content = {
             "هيكل مقوّى، تعليق خلفي متعدد الوصلات، ودفع رباعي قابل للاختيار يبقيان بوير Commercial ثابتة تحت الأحمال الثقيلة وعلى الطرق غير الممهدة.",
           stat: { value: "1,000كجم", label: "أقصى حمولة" },
           placeholder: "صورة: عرض سحب بوير Commercial",
+          media: { url: "/media/vehicles/poer-commercial/04_feature_detail.webp", alt: "ميزة سحب بوير Commercial" },
         },
         details: {
           exterior: [
-            { caption: "مصابيح LED وشبك أمامي مميز", placeholder: "صورة: تفاصيل الشبك الأمامي" },
-            { caption: "جنوط سبيكة 17 بوصة مصنفة للعمل", placeholder: "صورة: تفاصيل الجنط" },
-            { caption: "صندوق حمولة مقوى ونقاط تثبيت", placeholder: "صورة: تفاصيل صندوق الحمولة" },
+            {
+              caption: "مصابيح LED وشبك أمامي مميز",
+              placeholder: "صورة: تفاصيل الشبك الأمامي",
+              media: { url: "/media/vehicles/poer-commercial/01_hero_exterior.webp", alt: "تفاصيل المظهر الأمامي لبوير Commercial" },
+            },
+            {
+              caption: "جنوط سبيكة 17 بوصة مصنفة للعمل",
+              placeholder: "صورة: تفاصيل الجنط",
+              media: { url: "/media/vehicles/poer-commercial/04_feature_detail.webp", alt: "تفاصيل ميزة بوير Commercial" },
+            },
+            {
+              caption: "صندوق حمولة مقوى ونقاط تثبيت",
+              placeholder: "صورة: تفاصيل صندوق الحمولة",
+              media: { url: "/media/vehicles/poer-commercial/05_rear_side_profile.webp", alt: "تفاصيل صندوق الحمولة لبوير Commercial" },
+            },
           ],
           interior: [
-            { caption: "شاشة Coffee OS بحجم 12.3 بوصة", placeholder: "صورة: تفاصيل شاشة المعلومات" },
+            {
+              caption: "شاشة Coffee OS بحجم 12.3 بوصة",
+              placeholder: "صورة: تفاصيل شاشة المعلومات",
+              media: { url: "/media/vehicles/poer-commercial/03_interior_cockpit.webp", alt: "مقصورة قيادة بوير Commercial" },
+            },
             { caption: "تنجيد متين مقاوم للتآكل", placeholder: "صورة: تفاصيل تنجيد المقعد" },
             { caption: "مقاعد خلفية لمقصورة مزدوجة", placeholder: "صورة: تفاصيل المقعد الخلفي" },
           ],

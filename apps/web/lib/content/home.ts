@@ -15,6 +15,7 @@ export type HomeBrand = {
   summary: string;
   placeholder: string;
   href: string;
+  media?: MediaAsset;
 };
 
 export type HomeVehicle = {
@@ -26,6 +27,7 @@ export type HomeVehicle = {
   ctaLabel: string;
   placeholder: string;
   href: string;
+  media?: MediaAsset;
 };
 
 export type HomeNewsItem = {
@@ -125,24 +127,28 @@ export const fallbackHomeContent = {
         summary: "Smart family SUVs for everyday life.",
         placeholder: "Photo: Haval line-up, studio",
         href: "/vehicles",
+        media: { url: "/media/vehicles/all-new-h6/01_hero_exterior.webp", alt: "Haval All-New H6 exterior hero shot" },
       },
       {
         name: "GWM TANK",
         summary: "Premium luxury off-road icons.",
         placeholder: "Photo: Tank off-road action",
         href: "/vehicles",
+        media: { url: "/media/vehicles/tank-300/02_exterior_lifestyle.webp", alt: "TANK 300 off-road lifestyle shot" },
       },
       {
         name: "WEY",
         summary: "Advanced intelligent luxury SUVs.",
         placeholder: "Photo: Wey studio profile",
         href: "/vehicles",
+        media: { url: "/media/vehicles/wey-07/01_hero_exterior.webp", alt: "WEY 07 exterior hero shot" },
       },
       {
         name: "ORA",
         summary: "Pure electric fashion-forward coupes.",
         placeholder: "Photo: Ora city night",
         href: "/vehicles",
+        media: { url: "/media/vehicles/ora-07/02_exterior_lifestyle.webp", alt: "ORA 07 exterior lifestyle shot" },
       },
     ],
     featuredVehicles: [
@@ -155,6 +161,7 @@ export const fallbackHomeContent = {
         ctaLabel: "Explore",
         placeholder: "Photo: Haval H6, three-quarter front",
         href: "/vehicles/haval-h6-hev",
+        media: { url: "/media/vehicles/haval-h6-hev/01_hero_exterior.webp", alt: "Haval H6 HEV exterior hero shot" },
       },
       {
         brand: "TANK",
@@ -165,6 +172,7 @@ export const fallbackHomeContent = {
         ctaLabel: "Explore",
         placeholder: "Photo: Tank 300 desert",
         href: "/vehicles/tank-500",
+        media: { url: "/media/vehicles/tank-300/01_hero_exterior.webp", alt: "TANK 300 exterior hero shot" },
       },
       {
         brand: "ORA",
@@ -175,6 +183,7 @@ export const fallbackHomeContent = {
         ctaLabel: "Explore",
         placeholder: "Photo: Ora 07 studio",
         href: "/vehicles",
+        media: { url: "/media/vehicles/ora-07/01_hero_exterior.webp", alt: "ORA 07 exterior hero shot" },
       },
       {
         brand: "POER",
@@ -185,6 +194,7 @@ export const fallbackHomeContent = {
         ctaLabel: "Explore",
         placeholder: "Photo: Poer Sahar night",
         href: "/vehicles/poer-commercial",
+        media: { url: "/media/vehicles/sahar-poer/01_hero_exterior.webp", alt: "SAHAR POER exterior hero shot" },
       },
     ],
     viewAllLabel: "View all",
@@ -415,24 +425,28 @@ export const fallbackHomeContent = {
         summary: "سيارات SUV عائلية ذكية للحياة اليومية.",
         placeholder: "صورة: تشكيلة هافال، استوديو",
         href: "/vehicles",
+        media: { url: "/media/vehicles/all-new-h6/01_hero_exterior.webp", alt: "هافال All-New H6، لقطة خارجية رئيسية" },
       },
       {
         name: "جي دبليو إم تانك",
         summary: "رموز فاخرة للطرق الوعرة.",
         placeholder: "صورة: تانك في مشهد وعر",
         href: "/vehicles",
+        media: { url: "/media/vehicles/tank-300/02_exterior_lifestyle.webp", alt: "تانك 300، لقطة نمط حياة للطرق الوعرة" },
       },
       {
         name: "وي",
         summary: "سيارات SUV فاخرة وذكية متقدمة.",
         placeholder: "صورة: وي، استوديو",
         href: "/vehicles",
+        media: { url: "/media/vehicles/wey-07/01_hero_exterior.webp", alt: "وي 07، لقطة خارجية رئيسية" },
       },
       {
         name: "أورا",
         summary: "سيارات كوبيه كهربائية عصرية بالكامل.",
         placeholder: "صورة: أورا في المدينة ليلاً",
         href: "/vehicles",
+        media: { url: "/media/vehicles/ora-07/02_exterior_lifestyle.webp", alt: "أورا 07، لقطة نمط حياة خارجية" },
       },
     ],
     featuredVehicles: [
@@ -445,6 +459,7 @@ export const fallbackHomeContent = {
         ctaLabel: "استكشف",
         placeholder: "صورة: هافال H6، أمامية جانبية",
         href: "/vehicles/haval-h6-hev",
+        media: { url: "/media/vehicles/haval-h6-hev/01_hero_exterior.webp", alt: "هافال H6 HEV، لقطة خارجية رئيسية" },
       },
       {
         brand: "تانك",
@@ -455,6 +470,7 @@ export const fallbackHomeContent = {
         ctaLabel: "استكشف",
         placeholder: "صورة: تانك 300 في الصحراء",
         href: "/vehicles/tank-500",
+        media: { url: "/media/vehicles/tank-300/01_hero_exterior.webp", alt: "تانك 300، لقطة خارجية رئيسية" },
       },
       {
         brand: "أورا",
@@ -465,6 +481,7 @@ export const fallbackHomeContent = {
         ctaLabel: "استكشف",
         placeholder: "صورة: أورا 07، استوديو",
         href: "/vehicles",
+        media: { url: "/media/vehicles/ora-07/01_hero_exterior.webp", alt: "أورا 07، لقطة خارجية رئيسية" },
       },
       {
         brand: "بوير",
@@ -475,6 +492,7 @@ export const fallbackHomeContent = {
         ctaLabel: "استكشف",
         placeholder: "صورة: بوير Sahar ليلاً",
         href: "/vehicles/poer-commercial",
+        media: { url: "/media/vehicles/sahar-poer/01_hero_exterior.webp", alt: "سيهار بوير، لقطة خارجية رئيسية" },
       },
     ],
     viewAllLabel: "عرض الكل",

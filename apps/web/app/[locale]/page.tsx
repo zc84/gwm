@@ -90,7 +90,16 @@ export default async function HomePage({ params }: HomePageProps) {
           <div className="grid gap-4 md:grid-cols-4">
             {content.brands.map((brand) => (
               <article key={brand.name} className="border border-gwm-line bg-gwm-panel p-5">
-                <PhotoPlaceholder label={brand.placeholder} className="mb-5 aspect-[4/3]" />
+                {brand.media ? (
+                  <div
+                    className="mb-5 aspect-[4/3] bg-cover bg-center"
+                    role="img"
+                    aria-label={brand.media.alt}
+                    style={{ backgroundImage: `url(${brand.media.url})` }}
+                  />
+                ) : (
+                  <PhotoPlaceholder label={brand.placeholder} className="mb-5 aspect-[4/3]" />
+                )}
                 <div className="text-lg font-black uppercase text-white">{brand.name}</div>
                 <p className="gwm-copy mt-2 text-sm">{brand.summary}</p>
                 <Link
@@ -122,7 +131,16 @@ export default async function HomePage({ params }: HomePageProps) {
                 key={`${vehicle.brand}-${vehicle.model}`}
                 className="border border-gwm-line bg-gwm-panel p-5"
               >
-                <PhotoPlaceholder label={vehicle.placeholder} className="mb-5 aspect-[4/3]" />
+                {vehicle.media ? (
+                  <div
+                    className="mb-5 aspect-[4/3] bg-cover bg-center"
+                    role="img"
+                    aria-label={vehicle.media.alt}
+                    style={{ backgroundImage: `url(${vehicle.media.url})` }}
+                  />
+                ) : (
+                  <PhotoPlaceholder label={vehicle.placeholder} className="mb-5 aspect-[4/3]" />
+                )}
                 <h3 className="text-xl font-black text-white">
                   {vehicle.brand} {vehicle.model}
                 </h3>

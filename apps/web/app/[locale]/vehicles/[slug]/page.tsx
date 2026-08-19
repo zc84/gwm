@@ -13,6 +13,7 @@ import {
   SiteFooter,
   SiteHeader,
 } from "../../components";
+import { Viewer360 } from "../../viewer-360";
 
 type ProductPageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -102,7 +103,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="grid gap-4 md:grid-cols-3">
             {vehicle.whyCards.map((card) => (
               <article key={card.title}>
-                <PhotoPlaceholder label={card.placeholder} className="aspect-[4/3]" />
+                {card.media ? (
+                  <div
+                    className="aspect-[4/3] bg-cover bg-center"
+                    role="img"
+                    aria-label={card.media.alt}
+                    style={{ backgroundImage: `url(${card.media.url})` }}
+                  />
+                ) : (
+                  <PhotoPlaceholder label={card.placeholder} className="aspect-[4/3]" />
+                )}
                 <h3 className="mt-4 text-lg font-black text-white">{card.title}</h3>
                 <p className="gwm-copy mt-2 text-sm">{card.summary}</p>
               </article>
@@ -124,7 +134,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </span>
             ))}
           </div>
-          <PhotoPlaceholder label={vehicle.featureBanner.placeholder} className="aspect-[16/7]" />
+          {vehicle.featureBanner.media ? (
+            <div
+              className="aspect-[16/7] bg-cover bg-center"
+              role="img"
+              aria-label={vehicle.featureBanner.media.alt}
+              style={{ backgroundImage: `url(${vehicle.featureBanner.media.url})` }}
+            />
+          ) : (
+            <PhotoPlaceholder label={vehicle.featureBanner.placeholder} className="aspect-[16/7]" />
+          )}
           <div className="mt-6 grid gap-6 md:grid-cols-[1.4fr_0.6fr] md:items-center">
             <p className="gwm-copy max-w-2xl">{vehicle.featureBanner.description}</p>
             <div className="border border-gwm-line bg-gwm-panel p-5 text-center">
@@ -148,7 +167,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="grid gap-4 md:grid-cols-3">
             {vehicle.details.exterior.map((shot) => (
               <figure key={shot.caption} className="m-0">
-                <PhotoPlaceholder label={shot.placeholder} className="aspect-[4/3]" />
+                {shot.media ? (
+                  <div
+                    className="aspect-[4/3] bg-cover bg-center"
+                    role="img"
+                    aria-label={shot.media.alt}
+                    style={{ backgroundImage: `url(${shot.media.url})` }}
+                  />
+                ) : (
+                  <PhotoPlaceholder label={shot.placeholder} className="aspect-[4/3]" />
+                )}
                 <figcaption className="gwm-copy mt-3 text-sm">{shot.caption}</figcaption>
               </figure>
             ))}
@@ -160,7 +188,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="grid gap-4 md:grid-cols-3">
             {vehicle.details.interior.map((shot) => (
               <figure key={shot.caption} className="m-0">
-                <PhotoPlaceholder label={shot.placeholder} className="aspect-[4/3]" />
+                {shot.media ? (
+                  <div
+                    className="aspect-[4/3] bg-cover bg-center"
+                    role="img"
+                    aria-label={shot.media.alt}
+                    style={{ backgroundImage: `url(${shot.media.url})` }}
+                  />
+                ) : (
+                  <PhotoPlaceholder label={shot.placeholder} className="aspect-[4/3]" />
+                )}
                 <figcaption className="gwm-copy mt-3 text-sm">{shot.caption}</figcaption>
               </figure>
             ))}
@@ -174,16 +211,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {isRtl ? `منظور 360° خارجي` : "360° Exterior"}
           </h2>
           <div className="mx-auto max-w-lg">
-            <PhotoPlaceholder label={`360° · ${vehicle.model}`} className="aspect-square" />
+            {vehicle.spin360 ? (
+              <Viewer360
+                frames={vehicle.spin360.frames}
+                alt={vehicle.spin360.alt}
+                dragLabel={isRtl ? "اسحب للتدوير" : "Drag to rotate"}
+              />
+            ) : (
+              <PhotoPlaceholder label={`360° · ${vehicle.model}`} className="aspect-square" />
+            )}
             <p className="gwm-caption mt-4 text-center">{vehicle.spinCaption}</p>
-            <div className="mt-4 flex justify-center gap-1.5">
-              {[0, 1, 2, 3, 4].map((dot) => (
-                <span
-                  key={dot}
-                  className={`h-1.5 w-1.5 rounded-full ${dot === 0 ? "bg-gwm-red" : "bg-white/25"}`}
-                />
-              ))}
-            </div>
           </div>
         </div>
       </section>
